@@ -35,7 +35,7 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 app.use('/uploads', express.static(uploadDir));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Routes Integration
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/activities', require('./routes/activityRoutes'));
@@ -45,11 +45,12 @@ app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/stats', require('./routes/statsRoutes')); // Thống kê truy cập
 app.use('/api/visitors', require('./routes/visitorRoutes'));
+
 const PORT = process.env.PORT || 5002;
 
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+// Trang chủ API cơ bản
+app.get('/', (req, res) => {
+    res.json({ message: '[Phòng Hồ Chí Minh Server] API đang hoạt động bình thường!' });
 });
 
 app.listen(PORT, () => {
