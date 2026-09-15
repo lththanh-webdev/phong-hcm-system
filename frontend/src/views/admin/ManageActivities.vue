@@ -362,6 +362,9 @@
 </template>
 
 <script>
+const getApiUrl = () => {
+  return import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+};
 export default {
   data() {
     return {
@@ -391,6 +394,7 @@ export default {
       quizForm: { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' }
     };
   },
+  
   computed: {
     currentTitle() {
       const active = this.tabs.find(t => t.id === this.currentTab);
@@ -438,11 +442,12 @@ export default {
     },
     async fetchAllData() {
       try {
+        const baseUrl = getApiUrl();
         const [actRes, libRes, medRes, quizRes] = await Promise.all([
-          fetch('http://localhost:5002/api/activities'),
-          fetch('http://localhost:5002/api/library'),
-          fetch('http://localhost:5002/api/media'),
-          fetch('http://localhost:5002/api/quizzes')
+          fetch(`${baseUrl}/activities`),
+          fetch(`${baseUrl}/library`),
+          fetch(`${baseUrl}/media`),
+          fetch(`${baseUrl}/quizzes`)
         ]);
         if (actRes.ok) this.activitiesList = await actRes.json();
         if (libRes.ok) this.libraryList = await libRes.json();
@@ -503,9 +508,10 @@ export default {
 
         if (this.activityForm.image) formData.append('image', this.activityForm.image);
 
+        const baseUrl = getApiUrl();
         const url = this.isEditingActivity 
-          ? `http://localhost:5002/api/activities/${this.editActivityId}` 
-          : 'http://localhost:5002/api/activities';
+          ? `${baseUrl}/activities/${this.editActivityId}` 
+          : `${baseUrl}/activities`;
         const method = this.isEditingActivity ? 'PUT' : 'POST';
 
         const res = await fetch(url, { method, body: formData });
@@ -545,9 +551,10 @@ export default {
           created_at: finalCreatedAt
         };
 
+const baseUrl = getApiUrl();
         const url = this.isEditingLibrary 
-          ? `http://localhost:5002/api/library/${this.editLibraryId}` 
-          : 'http://localhost:5002/api/library';
+          ? `${baseUrl}/library/${this.editLibraryId}` 
+          : `${baseUrl}/library`;
         const method = this.isEditingLibrary ? 'PUT' : 'POST';
 
         const res = await fetch(url, {
@@ -596,10 +603,10 @@ export default {
       } catch (err) { console.error(err); }
     },
 
-    async deleteItem(endpoint, id) {
+   async deleteItem(endpoint, id) {
       if (!confirm('Bạn có chắc chắn muốn xóa bản ghi này?')) return;
       try {
-        const res = await fetch(`http://localhost:5002/api/${endpoint}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${getApiUrl()}/${endpoint}/${id}`, { method: 'DELETE' });
         if (res.ok) {
           alert('🗑️ Xóa thành công!');
           this.fetchAllData();
