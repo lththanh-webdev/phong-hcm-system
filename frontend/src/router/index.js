@@ -84,7 +84,8 @@ router.beforeEach((to, from, next) => {
 
 // Tự động ghi nhận lượt truy cập phục vụ tab Thống kê Admin
 router.afterEach((to) => {
-  fetch('http://localhost:5002/api/visitors', {
+  const API_URL = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com';
+  fetch(`${API_URL}/api/visitors`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ endpoint: to.path })

@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Sử dụng biến môi trường hoặc fallback về URL online trên Render
+const API_URL = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+
 const api = axios.create({
-    baseURL: 'http://localhost:5002/api',
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json'
     }
