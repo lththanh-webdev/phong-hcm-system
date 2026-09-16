@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import api from '../services/api'; 
+import api from '../../services/api';
 import 'pannellum'; // Thư viện Pannellum hiển thị ảnh 360 độ
 
 export default {
