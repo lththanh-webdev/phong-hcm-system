@@ -112,11 +112,11 @@ const currentQuestion = computed(() => {
   return questions.value[currentIndex.value] || {};
 });
 
-// Hàm lấy câu hỏi trực tiếp từ bảng 'quizzes' trên Supabase
+// Hàm lấy câu hỏi trực tiếp từ bảng 'quiz' (đồng bộ với Admin) trên Supabase
 const fetchQuizzes = async () => {
   try {
     const { data, error } = await supabase
-      .from('quizzes')
+      .from('quiz') // Đã sửa từ 'quizzes' thành 'quiz' để khớp với bảng của Admin
       .select('*')
       .order('id', { ascending: true });
 

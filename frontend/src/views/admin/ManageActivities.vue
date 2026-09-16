@@ -1,5 +1,13 @@
 <template>
   <div class="admin-layout">
+    <!-- Hệ thống Toast Thông Báo Nổi -->
+    <transition name="toast-slide">
+      <div v-if="toast.show" class="toast-notification" :class="toast.type">
+        <span class="toast-icon">{{ toast.type === 'success' ? '✅' : '❌' }}</span>
+        <span class="toast-message">{{ toast.message }}</span>
+      </div>
+    </transition>
+
     <!-- Sidebar Hiện Đại -->
     <aside class="admin-sidebar">
       <div class="sidebar-header">
@@ -392,7 +400,15 @@ export default {
       editLibraryId: null,
 
       mediaForm: { title: '', artist: '', media_type: 'song', file: null },
-      quizForm: { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' }
+      quizForm: { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' },
+
+      // Cấu hình Toast Notification
+      toast: {
+        show: false,
+        message: '',
+        type: 'success' // 'success' hoặc 'error'
+      },
+      toastTimeout: null
     };
   },
   computed: {
@@ -434,6 +450,15 @@ export default {
     this.fetchAllData();
   },
   methods: {
+    // Hàm hiển thị thông báo Toast đẹp mắt
+    showToast(message, type = 'success') {
+      if (this.toastTimeout) clearTimeout(this.toastTimeout);
+      this.toast = { show: true, message, type };
+      this.toastTimeout = setTimeout(() => {
+        this.toast.show = false;
+      }, 3000);
+    },
+
     getAuthHeaders(isMultipart = false) {
       const token = localStorage.getItem('token');
       const headers = {};
@@ -526,11 +551,16 @@ export default {
 
         const res = await fetch(url, { method, headers: this.getAuthHeaders(true), body: formData });
         if (res.ok) {
-          alert(this.isEditingActivity ? '✅ Cập nhật hoạt động thành công!' : '✅ Thêm hoạt động thành công!');
+          this.showToast(this.isEditingActivity ? 'Cập nhật hoạt động thành công!' : 'Thêm hoạt động thành công!', 'success');
           this.resetActivityForm();
           this.fetchAllData();
-        } else { alert('❌ Thất bại.'); }
-      } catch (err) { console.error(err); }
+        } else { 
+          this.showToast('Thực hiện thao tác thất bại!', 'error'); 
+        }
+      } catch (err) { 
+        console.error(err); 
+        this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
+      }
     },
 
     // CRUD Sách (Library)
@@ -573,11 +603,16 @@ export default {
           body: JSON.stringify(payload)
         });
         if (res.ok) {
-          alert(this.isEditingLibrary ? '✅ Cập nhật sách thành công!' : '✅ Thêm sách thành công!');
+          this.showToast(this.isEditingLibrary ? 'Cập nhật sách thành công!' : 'Thêm đầu sách thành công!', 'success');
           this.resetLibraryForm();
           this.fetchAllData();
-        } else { alert('❌ Thất bại.'); }
-      } catch (err) { console.error(err); }
+        } else { 
+          this.showToast('Thực hiện thao tác thất bại!', 'error'); 
+        }
+      } catch (err) { 
+        console.error(err); 
+        this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
+      }
     },
 
     // Media & Quiz
@@ -593,11 +628,16 @@ export default {
         const baseUrl = getApiUrl();
         const res = await fetch(`${baseUrl}/api/media`, { method: 'POST', headers: this.getAuthHeaders(true), body: formData });
         if (res.ok) {
-          alert('✅ Tải lên media thành công!');
+          this.showToast('Tải lên tệp Media thành công!', 'success');
           this.mediaForm = { title: '', artist: '', media_type: 'song', file: null };
           this.fetchAllData();
-        } else { alert('❌ Thất bại.'); }
-      } catch (err) { console.error(err); }
+        } else { 
+          this.showToast('Tải lên media thất bại!', 'error'); 
+        }
+      } catch (err) { 
+        console.error(err); 
+        this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
+      }
     },
     async submitQuiz() {
       try {
@@ -608,11 +648,16 @@ export default {
           body: JSON.stringify(this.quizForm)
         });
         if (res.ok) {
-          alert('✅ Thêm câu hỏi thành công!');
+          this.showToast('Thêm câu hỏi trắc nghiệm thành công!', 'success');
           this.quizForm = { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' };
           this.fetchAllData();
-        } else { alert('❌ Thất bại.'); }
-      } catch (err) { console.error(err); }
+        } else { 
+          this.showToast('Thêm câu hỏi thất bại!', 'error'); 
+        }
+      } catch (err) { 
+        console.error(err); 
+        this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
+      }
     },
 
     async deleteItem(endpoint, id) {
@@ -620,10 +665,15 @@ export default {
       try {
         const res = await fetch(`${getApiUrl()}/api/${endpoint}/${id}`, { method: 'DELETE', headers: this.getAuthHeaders() });
         if (res.ok) {
-          alert('🗑️ Xóa thành công!');
+          this.showToast('Đã xóa bản ghi thành công!', 'success');
           this.fetchAllData();
-        } else { alert('❌ Không thể xóa.'); }
-      } catch (err) { console.error(err); }
+        } else { 
+          this.showToast('Không thể xóa bản ghi này!', 'error'); 
+        }
+      } catch (err) { 
+        console.error(err); 
+        this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
+      }
     },
 
     handleLogout() {
@@ -637,7 +687,43 @@ export default {
 </script>
 
 <style scoped>
-.admin-layout { display: flex; min-height: 100vh; background-color: #0b132b; color: #edf2f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+.admin-layout { display: flex; min-height: 100vh; background-color: #0b132b; color: #edf2f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative; }
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.toast-notification.success {
+  background: rgba(22, 163, 74, 0.9);
+  color: #fff;
+}
+.toast-notification.error {
+  background: rgba(220, 38, 38, 0.9);
+  color: #fff;
+}
+.toast-icon {
+  font-size: 1.2rem;
+}
+.toast-slide-enter-active, .toast-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.toast-slide-enter-from, .toast-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+}
 
 /* Sidebar */
 .admin-sidebar { width: 280px; background-color: rgba(15, 23, 42, 0.95); border-right: 1px solid rgba(255, 215, 0, 0.15); display: flex; flex-direction: column; }
