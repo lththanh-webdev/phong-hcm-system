@@ -210,7 +210,6 @@
 <script>
 import { createClient } from '@supabase/supabase-js'
 
-// Khởi tạo Supabase client sử dụng biến môi trường (Vite: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL'
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
@@ -323,7 +322,6 @@ export default {
       });
     },
 
-    // Lấy dữ liệu trực tiếp từ Supabase table 'library'
     async fetchLibraryDocs() {
       try {
         const { data, error } = await supabase
@@ -331,10 +329,7 @@ export default {
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (error) {
-          throw error;
-        }
-
+        if (error) throw error;
         this.docs = data || [];
       } catch (err) {
         console.error('Lỗi khi tải thư viện từ Supabase:', err.message || err);
@@ -374,7 +369,6 @@ export default {
 </script>
 
 <style scoped>
-/* Giữ nguyên toàn bộ hệ thống CSS của bạn */
 .library-page {
   padding: 40px 24px;
   max-width: 1440px;
@@ -708,15 +702,17 @@ export default {
   padding: 14px 16px;
 }
 
+/* ĐÃ SỬA: Cho phép flex-wrap để không bị chồng chéo, tràn trên màn hình nhỏ */
 .sub-category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
   gap: 10px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap; 
 }
 
+/* ĐÃ SỬA: Cho phép tên mảng sách dài tự xuống dòng khi thiếu chỗ */
 .sub-category-title {
   color: #38bdf8;
   font-size: 0.88rem;
@@ -727,9 +723,7 @@ export default {
   gap: 8px;
   letter-spacing: 0.3px;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
   flex: 1;
 }
 
@@ -1102,7 +1096,6 @@ export default {
   color: #fff;
 }
 
-/* Responsive Mobile */
 @media (max-width: 768px) {
   .shelf-header {
     flex-wrap: wrap;

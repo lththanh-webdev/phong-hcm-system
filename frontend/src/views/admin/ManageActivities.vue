@@ -1,5 +1,8 @@
 <template>
   <div class="admin-layout">
+    <!-- Lớp phủ mờ khi mở menu trên điện thoại -->
+    <div v-if="isMobileMenuOpen" class="sidebar-overlay" @click="isMobileMenuOpen = false"></div>
+
     <!-- Hệ thống Toast Thông Báo Nổi -->
     <transition name="toast-slide">
       <div v-if="toast.show" class="toast-notification" :class="toast.type">
@@ -9,7 +12,7 @@
     </transition>
 
     <!-- Sidebar Hiện Đại -->
-    <aside class="admin-sidebar">
+    <aside class="admin-sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
       <div class="sidebar-header">
         <div class="sidebar-brand-icon">⭐</div>
         <h3>QUẢN TRỊ VTHC</h3>
@@ -44,8 +47,11 @@
     <main class="admin-main">
       <header class="main-header">
         <div class="header-title-box">
-          <h2>{{ currentTitle }}</h2>
-          <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Phòng Hồ Chí Minh Số</p>
+          <button class="mobile-toggle-btn" @click="toggleSidebar">☰</button>
+          <div>
+            <h2>{{ currentTitle }}</h2>
+            <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Phòng Hồ Chí Minh Số</p>
+          </div>
         </div>
         <div class="header-stats-badge">
           <span>🟢 Trạng thái: <strong>Hoạt động ổn định</strong></span>
@@ -92,31 +98,33 @@
             <div class="table-header-flex">
               <h4>📅 Thống Kê Hoạt Động & Dữ Liệu Theo Tháng</h4>
             </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Tháng</th>
-                  <th>Hoạt Động</th>
-                  <th>Quản Lý Sách</th>
-                  <th>Ca Khúc & Điệu Nhảy</th>
-                  <th>Câu Hỏi Trắc Nghiệm</th>
-                  <th>Tổng Số Lượng</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="stat in monthlyStatistics" :key="stat.month">
-                  <td><strong>Tháng {{ stat.month }}</strong></td>
-                  <td><span class="badge" style="background: #2563eb;">{{ stat.activities }}</span></td>
-                  <td><span class="badge" style="background: #0284c7;">{{ stat.library }}</span></td>
-                  <td><span class="badge" style="background: #9333ea;">{{ stat.media }}</span></td>
-                  <td><span class="badge" style="background: #d97706;">{{ stat.quizzes }}</span></td>
-                  <td><strong>{{ stat.activities + stat.library + stat.media + stat.quizzes }}</strong></td>
-                </tr>
-                <tr v-if="monthlyStatistics.length === 0">
-                  <td colspan="6" class="no-data">Chưa có dữ liệu thống kê theo tháng.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tháng</th>
+                    <th>Hoạt Động</th>
+                    <th>Quản Lý Sách</th>
+                    <th>Ca Khúc & Điệu Nhảy</th>
+                    <th>Câu Hỏi Trắc Nghiệm</th>
+                    <th>Tổng Số Lượng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="stat in monthlyStatistics" :key="stat.month">
+                    <td><strong>Tháng {{ stat.month }}</strong></td>
+                    <td><span class="badge" style="background: #2563eb;">{{ stat.activities }}</span></td>
+                    <td><span class="badge" style="background: #0284c7;">{{ stat.library }}</span></td>
+                    <td><span class="badge" style="background: #9333ea;">{{ stat.media }}</span></td>
+                    <td><span class="badge" style="background: #d97706;">{{ stat.quizzes }}</span></td>
+                    <td><strong>{{ stat.activities + stat.library + stat.media + stat.quizzes }}</strong></td>
+                  </tr>
+                  <tr v-if="monthlyStatistics.length === 0">
+                    <td colspan="6" class="no-data">Chưa có dữ liệu thống kê theo tháng.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -165,32 +173,34 @@
 
           <div class="data-table-container">
             <h4>Danh sách Hoạt động hiện có ({{ activitiesList.length }})</h4>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Tiêu đề</th>
-                  <th>Chuyên mục</th>
-                  <th>Ngày đăng</th>
-                  <th>Tóm tắt</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in activitiesList" :key="item.id">
-                  <td><strong>{{ item.title }}</strong></td>
-                  <td><span class="badge">{{ item.category }}</span></td>
-                  <td>{{ formatDate(item.created_at) }}</td>
-                  <td>{{ truncate(item.summary, 40) }}</td>
-                  <td class="action-btns">
-                    <button @click="editActivity(item)" class="btn-edit">✏️ Sửa</button>
-                    <button @click="deleteItem('activities', item.id)" class="btn-del">🗑️ Xóa</button>
-                  </td>
-                </tr>
-                <tr v-if="activitiesList.length === 0">
-                  <td colspan="5" class="no-data">Chưa có hoạt động nào.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu đề</th>
+                    <th>Chuyên mục</th>
+                    <th>Ngày đăng</th>
+                    <th>Tóm tắt</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in activitiesList" :key="item.id">
+                    <td><strong>{{ item.title }}</strong></td>
+                    <td><span class="badge">{{ item.category }}</span></td>
+                    <td>{{ formatDate(item.created_at) }}</td>
+                    <td>{{ truncate(item.summary, 40) }}</td>
+                    <td class="action-btns">
+                      <button @click="editActivity(item)" class="btn-edit">✏️ Sửa</button>
+                      <button @click="deleteItem('activities', item.id)" class="btn-del">🗑️ Xóa</button>
+                    </td>
+                  </tr>
+                  <tr v-if="activitiesList.length === 0">
+                    <td colspan="5" class="no-data">Chưa có hoạt động nào.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -237,32 +247,34 @@
 
           <div class="data-table-container">
             <h4>Danh sách Sách ({{ libraryList.length }})</h4>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Tên sách</th>
-                  <th>Mảng sách</th>
-                  <th>Tác giả</th>
-                  <th>Ngày đăng</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in libraryList" :key="item.id">
-                  <td><strong>{{ item.title }}</strong></td>
-                  <td><span class="badge">{{ item.category }}</span></td>
-                  <td>{{ item.author || 'N/A' }}</td>
-                  <td>{{ formatDate(item.created_at) }}</td>
-                  <td class="action-btns">
-                    <button @click="editLibrary(item)" class="btn-edit">✏️ Sửa</button>
-                    <button @click="deleteItem('library', item.id)" class="btn-del">🗑️ Xóa</button>
-                  </td>
-                </tr>
-                <tr v-if="libraryList.length === 0">
-                  <td colspan="5" class="no-data">Chưa có đầu sách nào.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tên sách</th>
+                    <th>Mảng sách</th>
+                    <th>Tác giả</th>
+                    <th>Ngày đăng</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in libraryList" :key="item.id">
+                    <td><strong>{{ item.title }}</strong></td>
+                    <td><span class="badge">{{ item.category }}</span></td>
+                    <td>{{ item.author || 'N/A' }}</td>
+                    <td>{{ formatDate(item.created_at) }}</td>
+                    <td class="action-btns">
+                      <button @click="editLibrary(item)" class="btn-edit">✏️ Sửa</button>
+                      <button @click="deleteItem('library', item.id)" class="btn-del">🗑️ Xóa</button>
+                    </td>
+                  </tr>
+                  <tr v-if="libraryList.length === 0">
+                    <td colspan="5" class="no-data">Chưa có đầu sách nào.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -295,26 +307,28 @@
 
           <div class="data-table-container">
             <h4>Danh sách Ca khúc & Điệu nhảy ({{ mediaList.length }})</h4>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Tên</th>
-                  <th>Loại</th>
-                  <th>Nghệ sĩ</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in mediaList" :key="item.id">
-                  <td><strong>{{ item.title }}</strong></td>
-                  <td><span class="badge" :class="item.media_type">{{ item.media_type === 'song' ? 'Ca khúc' : 'Điệu nhảy' }}</span></td>
-                  <td>{{ item.artist || 'N/A' }}</td>
-                  <td class="action-btns">
-                    <button @click="deleteItem('media', item.id)" class="btn-del">🗑️ Xóa</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tên</th>
+                    <th>Loại</th>
+                    <th>Nghệ sĩ</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in mediaList" :key="item.id">
+                    <td><strong>{{ item.title }}</strong></td>
+                    <td><span class="badge" :class="item.media_type">{{ item.media_type === 'song' ? 'Ca khúc' : 'Điệu nhảy' }}</span></td>
+                    <td>{{ item.artist || 'N/A' }}</td>
+                    <td class="action-btns">
+                      <button @click="deleteItem('media', item.id)" class="btn-del">🗑️ Xóa</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -343,24 +357,26 @@
 
           <div class="data-table-container">
             <h4>Danh sách Câu hỏi trắc nghiệm ({{ quizList.length }})</h4>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Câu hỏi</th>
-                  <th>Đáp án đúng</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in quizList" :key="item.id">
-                  <td><strong>{{ item.question }}</strong></td>
-                  <td>Đáp án số {{ item.correct_option }}</td>
-                  <td class="action-btns">
-                    <button @click="deleteItem('quizzes', item.id)" class="btn-del">🗑️ Xóa</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Câu hỏi</th>
+                    <th>Đáp án đúng</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in quizList" :key="item.id">
+                    <td><strong>{{ item.question }}</strong></td>
+                    <td>Đáp án số {{ item.correct_option }}</td>
+                    <td class="action-btns">
+                      <button @click="deleteItem('quizzes', item.id)" class="btn-del">🗑️ Xóa</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -379,6 +395,7 @@ export default {
   data() {
     return {
       currentTab: 'analytics',
+      isMobileMenuOpen: false, // Quản lý trạng thái mở sidebar trên mobile
       tabs: [
         { id: 'analytics', name: 'Thống kê Tổng hợp', icon: '📊' },
         { id: 'activities', name: 'Hoạt Động & Phong Trào', icon: '🎯' },
@@ -402,11 +419,10 @@ export default {
       mediaForm: { title: '', artist: '', media_type: 'song', file: null },
       quizForm: { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' },
 
-      // Cấu hình Toast Notification
       toast: {
         show: false,
         message: '',
-        type: 'success' // 'success' hoặc 'error'
+        type: 'success'
       },
       toastTimeout: null
     };
@@ -450,7 +466,9 @@ export default {
     this.fetchAllData();
   },
   methods: {
-    // Hàm hiển thị thông báo Toast đẹp mắt
+    toggleSidebar() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    },
     showToast(message, type = 'success') {
       if (this.toastTimeout) clearTimeout(this.toastTimeout);
       this.toast = { show: true, message, type };
@@ -472,6 +490,7 @@ export default {
     },
     switchTab(tabId) {
       this.currentTab = tabId;
+      this.isMobileMenuOpen = false; // Tự động đóng menu trên mobile khi chuyển tab
       this.fetchAllData();
     },
     async fetchAllData() {
@@ -511,7 +530,6 @@ export default {
       return `${year}-${month}-${day}T${hours}:${minutes}`;
     },
 
-    // CRUD Hoạt động
     handleFileChange(e) { this.activityForm.image = e.target.files[0]; },
     editActivity(item) {
       this.isEditingActivity = true;
@@ -562,8 +580,6 @@ export default {
         this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
       }
     },
-
-    // CRUD Sách (Library)
     editLibrary(item) {
       this.isEditingLibrary = true;
       this.editLibraryId = item.id;
@@ -590,13 +606,11 @@ export default {
           description: this.libraryForm.description,
           created_at: finalCreatedAt
         };
-
         const baseUrl = getApiUrl();
         const url = this.isEditingLibrary 
           ? `${baseUrl}/api/library/${this.editLibraryId}` 
           : `${baseUrl}/api/library`;
         const method = this.isEditingLibrary ? 'PUT' : 'POST';
-
         const res = await fetch(url, {
           method,
           headers: this.getAuthHeaders(false),
@@ -614,8 +628,6 @@ export default {
         this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
       }
     },
-
-    // Media & Quiz
     handleMediaFileChange(e) { this.mediaForm.file = e.target.files[0]; },
     async submitMedia() {
       try {
@@ -659,7 +671,6 @@ export default {
         this.showToast('Đã xảy ra lỗi hệ thống!', 'error');
       }
     },
-
     async deleteItem(endpoint, id) {
       if (!confirm('Bạn có chắc chắn muốn xóa bản ghi này?')) return;
       try {
@@ -689,7 +700,7 @@ export default {
 <style scoped>
 .admin-layout { display: flex; min-height: 100vh; background-color: #0b132b; color: #edf2f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative; }
 
-/* Toast Notification Styles */
+/* Toast Notifications */
 .toast-notification {
   position: fixed;
   top: 25px;
@@ -706,37 +717,30 @@ export default {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.15);
 }
-.toast-notification.success {
-  background: rgba(22, 163, 74, 0.9);
-  color: #fff;
-}
-.toast-notification.error {
-  background: rgba(220, 38, 38, 0.9);
-  color: #fff;
-}
-.toast-icon {
-  font-size: 1.2rem;
-}
-.toast-slide-enter-active, .toast-slide-leave-active {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast-slide-enter-from, .toast-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-20px) scale(0.95);
-}
+.toast-notification.success { background: rgba(22, 163, 74, 0.9); color: #fff; }
+.toast-notification.error { background: rgba(220, 38, 38, 0.9); color: #fff; }
+.toast-icon { font-size: 1.2rem; }
+.toast-slide-enter-active, .toast-slide-leave-active { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.toast-slide-enter-from, .toast-slide-leave-to { opacity: 0; transform: translateY(-20px) scale(0.95); }
 
 /* Sidebar */
-.admin-sidebar { width: 280px; background-color: rgba(15, 23, 42, 0.95); border-right: 1px solid rgba(255, 215, 0, 0.15); display: flex; flex-direction: column; }
+.admin-sidebar { 
+  width: 280px; 
+  background-color: rgba(15, 23, 42, 0.98); 
+  border-right: 1px solid rgba(255, 215, 0, 0.15); 
+  display: flex; 
+  flex-direction: column; 
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
 .sidebar-header { padding: 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .sidebar-brand-icon { font-size: 2.2rem; margin-bottom: 8px; }
 .sidebar-header h3 { font-size: 1.1rem; color: #ffd700; margin: 0 0 4px 0; letter-spacing: 1px; }
 .sidebar-header p { font-size: 0.75rem; color: #8d99ae; margin: 0; }
-
 .sidebar-menu { flex: 1; padding: 20px 0; display: flex; flex-direction: column; gap: 6px; }
 .sidebar-menu button { width: 100%; padding: 14px 24px; background: none; border: none; color: #94a3b8; text-align: left; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: all 0.2s ease; font-weight: 600; }
 .sidebar-menu button:hover, .sidebar-menu button.active { background-color: rgba(37, 99, 235, 0.2); color: #fff; border-left: 4px solid #ffd700; }
 .sidebar-menu button .icon { font-size: 1.2rem; }
-
 .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(11, 19, 43, 0.5); }
 .admin-profile { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
 .admin-profile .avatar { font-size: 1.8rem; background: rgba(255,215,0,0.1); padding: 8px; border-radius: 10px; }
@@ -745,50 +749,63 @@ export default {
 .btn-logout { width: 100%; padding: 10px; background-color: #da251d; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
 .btn-logout:hover { background-color: #b91c1c; }
 
-/* Main Content */
-.admin-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-.main-header { height: 75px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 215, 0, 0.15); display: flex; align-items: center; justify-content: space-between; padding: 0 35px; position: sticky; top: 0; z-index: 50; }
-.main-header h2 { font-size: 1.35rem; color: #ffd700; margin: 0; }
+/* Main layout */
+.admin-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; width: 100%; min-width: 0; }
+.main-header { height: 75px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 215, 0, 0.15); display: flex; align-items: center; justify-content: space-between; padding: 0 35px; position: sticky; top: 0; z-index: 50; gap: 15px; }
+.header-title-box { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.main-header h2 { font-size: 1.35rem; color: #ffd700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .date-time { font-size: 0.75rem; color: #8d99ae; margin: 2px 0 0 0; }
-.header-stats-badge { background: rgba(22, 163, 74, 0.15); border: 1px solid rgba(22, 163, 74, 0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: #4ade80; }
+.header-stats-badge { background: rgba(22, 163, 74, 0.15); border: 1px solid rgba(22, 163, 74, 0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: #4ade80; white-space: nowrap; }
 
+/* Mobile Menu Toggle Button & Overlay */
+.mobile-toggle-btn { display: none; background: none; border: none; color: #ffd700; font-size: 1.6rem; cursor: pointer; padding: 0; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 900; backdrop-filter: blur(3px); }
+
+/* Content Wrapper & Cards */
 .main-content-wrapper { margin: 30px; background: rgba(28, 37, 65, 0.75); backdrop-filter: blur(12px); padding: 32px; border-radius: 16px; border: 1px solid rgba(255, 215, 0, 0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-
-/* Thống kê Analytics */
 .stats-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
 .stat-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 16px; }
 .stat-icon { font-size: 2.2rem; background: rgba(255, 215, 0, 0.1); padding: 12px; border-radius: 10px; }
 .stat-info span { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; }
 .stat-info h3 { font-size: 1.6rem; color: #ffd700; margin: 4px 0 0 0; }
-
-.table-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-
-/* Form & Tables */
-.section-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.table-header-flex, .section-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
 .tab-pane h3 { font-size: 1.25rem; color: #ffd700; margin-bottom: 4px; }
 .subtitle { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
-.btn-cancel { background: #64748b; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; }
 
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 35px; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-group.full-width { grid-column: span 2; }
-.form-group label { font-weight: 600; font-size: 0.9rem; color: #cbd5e1; }
-.form-group input, .form-group select, .form-group textarea { padding: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.9); color: #fff; border-radius: 8px; font-size: 0.95rem; outline: none; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #ffd700; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15); }
+/* Responsive Table Wrapper */
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.data-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+.data-table th, .data-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
+.data-table th { background: rgba(15, 23, 42, 0.6); color: #ffd700; font-weight: 600; }
 
-.btn-primary { grid-column: span 2; padding: 14px; background-color: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
-.btn-primary:hover { background-color: #1d4ed8; }
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .stats-cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
-.data-table-container { margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; }
-.data-table-container h4 { color: #ffd700; margin-bottom: 15px; font-size: 1.1rem; }
-.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-.data-table th, .data-table td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #e2e8f0; }
-.data-table th { background-color: rgba(15, 23, 42, 0.8); font-weight: 600; color: #ffd700; }
-.badge { background: #3b82f6; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-.action-btns { display: flex; gap: 8px; }
-.btn-edit { background: #f59e0b; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
-.btn-edit:hover { background: #d97706; }
-.btn-del { background: #ef4444; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
-.btn-del:hover { background: #dc2626; }
-.no-data { text-align: center; color: #94a3b8; font-style: italic; padding: 25px; }
+@media (max-width: 768px) {
+  .mobile-toggle-btn { display: block; }
+  .sidebar-overlay { display: block; }
+  
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-header { padding: 0 15px; height: 65px; }
+  .main-content-wrapper { margin: 12px; padding: 16px; }
+  .stats-cards-grid { grid-template-columns: 1fr; gap: 12px; }
+  .header-stats-badge { display: none; } /* Ẩn bớt badge trên màn hình quá nhỏ để tiết kiệm diện tích */
+}
+
+@media (max-width: 576px) {
+  .main-header h2 { font-size: 1.1rem; }
+  .date-time { display: none; }
+}
 </style>
