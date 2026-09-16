@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/db');
 
-// GET: Lấy danh sách tài liệu thư viện
+// GET: Lấy danh sách tài liệu thư viện (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM library ORDER BY created_at DESC');
+        const result = await pool.query('SELECT * FROM library ORDER BY id DESC');
         res.json(result.rows);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi lấy danh sách thư viện:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
         const newItem = await pool.query(query, [title, author, category, description]);
         res.status(201).json(newItem.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi thêm tài liệu:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -44,8 +44,8 @@ router.put('/:id', async (req, res) => {
         const updated = await pool.query(query, [title, author, category, description, id]);
         res.json(updated.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi cập nhật tài liệu:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -56,8 +56,8 @@ router.delete('/:id', async (req, res) => {
         await pool.query('DELETE FROM library WHERE id = $1', [id]);
         res.json({ message: 'Đã xóa tài liệu thành công' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi xóa tài liệu:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 

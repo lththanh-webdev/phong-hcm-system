@@ -1,23 +1,34 @@
 const express = require('express');
 const router = express.Router();
+const pool = require('../config/db');
 
-// Định nghĩa API lấy thống kê hệ thống
+// GET: Lấy thống kê số lượng dữ liệu toàn hệ thống từ Supabase
 router.get('/', async (req, res) => {
-  try {
- 
+    try {
+        // Thực hiện đếm số lượng bản ghi từ các bảng đồng thời bằng Promise.all để tối ưu tốc độ
+        const [activitiesRes, libraryRes, mediaRes, quizRes, visitorRes] = await Promise.all([
+            pool.query('SELECT COUNT(*) FROM activities'),
+            pool.query('SELECT COUNT(*) FROM library'),
+            pool.query('SELECT COUNT(*) FROM media'),
+            pool.query('SELECT COUNT(*) FROM quiz'),
+            // Phòng hờ nếu bảng visitor_logs chưa có thì trả về 0 để không làm sập API
+            pool.query('SELECT COUNT(*) FROM visitor_logs').catch(() => ({ rows: [{ count: 0 }] }))
+        ]);
 
-    res.status(200).json({
-      success: true,
-      data: {
-        activities: 0,
-        library: 0,
-        media: 0,
-        quizzes: 0
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+        res.status(200).json({
+            success: true,
+            data: {
+                activities: parseInt(activitiesRes.rows[0].count, 10) || 0,
+                library: parseInt(libraryRes.rows[0].count, 10) || 0,
+                media: parseInt(mediaRes.rows[0].count, 10) || 0,
+                quizzes: parseInt(quizRes.rows[0].count, 10) || 0,
+                visitors: parseInt(visitorRes.rows[0].count, 10) || 0
+            }
+        });
+    } catch (error) {
+        console.error('Lỗi lấy thống kê hệ thống:', error.message);
+        res.status(500).json({ success: false, message: error.message });
+    }
 });
 
 module.exports = router;

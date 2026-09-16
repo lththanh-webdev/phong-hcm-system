@@ -8,7 +8,10 @@ const verifyAdmin = (req, res, next) => {
         return res.status(401).json({ success: false, message: 'Rất tiếc, bạn chưa đăng nhập!' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET || 'secret_key_phong_hcm', (err, user) => {
+    // Đồng bộ chuỗi khóa bí mật dự phòng với file authRoutes.js
+    const JWT_SECRET = process.env.JWT_SECRET || 'phong-hcm-secure-jwt-secret-key-2026';
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
             return res.status(403).json({ success: false, message: 'Token không hợp lệ hoặc đã hết hạn!' });
         }

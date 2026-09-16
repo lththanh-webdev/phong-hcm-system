@@ -2,7 +2,7 @@
   <div class="activity-page">
     <!-- Tiêu đề trang -->
     <div class="hero-section">
-      <div class="hero-badge animate-fade-down">TIỂU ĐOÀN PHÒNG KHÔNG 16 </div>
+      <div class="hero-badge animate-fade-down">TIỂU ĐOÀN PHÒNG KHÔNG 16</div>
       <h2 class="section-title animate-fade-in">BẢN TIN HOẠT ĐỘNG</h2>
       <p class="section-desc animate-fade-up">Cập nhật hoạt động công tác tư tưởng, thi đua & chuyển đổi số toàn đơn vị</p>
     </div>
@@ -23,7 +23,7 @@
         >
           <div 
             v-for="(item, index) in activities" 
-            v-bind:key="item.id || index" 
+            :key="item.id || index" 
             class="activity-card"
             :style="{ flex: `0 0 calc(${cardWidthPercentage}% - 20px)` }"
             @click="openDetail(item)"
@@ -107,8 +107,8 @@
 </template>
 
 <script>
-import api from '../../services/api';
-import 'pannellum'; // Thêm import thư viện Pannellum
+import api from '../services/api'; 
+import 'pannellum'; // Thư viện Pannellum hiển thị ảnh 360 độ
 
 export default {
   data() {
@@ -118,7 +118,8 @@ export default {
       selectedItem: null,
       currentIndex: 0,
       visibleCards: 3,
-      autoSlideTimer: null
+      autoSlideTimer: null,
+      pannellumViewer: null
     }
   },
   computed: {
@@ -180,21 +181,33 @@ export default {
       this.showModal = true;
       document.body.style.overflow = 'hidden';
 
-      // Khởi tạo Pannellum ngay sau khi modal được render xong DOM
+      // Khởi tạo Pannellum nếu bài viết thuộc dạng ảnh 360 độ
       if (item.is360) {
         this.$nextTick(() => {
           if (window.pannellum) {
-            window.pannellum.viewer('panorama-viewer', {
-              type: 'equirectangular',
-              image: item.image_url,
-              autoLoad: true,
-              compass: true
-            });
+            try {
+              this.pannellumViewer = window.pannellum.viewer('panorama-viewer', {
+                type: 'equirectangular',
+                image: item.image_url,
+                autoLoad: true,
+                compass: true
+              });
+            } catch (e) {
+              console.error("Lỗi khởi tạo trình xem 360:", e);
+            }
           }
         });
       }
     },
     closeDetail() {
+      // Hủy viewer 360 độ nếu có để tránh rò rỉ bộ nhớ DOM
+      if (this.pannellumViewer && typeof this.pannellumViewer.destroy === 'function') {
+        try {
+          this.pannellumViewer.destroy();
+        } catch (e) { console.error(e); }
+        this.pannellumViewer = null;
+      }
+
       this.showModal = false;
       document.body.style.overflow = 'auto';
       this.startAutoSlide();
@@ -221,6 +234,9 @@ export default {
   beforeUnmount() {
     this.stopAutoSlide();
     window.removeEventListener('resize', this.updateVisibleCards);
+    if (this.pannellumViewer && typeof this.pannellumViewer.destroy === 'function') {
+      this.pannellumViewer.destroy();
+    }
   }
 }
 </script>

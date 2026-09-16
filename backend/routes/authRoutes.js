@@ -6,8 +6,8 @@ const db = require('../config/db');
 const upload = require('../middlewares/upload');
 const verifyAdmin = require('../middlewares/auth');
 
-// Tự động sinh khóa bí mật mới mỗi khi server restart (giúp reset toàn bộ token cũ khi build lại web)
-const JWT_SECRET = process.env.JWT_SECRET || Math.random().toString(36) + Date.now().toString(36);
+// Khuyến nghị: Nên đặt biến JWT_SECRET vào mục Environment trên Render, nếu không có sẽ dùng chuỗi mặc định an toàn này
+const JWT_SECRET = process.env.JWT_SECRET || 'phong-hcm-secure-jwt-secret-key-2026';
 
 // Đăng nhập Admin
 router.post('/login', async (req, res) => {
@@ -30,19 +30,32 @@ router.post('/login', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({ success: true, token, user: { username: user.username, full_name: user.full_name } });
+        res.json({ 
+            success: true, 
+            token, 
+            user: { username: user.username, full_name: user.full_name } 
+        });
     } catch (err) {
-        res.status(500).json({ success: false, message: err.message });
+        console.error('Lỗi đăng nhập:', err.message);
+        res.status(500).json({ success: false, message: 'Lỗi Server: ' + err.message });
     }
 });
 
-// API Upload file dùng chung cho Admin
+// API Upload file dùng chung cho Admin (Hỗ trợ trả về URL tuyệt đối chuẩn Cloud)
 router.post('/upload', verifyAdmin, upload.single('file'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ success: false, message: 'Chưa chọn file upload' });
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Chưa chọn file upload' });
+        }
+        // Tự động nhận diện domain của Render hoặc Localhost
+        const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const fileUrl = `${baseUrl}/uploads/${req.file.filename}`;
+        
+        res.json({ success: true, fileUrl });
+    } catch (err) {
+        console.error('Lỗi upload file:', err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.json({ success: true, fileUrl });
 });
 
 module.exports = router;

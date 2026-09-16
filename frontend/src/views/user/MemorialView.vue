@@ -1,5 +1,17 @@
 <template>
   <div class="memorial-container">
+    <!-- Hiệu ứng hoa bay khi dâng hoa -->
+    <div class="flower-rain-container">
+      <span 
+        v-for="flower in floatingFlowers" 
+        :key="flower.id" 
+        class="floating-flower"
+        :style="{ left: flower.left + '%', animationDuration: flower.duration + 's', fontSize: flower.size + 'rem' }"
+      >
+        🌸
+      </span>
+    </div>
+
     <!-- Phần phông nền trang trọng nhỏ gọn với hiệu ứng phông đỏ bay lượn -->
     <div class="memorial-hero-stage">
       <div class="red-backdrop-banner">
@@ -38,14 +50,21 @@
         <span class="btn-icon">🌸</span> Dâng Hoa Tưởng Niệm Bác
       </button>
 
-      <!-- Nút Thắp Hương kèm hiệu ứng khói và đếm ngược 1 phút -->
+      <!-- Nút Thắp Hương kèm mô hình Cây Hương cháy 60s và khói bay -->
       <button 
         @click="lightIncense" 
         class="btn-action incense-btn" 
         :class="{ lit: isLit, cooling: isCooldown }"
         :disabled="isCooldown"
       >
-        <span class="btn-icon">🕯️</span> 
+        <!-- Biểu tượng / Mô hình cây hương cháy -->
+        <div class="incense-icon-wrapper">
+          <div class="incense-stick-container">
+            <div v-if="isCooldown" class="burning-tip"></div>
+            <div class="incense-body" :style="{ height: incenseHeightStyle }"></div>
+          </div>
+        </div>
+
         <!-- Hiệu ứng làn khói bay lên khi đã thắp -->
         <span v-if="isLit" class="smoke-effect">
           <span class="smoke-particle p1"></span>
@@ -86,8 +105,14 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
+import { createClient } from '@supabase/supabase-js';
 import { Viewer } from '@photo-sphere-viewer/core';
 import '@photo-sphere-viewer/core/index.css';
+
+// Khởi tạo Supabase client sử dụng biến môi trường Vite
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const tributeCount = ref(0);
 const isLit = ref(false);
@@ -100,16 +125,44 @@ const show360 = ref(false);
 const viewerContainer = ref(null);
 let viewerInstance = null;
 
-// Hàm lấy số liệu thống kê từ PostgreSQL API khi vừa vào trang
+// Quản lý danh sách hiệu ứng hoa bay
+const floatingFlowers = ref([]);
+
+const triggerFlowerEffect = () => {
+  const flowers = [];
+  for (let i = 0; i < 20; i++) {
+    flowers.push({
+      id: Date.now() + i,
+      left: Math.random() * 92 + 4, // Vị trí ngang ngẫu nhiên từ 4% đến 96%
+      duration: Math.random() * 2 + 2.5, // Tốc độ rơi từ 2.5s đến 4.5s
+      size: Math.random() * 1.2 + 1 // Kích thước từ 1rem đến 2.2rem
+    });
+  }
+  floatingFlowers.value = flowers;
+  setTimeout(() => {
+    floatingFlowers.value = [];
+  }, 4500);
+};
+
+// Tính toán chiều cao thân cây hương giảm dần từ 100% về 0% trong 60 giây
+const incenseHeightStyle = computed(() => {
+  if (!isCooldown.value) return '100%';
+  const percentage = (cooldownTime.value / 60) * 100;
+  return `${percentage}%`;
+});
+
+// Hàm lấy tổng số lượt thắp hương từ bảng 'tributes' trên Supabase
 const fetchTributesData = async () => {
   try {
-    const response = await fetch('/api/tributes');
-    const data = await response.json();
-    if (data.success) {
-      tributeCount.value = data.incenses; // Lấy tổng số lượt thắp hương
-    }
+    const { count, error } = await supabase
+      .from('tributes')
+      .select('*', { count: 'exact', head: true })
+      .eq('tribute_type', 'incense');
+
+    if (error) throw error;
+    tributeCount.value = count || 0;
   } catch (error) {
-    console.error("Lỗi khi tải dữ liệu thắp hương:", error);
+    console.error("Lỗi khi tải dữ liệu thắp hương từ Supabase:", error.message || error);
   }
 };
 
@@ -140,21 +193,17 @@ const lightIncense = async () => {
   if (isCooldown.value) return;
 
   try {
-    const response = await fetch('/api/tributes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const { error } = await supabase.from('tributes').insert([
+      {
         author_name: 'Khách Tưởng Niệm',
         unit_name: 'Cá nhân',
         tribute_type: 'incense',
         message: 'Thành kính dâng hương tưởng niệm Bác Hồ'
-      })
-    });
+      }
+    ]);
 
-    const result = await response.json();
-    if (result.success) {
-      await fetchTributesData();
-    }
+    if (error) throw error;
+    await fetchTributesData();
 
     isLit.value = true;
     isCooldown.value = true;
@@ -169,25 +218,25 @@ const lightIncense = async () => {
       }
     }, 1000);
   } catch (error) {
-    console.error("Lỗi khi thắp hương: ", error);
+    console.error("Lỗi khi thắp hương lên Supabase: ", error.message || error);
   }
 };
 
 const offerFlowers = async () => {
   showFlowerPopup.value = true;
+  triggerFlowerEffect(); // Kích hoạt hiệu ứng hoa bay
   try {
-    await fetch('/api/tributes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const { error } = await supabase.from('tributes').insert([
+      {
         author_name: 'Khách Tưởng Niệm',
         unit_name: 'Cá nhân',
         tribute_type: 'flower',
         message: 'Thành kính dâng hoa tưởng niệm Bác'
-      })
-    });
+      }
+    ]);
+    if (error) throw error;
   } catch (error) {
-    console.error("Lỗi khi dâng hoa: ", error);
+    console.error("Lỗi khi dâng hoa lên Supabase: ", error.message || error);
   }
 };
 
@@ -197,7 +246,6 @@ const openTour360 = async () => {
   
   setTimeout(() => {
     if (viewerContainer.value) {
-      // Hủy instance cũ nếu có trước khi tạo mới để tránh lỗi trùng lặp container
       if (viewerInstance) {
         viewerInstance.destroy();
         viewerInstance = null;
@@ -205,7 +253,7 @@ const openTour360 = async () => {
 
       viewerInstance = new Viewer({
         container: viewerContainer.value,
-        panorama: 'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg', // Thay thế bằng URL ảnh 360 thực tế của bạn tại đây nếu cần
+        panorama: 'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg',
         autoload: true,
         size: { width: '100%', height: '500px' },
       });
@@ -231,6 +279,80 @@ const closeTour360 = () => {
   padding: 20px;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
+}
+
+/* Hiệu ứng hoa bay rơi toàn màn hình */
+.flower-rain-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4000;
+  overflow: hidden;
+}
+
+.floating-flower {
+  position: absolute;
+  top: -10%;
+  animation: fallFlower linear forwards;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+@keyframes fallFlower {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Tinh chỉnh mô hình Cây Hương cháy */
+.incense-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 22px;
+  position: relative;
+}
+
+.incense-stick-container {
+  position: relative;
+  width: 4px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.incense-body {
+  width: 100%;
+  background: linear-gradient(to top, #b45309, #d97706);
+  border-radius: 2px;
+  transition: height 1s linear;
+}
+
+.burning-tip {
+  position: absolute;
+  top: -4px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ef4444, 0 0 12px #f59e0b;
+  animation: sparkGlow 0.8s infinite alternate ease-in-out;
+  z-index: 2;
+}
+
+@keyframes sparkGlow {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #ff3333, 0 0 16px #ffcc00; }
 }
 
 .memorial-hero-stage {
@@ -403,7 +525,7 @@ const closeTour360 = () => {
 }
 
 .incense-btn:disabled {
-  opacity: 0.85;
+  opacity: 0.9;
   cursor: not-allowed;
   transform: none !important;
 }

@@ -21,14 +21,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// GET: Lấy danh sách media
+// GET: Lấy danh sách media (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM media ORDER BY created_at DESC');
+        const result = await pool.query('SELECT * FROM media ORDER BY id DESC');
         res.json(result.rows);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi lấy danh sách media:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -36,7 +36,13 @@ router.get('/', async (req, res) => {
 router.post('/', upload.single('file'), async (req, res) => {
     try {
         const { title, artist, media_type } = req.body;
-        const file_url = req.file ? `/uploads/${req.file.filename}` : '';
+        let file_url = '';
+        
+        if (req.file) {
+            // Tự động nhận diện domain chuẩn trên Render hoặc Localhost
+            const baseUrl = `${req.protocol}://${req.get('host')}`;
+            file_url = `${baseUrl}/uploads/${req.file.filename}`;
+        }
 
         const query = `
             INSERT INTO media (title, artist, media_type, file_url) 
@@ -46,8 +52,8 @@ router.post('/', upload.single('file'), async (req, res) => {
         const newMedia = await pool.query(query, [title, artist, media_type, file_url]);
         res.status(201).json(newMedia.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi tải lên media:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -58,8 +64,8 @@ router.delete('/:id', async (req, res) => {
         await pool.query('DELETE FROM media WHERE id = $1', [id]);
         res.json({ message: 'Đã xóa media thành công' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi xóa media:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 

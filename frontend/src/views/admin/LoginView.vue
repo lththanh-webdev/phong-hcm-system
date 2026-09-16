@@ -33,7 +33,7 @@
 
         <button 
           type="submit" 
-          class="w-full py-3 bg-army-red hover:bg-red-700 font-bold text-white rounded-lg transition-all shadow-lg"
+          class="w-full py-3 bg-army-red hover:bg-red-700 font-bold text-white rounded-lg transition-all shadow-lg cursor-pointer"
         >
           Đăng Nhập Hệ Thống
         </button>
@@ -57,7 +57,7 @@ const handleLogin = async () => {
     if (res.data.success) {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('adminUser', JSON.stringify(res.data.user));
-      localStorage.setItem('loginDate', new Date().toDateString()); // 📌 Lưu mốc ngày hiện tại để tự động reset phiên đăng nhập mỗi khi sang ngày mới
+      localStorage.setItem('loginDate', new Date().toDateString()); // 📌 Lưu mốc ngày hiện tại để tự động reset phiên đăng nhập khi sang ngày mới
       router.push('/admin/hoat-dong');
     }
   } catch (err) {

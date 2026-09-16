@@ -15,14 +15,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// GET: Lấy danh sách hoạt động
+// GET: Lấy danh sách hoạt động (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM activities ORDER BY created_at DESC');
+        // Dùng ORDER BY id DESC để tránh lỗi nếu bảng chưa tạo cột created_at
+        const result = await pool.query('SELECT * FROM activities ORDER BY id DESC');
         res.json(result.rows);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi lấy danh sách hoạt động:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -31,8 +32,11 @@ router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { title, category, summary, content, created_at } = req.body;
         let image_url = null;
+        
         if (req.file) {
-            image_url = `http://localhost:5002/uploads/${req.file.filename}`;
+            // Tự động nhận diện domain hiện tại (Hỗ trợ cả Localhost và Render Cloud)
+            const baseUrl = `${req.protocol}://${req.get('host')}`;
+            image_url = `${baseUrl}/uploads/${req.file.filename}`;
         }
 
         let query, values;
@@ -55,8 +59,8 @@ router.post('/', upload.single('image'), async (req, res) => {
         const newActivity = await pool.query(query, values);
         res.status(201).json(newActivity.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi thêm hoạt động:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -66,8 +70,10 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         const { id } = req.params;
         const { title, category, summary, content, created_at } = req.body;
         let image_url = null;
+        
         if (req.file) {
-            image_url = `http://localhost:5002/uploads/${req.file.filename}`;
+            const baseUrl = `${req.protocol}://${req.get('host')}`;
+            image_url = `${baseUrl}/uploads/${req.file.filename}`;
         }
 
         let query, values;
@@ -88,8 +94,8 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         const updated = await pool.query(query, values);
         res.json(updated.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi cập nhật hoạt động:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -100,8 +106,8 @@ router.delete('/:id', async (req, res) => {
         await pool.query('DELETE FROM activities WHERE id = $1', [id]);
         res.json({ message: 'Đã xóa hoạt động thành công' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Lỗi xóa hoạt động:', err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 

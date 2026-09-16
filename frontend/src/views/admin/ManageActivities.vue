@@ -117,7 +117,7 @@
           <div class="section-top">
             <div>
               <h3>Quản Lý Hoạt Động & Thi Đua</h3>
-              <p class="subtitle">{{ isEditingActivity ? '✏️ Đang chỉnh sửa bài viết' : '➕ Thêm mới bài viết hoạt động (Tự động cập nhật thời gian thực)' }}</p>
+              <p class="subtitle">{{ isEditingActivity ? '✏️ Đang chỉnh sửa bài viết' : '➕ Thêm mới bài viết hoạt động' }}</p>
             </div>
             <button v-if="isEditingActivity" @click="resetActivityForm" class="btn-cancel">Hủy sửa</button>
           </div>
@@ -137,7 +137,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Ngày giờ đăng (Để trống sẽ tự động lấy thời gian hiện tại)</label>
+              <label>Ngày giờ đăng (Để trống sẽ lấy thời gian hiện tại)</label>
               <input type="datetime-local" v-model="activityForm.created_at" />
             </div>
             <div class="form-group">
@@ -191,7 +191,7 @@
           <div class="section-top">
             <div>
               <h3>Quản Lý Sách</h3>
-              <p class="subtitle">{{ isEditingLibrary ? '✏️ Đang chỉnh sửa sách' : '➕ Thêm mới sách (Tự động cập nhật thời gian thực)' }}</p>
+              <p class="subtitle">{{ isEditingLibrary ? '✏️ Đang chỉnh sửa sách' : '➕ Thêm mới đầu sách' }}</p>
             </div>
             <button v-if="isEditingLibrary" @click="resetLibraryForm" class="btn-cancel">Hủy sửa</button>
           </div>
@@ -217,7 +217,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Ngày giờ đăng (Để trống sẽ tự động lấy thời gian hiện tại)</label>
+              <label>Ngày giờ đăng</label>
               <input type="datetime-local" v-model="libraryForm.created_at" />
             </div>
             <div class="form-group full-width">
@@ -363,8 +363,10 @@
 
 <script>
 const getApiUrl = () => {
-  return import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+  const rawUrl = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+  return rawUrl.endsWith('/api') ? rawUrl.slice(0, -4) : rawUrl;
 };
+
 export default {
   data() {
     return {
@@ -376,7 +378,6 @@ export default {
         { id: 'media', name: 'Ca Khúc & Điệu Nhảy', icon: '🎶' },
         { id: 'quiz', name: 'Câu Hỏi Trắc Nghiệm', icon: '❓' }
       ],
-      // Data lists & forms
       activitiesList: [],
       libraryList: [],
       mediaList: [],
@@ -394,13 +395,11 @@ export default {
       quizForm: { question: '', options: ['', '', '', ''], correct_option: 1, explanation: '' }
     };
   },
-  
   computed: {
     currentTitle() {
       const active = this.tabs.find(t => t.id === this.currentTab);
       return active ? active.name : 'Quản Trị Hệ Thống';
     },
-    // Tính toán thống kê dữ liệu theo từng tháng dựa trên created_at
     monthlyStatistics() {
       const statsMap = {};
 
@@ -428,7 +427,6 @@ export default {
       if (this.mediaList) this.mediaList.forEach(item => addItem(item, 'media'));
       if (this.quizList) this.quizList.forEach(item => addItem(item, 'quizzes'));
 
-      // Sắp xếp theo tháng mới nhất lên đầu
       return Object.values(statsMap).sort((a, b) => b.sortKey - a.sortKey);
     }
   },
@@ -436,6 +434,17 @@ export default {
     this.fetchAllData();
   },
   methods: {
+    getAuthHeaders(isMultipart = false) {
+      const token = localStorage.getItem('token');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      if (!isMultipart) {
+        headers['Content-Type'] = 'application/json';
+      }
+      return headers;
+    },
     switchTab(tabId) {
       this.currentTab = tabId;
       this.fetchAllData();
@@ -443,11 +452,12 @@ export default {
     async fetchAllData() {
       try {
         const baseUrl = getApiUrl();
+        const headers = this.getAuthHeaders();
         const [actRes, libRes, medRes, quizRes] = await Promise.all([
-          fetch(`${baseUrl}/activities`),
-          fetch(`${baseUrl}/library`),
-          fetch(`${baseUrl}/media`),
-          fetch(`${baseUrl}/quizzes`)
+          fetch(`${baseUrl}/api/activities`, { headers }),
+          fetch(`${baseUrl}/api/library`, { headers }),
+          fetch(`${baseUrl}/api/media`, { headers }),
+          fetch(`${baseUrl}/api/quizzes`, { headers })
         ]);
         if (actRes.ok) this.activitiesList = await actRes.json();
         if (libRes.ok) this.libraryList = await libRes.json();
@@ -510,11 +520,11 @@ export default {
 
         const baseUrl = getApiUrl();
         const url = this.isEditingActivity 
-          ? `${baseUrl}/activities/${this.editActivityId}` 
-          : `${baseUrl}/activities`;
+          ? `${baseUrl}/api/activities/${this.editActivityId}` 
+          : `${baseUrl}/api/activities`;
         const method = this.isEditingActivity ? 'PUT' : 'POST';
 
-        const res = await fetch(url, { method, body: formData });
+        const res = await fetch(url, { method, headers: this.getAuthHeaders(true), body: formData });
         if (res.ok) {
           alert(this.isEditingActivity ? '✅ Cập nhật hoạt động thành công!' : '✅ Thêm hoạt động thành công!');
           this.resetActivityForm();
@@ -551,15 +561,15 @@ export default {
           created_at: finalCreatedAt
         };
 
-const baseUrl = getApiUrl();
+        const baseUrl = getApiUrl();
         const url = this.isEditingLibrary 
-          ? `${baseUrl}/library/${this.editLibraryId}` 
-          : `${baseUrl}/library`;
+          ? `${baseUrl}/api/library/${this.editLibraryId}` 
+          : `${baseUrl}/api/library`;
         const method = this.isEditingLibrary ? 'PUT' : 'POST';
 
         const res = await fetch(url, {
           method,
-          headers: { 'Content-Type': 'application/json' },
+          headers: this.getAuthHeaders(false),
           body: JSON.stringify(payload)
         });
         if (res.ok) {
@@ -580,7 +590,8 @@ const baseUrl = getApiUrl();
         formData.append('media_type', this.mediaForm.media_type);
         if (this.mediaForm.file) formData.append('file', this.mediaForm.file);
 
-        const res = await fetch('http://localhost:5002/api/media', { method: 'POST', body: formData });
+        const baseUrl = getApiUrl();
+        const res = await fetch(`${baseUrl}/api/media`, { method: 'POST', headers: this.getAuthHeaders(true), body: formData });
         if (res.ok) {
           alert('✅ Tải lên media thành công!');
           this.mediaForm = { title: '', artist: '', media_type: 'song', file: null };
@@ -590,9 +601,10 @@ const baseUrl = getApiUrl();
     },
     async submitQuiz() {
       try {
-        const res = await fetch('http://localhost:5002/api/quizzes', {
+        const baseUrl = getApiUrl();
+        const res = await fetch(`${baseUrl}/api/quizzes`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: this.getAuthHeaders(false),
           body: JSON.stringify(this.quizForm)
         });
         if (res.ok) {
@@ -603,10 +615,10 @@ const baseUrl = getApiUrl();
       } catch (err) { console.error(err); }
     },
 
-   async deleteItem(endpoint, id) {
+    async deleteItem(endpoint, id) {
       if (!confirm('Bạn có chắc chắn muốn xóa bản ghi này?')) return;
       try {
-        const res = await fetch(`${getApiUrl()}/${endpoint}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${getApiUrl()}/api/${endpoint}/${id}`, { method: 'DELETE', headers: this.getAuthHeaders() });
         if (res.ok) {
           alert('🗑️ Xóa thành công!');
           this.fetchAllData();
@@ -616,6 +628,8 @@ const baseUrl = getApiUrl();
 
     handleLogout() {
       localStorage.removeItem('token');
+      localStorage.removeItem('adminUser');
+      localStorage.removeItem('loginDate');
       this.$router.push('/admin/login');
     }
   }

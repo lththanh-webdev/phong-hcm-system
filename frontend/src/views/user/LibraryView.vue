@@ -106,7 +106,7 @@
             </div>
           </div>
           
-          <!-- Custom Dropdown Sắp xếp Tủ Phải (Đã tối ưu Icon cho mobile) -->
+          <!-- Custom Dropdown Sắp xếp Tủ Phải -->
           <div class="sort-box" ref="rightSortBox">
             <div class="custom-select-trigger" @click="rightDropdownOpen = !rightDropdownOpen" :title="rightSort === 'date-desc' ? 'Mới cập nhật' : 'Tên (A-Z)'">
               <span class="sort-text">{{ rightSort === 'date-desc' ? '⚡ Mới cập nhật' : '🔤 Tên (A-Z)' }}</span>
@@ -208,6 +208,13 @@
 </template>
 
 <script>
+import { createClient } from '@supabase/supabase-js'
+
+// Khởi tạo Supabase client sử dụng biến môi trường (Vite: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
 export default {
   data() {
     return {
@@ -316,17 +323,24 @@ export default {
       });
     },
 
+    // Lấy dữ liệu trực tiếp từ Supabase table 'library'
     async fetchLibraryDocs() {
       try {
-        const res = await fetch('http://localhost:5002/api/library');
-        if (res.ok) {
-          const data = await res.json();
-          this.docs = data;
+        const { data, error } = await supabase
+          .from('library')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          throw error;
         }
+
+        this.docs = data || [];
       } catch (err) {
-        console.error('Lỗi khi tải thư viện:', err);
+        console.error('Lỗi khi tải thư viện từ Supabase:', err.message || err);
       }
     },
+
     formatDate(dateStr) {
       if (!dateStr) return 'Gần đây';
       const d = new Date(dateStr);
@@ -340,12 +354,12 @@ export default {
     },
     handleDownload(doc) {
       const content = `========================================\n` +
-                      `TÊN TÀI LIỆU: ${doc.title}\n` +
-                      `CHUYÊN MỤC: ${doc.category || 'N/A'}\n` +
-                      `TÁC GIẢ / NGUỒN: ${doc.author || 'N/A'}\n` +
-                      `NGÀY CẬP NHẬT: ${this.formatDate(doc.created_at)}\n` +
-                      `========================================\n\n` +
-                      `NỘI DUNG CHI TIẾT & TIÊU CHÍ:\n${doc.description || 'Không có mô tả'}`;
+                    `TÊN TÀI LIỆU: ${doc.title}\n` +
+                    `CHUYÊN MỤC: ${doc.category || 'N/A'}\n` +
+                    `TÁC GIẢ / NGUỒN: ${doc.author || 'N/A'}\n` +
+                    `NGÀY CẬP NHẬT: ${this.formatDate(doc.created_at)}\n` +
+                    `========================================\n\n` +
+                    `NỘI DUNG CHI TIẾT & TIÊU CHÍ:\n${doc.description || 'Không có mô tả'}`;
       
       const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -360,6 +374,7 @@ export default {
 </script>
 
 <style scoped>
+/* Giữ nguyên toàn bộ hệ thống CSS của bạn */
 .library-page {
   padding: 40px 24px;
   max-width: 1440px;
@@ -530,7 +545,7 @@ export default {
   border-radius: 10px;
 }
 
-/* Header tủ sách: Hỗ trợ rớt dòng linh hoạt trên mobile để không bị cắt chữ */
+/* Header tủ sách */
 .shelf-header {
   display: flex;
   justify-content: space-between;
@@ -578,7 +593,6 @@ export default {
   font-size: 1.25rem;
   font-weight: 800;
   margin: 0 0 2px 0;
-  /* Đảm bảo hiển thị đầy đủ tiêu đề */
   white-space: normal;
   overflow: visible;
   text-overflow: unset;
@@ -622,7 +636,6 @@ export default {
   border-color: #ffd700;
 }
 
-/* Cấu hình hiển thị Text / Icon cho nút sắp xếp */
 .sort-text {
   display: inline;
 }
@@ -681,7 +694,7 @@ export default {
   font-weight: 700;
 }
 
-/* Sub-categories container & sections */
+/* Sub-categories */
 .sub-categories-container, .right-list {
   display: flex;
   flex-direction: column;
@@ -735,7 +748,7 @@ export default {
   gap: 10px;
 }
 
-/* Thẻ tài liệu (Card) */
+/* Thẻ tài liệu */
 .doc-card {
   position: relative;
   display: flex;
@@ -1089,10 +1102,10 @@ export default {
   color: #fff;
 }
 
-/* Responsive điều chỉnh giao diện Mobile (dưới 768px) */
+/* Responsive Mobile */
 @media (max-width: 768px) {
   .shelf-header {
-    flex-wrap: wrap; /* Cho phép phần tử xuống dòng nếu màn hình hẹp, tránh bóp méo tiêu đề */
+    flex-wrap: wrap;
   }
   
   .shelf-title-group {
@@ -1100,15 +1113,15 @@ export default {
   }
 
   .sort-box {
-    margin-left: auto; /* Đẩy nút chọn sắp xếp gọn gàng */
+    margin-left: auto;
   }
 
   .sort-text {
-    display: none; /* Ẩn chữ dài trên mobile */
+    display: none;
   }
 
   .sort-icon-only {
-    display: inline; /* Chỉ hiển thị icon (⚡ hoặc 🔤) */
+    display: inline;
     font-size: 1.1rem;
   }
   

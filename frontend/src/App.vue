@@ -1,9 +1,7 @@
 <template>
   <div id="app" class="app-layout">
-    <!-- Header Phong Cách Quân Đội & Hiện Đại -->
     <header class="navbar-header">
       <div class="header-container">
-        <!-- Logo & Tiêu đề bên trái -->
         <div class="brand-section">
           <img src="https://media.loveitopcdn.com/3807/logo-quan-doi-nhan-dan-viet-nam-2.png" alt="Quân Đội Nhân Dân Việt Nam" class="brand-logo">
           <div class="brand-titles">
@@ -13,7 +11,6 @@
           </div>
         </div>
 
-        <!-- Widget Thời gian & Trạng thái mạng bên phải (Desktop) -->
         <div class="header-widgets desktop-widgets">
           <div class="network-badge">
             <img 
@@ -32,13 +29,11 @@
           </div>
         </div>
 
-        <!-- Nút Menu 3 gạch trên Mobile -->
         <button class="mobile-menu-btn" @click="isMobileMenuOpen = !isMobileMenuOpen" aria-label="Menu">
           <span :class="['hamburger-bar', { 'open': isMobileMenuOpen }]"></span>
         </button>
       </div>
 
-      <!-- Widget phụ hiển thị gọn dưới header trên Mobile (Đã vá lỗi hiển thị cờ & chống tràn) -->
       <div class="mobile-widgets-bar">
         <div class="network-badge">
           <img 
@@ -55,7 +50,6 @@
         </div>
       </div>
 
-      <!-- Thanh Điều Hướng (Navigation Bar) -->
       <nav :class="['nav-bar', { 'mobile-open': isMobileMenuOpen }]">
         <div class="nav-links-container" @click="isMobileMenuOpen = false">
           <router-link to="/tuong-niem" class="nav-item">Tường Niệm</router-link>
@@ -68,12 +62,10 @@
       </nav>
     </header>
 
-    <!-- Vùng hiển thị nội dung chính -->
     <main class="main-body">
       <router-view />
     </main>
 
-    <!-- Chân trang (Footer) Hiện Đại & Trang Trọng -->
     <footer class="app-footer">
       <div class="footer-glow-line"></div>
       <div class="footer-content">

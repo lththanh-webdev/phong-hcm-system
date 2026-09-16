@@ -26,7 +26,7 @@
         <!-- Trình phát Audio nếu là bài hát -->
         <div v-if="item.media_type === 'song'" class="player-container">
           <audio controls class="audio-player">
-            <source :src="'http://localhost:5002' + item.file_url" type="audio/mpeg">
+            <source :src="getMediaUrl(item.file_url)" type="audio/mpeg">
             Trình duyệt của bạn không hỗ trợ phát âm thanh.
           </audio>
         </div>
@@ -34,7 +34,7 @@
         <!-- Trình phát Video nếu là điệu nhảy -->
         <div v-else-if="item.media_type === 'dance'" class="player-container">
           <video controls class="video-player">
-            <source :src="'http://localhost:5002' + item.file_url" type="video/mp4">
+            <source :src="getMediaUrl(item.file_url)" type="video/mp4">
             Trình duyệt của bạn không hỗ trợ phát video.
           </video>
         </div>
@@ -44,6 +44,13 @@
 </template>
 
 <script>
+import { createClient } from '@supabase/supabase-js'
+
+// Khởi tạo Supabase client sử dụng biến môi trường Vite
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
 export default {
   data() {
     return {
@@ -61,15 +68,31 @@ export default {
     this.fetchMedia();
   },
   methods: {
+    // Lấy danh sách media từ bảng 'media' trên Supabase
     async fetchMedia() {
       try {
-        const res = await fetch('http://localhost:5002/api/media');
-        if (res.ok) {
-          this.mediaList = await res.json();
-        }
+        const { data, error } = await supabase
+          .from('media')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        this.mediaList = data || [];
       } catch (err) {
-        console.error('Lỗi khi tải danh sách media:', err);
+        console.error('Lỗi khi tải danh sách media từ Supabase:', err.message || err);
       }
+    },
+
+    // Hàm xử lý đường dẫn file (hỗ trợ cả URL đầy đủ hoặc lấy từ Supabase Storage bucket tên 'media-storage')
+    getMediaUrl(fileUrl) {
+      if (!fileUrl) return '';
+      // Nếu file_url đã là URL tuyệt đối (http:// hoặc https://) thì dùng luôn
+      if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
+        return fileUrl;
+      }
+      // Nếu lưu dạng đường dẫn tương đối trong Supabase Storage Bucket (Ví dụ: 'songs/bai_hat_1.mp3')
+      const { data } = supabase.storage.from('media-storage').getPublicUrl(fileUrl);
+      return data.publicUrl;
     }
   }
 };

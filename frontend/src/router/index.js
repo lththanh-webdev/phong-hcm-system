@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 const routes = [
   { 
     path: '/', 
@@ -82,9 +83,11 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// Tự động ghi nhận lượt truy cập phục vụ tab Thống kê Admin
+// Tự động ghi nhận lượt truy cập phục vụ tab Thống kê Admin (Đã xử lý chống trùng lặp /api/api)
 router.afterEach((to) => {
-  const API_URL = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com';
+  const rawUrl = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+  const API_URL = rawUrl.endsWith('/api') ? rawUrl.slice(0, -4) : rawUrl;
+
   fetch(`${API_URL}/api/visitors`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
