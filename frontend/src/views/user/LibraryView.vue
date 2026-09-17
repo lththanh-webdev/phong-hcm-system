@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <!-- Bố cục Tủ Sách Chính & Pháp Luật (Đồng bộ khung cố định hiện đại, gọn gàng) -->
+    <!-- Bố cục Tủ Sách Chính & Pháp Luật -->
     <div class="shelves-container">
       
       <!-- TỦ CHÍNH TRỊ - VĂN HỌC -->
@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      <!-- TỦ BÊN PHẢI: Tủ Sách Pháp Luật (Không chia ngăn, thiết kế gọn gàng, chống kéo giãn) -->
+      <!-- TỦ BÊN PHẢI: Tủ Sách Pháp Luật -->
       <div class="book-shelf law-shelf-container">
         <div class="shelf-header">
           <div class="shelf-title-group">
@@ -166,16 +166,13 @@
       </div>
     </div>
 
-    <!-- MODAL ĐỌC SÁCH CHI TIẾT VỚI HIỆU ỨNG LẬT TRANG MƯỢT MÀ, TINH TẾ -->
+    <!-- MODAL ĐỌC SÁCH VỚI HIỆU ỨNG LẬT TRANG 3D TỪ PHẢI QUA TRÁI -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
       <div class="book-object-wrapper animate-book-open" @click.stop>
         
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
         <div class="open-book-spread">
-          <!-- Gáy sách trung tâm tạo chiều sâu -->
-          <div class="book-spine-center-shadow"></div>
-
           <div class="book-page left-page">
             <div class="page-header-author">
               <span class="author-badge-icon">✒️ Tác Giả:</span>
@@ -192,7 +189,7 @@
             </div>
           </div>
 
-          <!-- Trang phải chứa nội dung văn bản với hiệu ứng chuyển trang mượt -->
+          <!-- Trang phải với hiệu ứng lật 3D từ phải sang trái -->
           <div class="book-page right-page" :class="{ 'is-flipping': isFlipping }">
             <div class="page-content-header">
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
@@ -372,8 +369,8 @@ export default {
         this.isFlipping = true;
         setTimeout(() => {
           this.currentBookPage--;
-          setTimeout(() => { this.isFlipping = false; }, 180);
-        }, 150);
+          setTimeout(() => { this.isFlipping = false; }, 250);
+        }, 180);
       }
     },
     nextPage() {
@@ -381,8 +378,8 @@ export default {
         this.isFlipping = true;
         setTimeout(() => {
           this.currentBookPage++;
-          setTimeout(() => { this.isFlipping = false; }, 180);
-        }, 150);
+          setTimeout(() => { this.isFlipping = false; }, 250);
+        }, 180);
       }
     },
     handleDownload(doc) {
@@ -521,7 +518,6 @@ export default {
   flex-direction: column;
 }
 
-/* KHUNG CỐ ĐỊNH CHUẨN - Triệt tiêu hoàn toàn hiện tượng kéo dài thõng xuống */
 .fixed-shelf-box {
   height: 440px;
   max-height: 440px;
@@ -562,7 +558,6 @@ export default {
 .shelf-desc { font-size: 0.75rem; color: #94a3b8; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat-pill { background: rgba(255,215,0,0.1); color: #ffd700; padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(255,215,0,0.25); white-space: nowrap; }
 
-/* Các thẻ danh mục trong tủ chính */
 .drawers-container {
   display: flex;
   flex-direction: column;
@@ -618,7 +613,6 @@ export default {
 .drawer-arrow-icon { color: #ffd700; font-size: 0.9rem; font-weight: 700; transition: transform 0.2s; }
 .drawer-item-card:hover .drawer-arrow-icon { transform: translateX(4px); }
 
-/* Tủ pháp luật bên phải */
 .right-list { display: flex; flex-direction: column; gap: 10px; }
 .doc-card {
   display: flex; 
@@ -646,7 +640,7 @@ export default {
 .btn-download:hover { background: #ef4444; color: #fff; }
 .no-data { color: #94a3b8; font-style: italic; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-/* Custom Dropdown for Sorting */
+/* Custom Dropdown */
 .sort-box { position: relative; flex-shrink: 0; }
 .custom-select-trigger {
   background: rgba(30, 15, 15, 0.9);
@@ -686,7 +680,6 @@ export default {
 .dropdown-option:hover { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
 .dropdown-option.active { background: rgba(255, 215, 0, 0.25); color: #ffd700; font-weight: 700; }
 
-/* Responsive nhỏ */
 @media(max-width: 600px) {
   .library-page { padding: 12px 8px; }
   .section-title { font-size: 1.5rem; }
@@ -777,30 +770,18 @@ export default {
 }
 .close-book-btn:hover { background: #ef4444; }
 
+/* Bố cục trang sách mở (Không còn thanh đen dọc ở giữa) */
 .open-book-spread {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1fr;
   height: 100%;
   position: relative;
-  background: rgba(255, 215, 0, 0.15);
-}
-
-/* Gáy sách trung tâm tạo chiều sâu */
-.book-spine-center-shadow {
-  position: absolute;
-  left: calc(50% - 10px);
-  top: 0;
-  bottom: 0;
-  width: 20px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.5));
-  z-index: 20;
-  pointer-events: none;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  perspective: 2000px; /* Tạo không gian 3D cho hiệu ứng lật trang */
+  background: #120505;
 }
 
 @media(max-width: 768px) {
   .open-book-spread { grid-template-columns: 1fr; }
-  .book-spine-center-shadow { display: none; }
   .book-object-wrapper { height: 92vh; }
 }
 
@@ -860,15 +841,17 @@ export default {
 
 .page-footer-info { font-size: 0.75rem; color: #94a3b8; }
 
-/* HIỆU ỨNG CHUYỂN TRANG MƯỢT MÀ, TINH TẾ (Đơn giản, nhẹ nhàng hơn) */
+/* HIỆU ỨNG LẬT TRANG SÁCH 3D TỪ PHẢI QUA TRÁI */
 .right-page {
   background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
-  transition: transform 0.25s ease-in-out, opacity 0.22s ease-in-out;
+  transform-origin: left center; /* Trục lật ở cạnh trái (gáy sách giả lập) */
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.35s ease-in-out;
 }
 
 .right-page.is-flipping {
-  transform: translateX(10px);
-  opacity: 0.15;
+  transform: rotateY(-90deg); /* Lật trang từ phải vòng qua trái theo không gian 3D */
+  opacity: 0.2;
 }
 
 .page-content-header h4 {
