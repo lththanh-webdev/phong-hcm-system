@@ -172,7 +172,11 @@
         
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
+        <!-- Rãnh gáy sách trung tâm mô phỏng chân thực -->
+        <div class="book-spine-center"></div>
+
         <div class="open-book-spread">
+          <!-- Trang trái -->
           <div class="book-page left-page">
             <div class="page-header-author">
               <span class="author-badge-icon">✒️ Tác Giả:</span>
@@ -708,7 +712,7 @@ export default {
 .book-object-wrapper {
   background: linear-gradient(135deg, #200d0d 0%, #0c0404 100%);
   width: 100%;
-  max-width: 900px;
+  max-width: 920px;
   height: 85vh;
   border-radius: 14px;
   border: 2px solid rgba(255, 215, 0, 0.4);
@@ -765,18 +769,39 @@ export default {
   border-radius: 50%;
   font-size: 1.2rem;
   cursor: pointer;
-  z-index: 10;
+  z-index: 20;
   transition: 0.2s;
 }
 .close-book-btn:hover { background: #ef4444; }
 
-/* Bố cục trang sách mở (Không còn thanh đen dọc ở giữa) */
+/* Rãnh gáy sách trung tâm mô phỏng chân thực (Thay thế vệt đen thô) */
+.book-spine-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, 
+    rgba(10, 2, 2, 0.6) 0%, 
+    rgba(0, 0, 0, 0.95) 50%, 
+    rgba(10, 2, 2, 0.6) 100%);
+  z-index: 5;
+  pointer-events: none;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+@media(max-width: 768px) {
+  .book-spine-center { display: none; }
+}
+
+/* Bố cục trang sách mở */
 .open-book-spread {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100%;
   position: relative;
-  perspective: 2000px; /* Tạo không gian 3D cho hiệu ứng lật trang */
+  perspective: 2500px; /* Không gian 3D sâu hơn */
   background: #120505;
 }
 
@@ -787,7 +812,7 @@ export default {
 
 .book-page {
   background: linear-gradient(145deg, #1b0e0e 0%, #110606 100%);
-  padding: 20px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -796,7 +821,6 @@ export default {
 }
 
 .left-page {
-  border-right: 1px solid rgba(255, 215, 0, 0.15);
   text-align: center;
   align-items: center;
 }
@@ -841,17 +865,18 @@ export default {
 
 .page-footer-info { font-size: 0.75rem; color: #94a3b8; }
 
-/* HIỆU ỨNG LẬT TRANG SÁCH 3D TỪ PHẢI QUA TRÁI */
+/* HIỆU ỨNG LẬT TRANG SÁCH 3D TỪ PHẢI QUA TRÁI (HOÀN CHỈNH) */
 .right-page {
   background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
-  transform-origin: left center; /* Trục lật ở cạnh trái (gáy sách giả lập) */
+  transform-origin: left center; /* Trục lật chính xác ở gáy sách bên trái */
   transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.35s ease-in-out;
+  transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.4s ease-in-out;
+  z-index: 6;
 }
 
 .right-page.is-flipping {
-  transform: rotateY(-90deg); /* Lật trang từ phải vòng qua trái theo không gian 3D */
-  opacity: 0.2;
+  transform: rotateY(-90deg); /* Xoay lật 3D vòng qua trái */
+  opacity: 0.15;
 }
 
 .page-content-header h4 {
