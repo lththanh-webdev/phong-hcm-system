@@ -92,7 +92,6 @@
             <div class="doc-card-indicator law-indicator"></div>
             <div class="doc-info">
               <div class="doc-top-row">
-                <span class="doc-badge law-badge">Pháp luật</span>
                 <span class="doc-date">📅 {{ formatDate(doc.created_at) }}</span>
               </div>
               <h4 class="doc-title" :title="doc.title">{{ doc.title }}</h4>
@@ -108,7 +107,7 @@
 
     </div>
 
-    <!-- MODAL HIỂN THỊ DANH SÁCH CHUYÊN MỤC (HIỆU ỨNG ÁNH SÁNG & SẮP XẾP) -->
+    <!-- MODAL HIỂN THỊ DANH SÁCH CHUYÊN MỤC (Đã giản lược nhãn danh mục trùng lặp) -->
     <div v-if="selectedCategory" class="book-modal-overlay" @click="closeCategoryDetail">
       <div class="book-object-wrapper animate-book-open category-modal-wrapper" @click.stop>
         <button class="close-book-btn" @click="closeCategoryDetail">&times;</button>
@@ -125,7 +124,6 @@
           <div class="category-modal-toolbar">
             <span class="stat-pill">📚 {{ filteredCategoryDocs.length }} tài liệu</span>
             
-            <!-- Box sắp xếp trong Modal danh mục -->
             <div class="sort-box" ref="categorySortBox">
               <div class="custom-select-trigger" @click="categoryDropdownOpen = !categoryDropdownOpen">
                 <span>{{ categorySort === 'date-desc' ? '⚡ Mới cập nhật' : '🔤 Tên (A-Z)' }}</span>
@@ -154,7 +152,6 @@
               <div class="doc-card-indicator"></div>
               <div class="doc-info">
                 <div class="doc-top-row">
-                  <span class="doc-badge">{{ doc.category }}</span>
                   <span class="doc-date">📅 {{ formatDate(doc.created_at) }}</span>
                 </div>
                 <h4 class="doc-title" :title="doc.title">{{ doc.title }}</h4>
@@ -170,7 +167,7 @@
       </div>
     </div>
 
-    <!-- HIỆU ỨNG MỞ SÁCH & ĐỌC CHI TIẾT -->
+    <!-- HIỆU ỨNG MỞ SÁCH & ĐỌC CHI TIẾT (TÍCH HỢP HIỆU ỨNG LẬT TRANG 3D MƯỢT MÀ) -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
       <div class="book-object-wrapper animate-book-open" @click.stop>
         
@@ -184,7 +181,6 @@
             </div>
             
             <div class="book-center-title-box">
-              <span class="book-category-tag">{{ selectedDoc.category || 'Tài liệu chuyên khảo' }}</span>
               <h2 class="book-title-center">{{ selectedDoc.title }}</h2>
               <div class="gold-divider"></div>
             </div>
@@ -199,7 +195,8 @@
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
             </div>
 
-            <div class="book-scrollable-content">
+            <!-- Khu vực nội dung có tích hợp hiệu ứng lật trang 3D mượt mà -->
+            <div class="book-scrollable-content page-flip-container" :key="currentBookPage">
               <p class="book-text-body">
                 {{ currentPageContent }}
               </p>
@@ -628,8 +625,6 @@ export default {
 .doc-card:hover { border-color: #ffd700; }
 .doc-info { flex: 1; min-width: 0; }
 .doc-top-row { display: flex; gap: 8px; margin-bottom: 4px; align-items: center; flex-wrap: wrap; }
-.doc-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
-.law-badge { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
 .doc-date { font-size: 0.7rem; color: #94a3b8; }
 .doc-title { color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .doc-meta { font-size: 0.72rem; color: #cbd5e1; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -696,7 +691,7 @@ export default {
 }
 
 
-/* --- HIỆU ỨNG MODAL ÁNH SÁNG (MỞ DANH MỤC & ĐỌC SÁCH) --- */
+/* --- HIỆU ỨNG MODAL ÁNH SÁNG & LẬT TRANG SÁCH 3D --- */
 .book-modal-overlay {
   position: fixed;
   inset: 0;
@@ -826,16 +821,6 @@ export default {
   margin: auto 0;
 }
 
-.book-category-tag {
-  background: rgba(56, 189, 248, 0.15);
-  color: #38bdf8;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-}
-
 .book-title-center {
   color: #fff;
   font-size: 1.5rem;
@@ -855,6 +840,7 @@ export default {
 
 .right-page {
   background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
+  perspective: 1500px;
 }
 
 .page-content-header h4 {
@@ -876,6 +862,24 @@ export default {
 
 .book-scrollable-content::-webkit-scrollbar { width: 5px; }
 .book-scrollable-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 10px; }
+
+/* Hiệu ứng lật trang sách 3D cực mượt khi chuyển trang */
+.page-flip-container {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  animation: modernPageFlip 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes modernPageFlip {
+  0% {
+    opacity: 0;
+    transform: rotateY(-25deg) translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) translateX(0);
+  }
+}
 
 .book-text-body {
   color: #e2e8f0;
