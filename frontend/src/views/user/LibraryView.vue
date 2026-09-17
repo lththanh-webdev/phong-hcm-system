@@ -25,14 +25,14 @@
     <!-- Bố cục Tủ Sách Chính -->
     <div class="shelves-container">
       
-      <!-- TỦ CHÍNH TRỊ - VĂN HỌC (5 Ngăn tương ứng 5 mảng sách) -->
+      <!-- TỦ CHÍNH TRỊ - VĂN HỌC (Cố định kích thước khung tủ, cuộn bên trong) -->
       <div class="book-shelf main-political-shelf">
         <div class="shelf-main-header">
           <div class="shelf-title-group">
             <div class="shelf-icon-wrapper">🏛️</div>
             <div class="shelf-text-wrap">
               <h3>Tủ Sách Chính Trị - Văn Học</h3>
-              <span class="shelf-desc">Hệ thống 5 ngăn tủ chuyên đề (Tự động mở khi tìm kiếm)</span>
+              <span class="shelf-desc">Hệ thống 5 ngăn tủ chuyên đề (Cố định khung, cuộn mượt mà)</span>
             </div>
           </div>
           <div class="shelf-stats">
@@ -40,8 +40,8 @@
           </div>
         </div>
 
-        <!-- 5 Ngăn tủ tương ứng với 5 mảng sách -->
-        <div class="drawers-container">
+        <!-- 5 Ngăn tủ nằm trong khung cố định chiều cao và có thanh cuộn -->
+        <div class="drawers-container fixed-shelf-box">
           <div 
             v-for="(cat, index) in leftCategories" 
             :key="cat" 
@@ -58,45 +58,43 @@
                 <span class="drawer-count">({{ getDocsByCategory(cat).length }} tài liệu)</span>
               </div>
               <div class="drawer-action-badge">
-                <span class="status-text">{{ isDrawerOpen(cat) ? 'Đang mở ngăn' : 'Kéo mở ngăn' }}</span>
+                <span class="status-text">{{ isDrawerOpen(cat) ? 'Đang mở' : 'Đóng' }}</span>
                 <span class="drawer-arrow" :class="{ 'rotated': isDrawerOpen(cat) }">▼</span>
               </div>
             </div>
 
-            <!-- Ngăn kéo mở ra với hiệu ứng ánh sáng và thanh cuộn ngang -->
-            <transition name="drawer-slide">
-              <div v-if="isDrawerOpen(cat)" class="drawer-drawer-content">
-                <div class="inner-shelf-glow"></div>
-                
-                <div class="horizontal-scroll-wrapper">
-                  <div v-if="getDocsByCategory(cat).length === 0" class="no-data-drawer">
-                    📭 Ngăn tủ này hiện đang trống hoặc không có kết quả phù hợp.
-                  </div>
+            <!-- Ngăn kéo mở ra với thanh cuộn ngang chứa sách -->
+            <div v-show="isDrawerOpen(cat)" class="drawer-drawer-content">
+              <div class="inner-shelf-glow"></div>
+              
+              <div class="horizontal-scroll-wrapper">
+                <div v-if="getDocsByCategory(cat).length === 0" class="no-data-drawer">
+                  📭 Ngăn tủ này hiện đang trống hoặc không có kết quả phù hợp.
+                </div>
 
-                  <div 
-                    v-for="doc in getDocsByCategory(cat)" 
-                    :key="doc.id" 
-                    class="drawer-book-card" 
-                    @click="openBookDetail(doc)"
-                  >
-                    <div class="book-spine-accent"></div>
-                    <div class="drawer-book-info">
-                      <span class="drawer-book-cat">{{ doc.category }}</span>
-                      <h5 class="drawer-book-title" :title="doc.title">{{ doc.title }}</h5>
-                      <p class="drawer-book-author">✍️ {{ doc.author || 'Đang cập nhật' }}</p>
-                    </div>
-                    <div class="drawer-book-footer">
-                      <button class="btn-read-book" @click.stop="openBookDetail(doc)">
-                        📖 Đọc ngay
-                      </button>
-                      <button class="btn-download-book" @click.stop="handleDownload(doc)" title="Tải xuống">
-                        📥
-                      </button>
-                    </div>
+                <div 
+                  v-for="doc in getDocsByCategory(cat)" 
+                  :key="doc.id" 
+                  class="drawer-book-card" 
+                  @click="openBookDetail(doc)"
+                >
+                  <div class="book-spine-accent"></div>
+                  <div class="drawer-book-info">
+                    <span class="drawer-book-cat">{{ doc.category }}</span>
+                    <h5 class="drawer-book-title" :title="doc.title">{{ doc.title }}</h5>
+                    <p class="drawer-book-author">✍️ {{ doc.author || 'Đang cập nhật' }}</p>
+                  </div>
+                  <div class="drawer-book-footer">
+                    <button class="btn-read-book" @click.stop="openBookDetail(doc)">
+                      📖 Đọc ngay
+                    </button>
+                    <button class="btn-download-book" @click.stop="handleDownload(doc)" title="Tải xuống">
+                      📥
+                    </button>
                   </div>
                 </div>
               </div>
-            </transition>
+            </div>
           </div>
         </div>
       </div>
@@ -124,7 +122,7 @@
           </div>
         </div>
 
-        <div class="doc-list right-list">
+        <div class="doc-list right-list fixed-shelf-box">
           <div v-if="filteredRightDocs.length === 0" class="no-data">Chưa có tài liệu pháp luật nào phù hợp...</div>
           
           <div v-for="doc in filteredRightDocs" :key="doc.id" class="doc-card law-card" @click="openBookDetail(doc)">
@@ -147,17 +145,13 @@
 
     </div>
 
-    <!-- HIỆU ỨNG MỞ SÁCH & ĐỌC CHI TIẾT (Phân trang thực tế & Lật trang mượt mà) -->
+    <!-- HIỆU ỨNG MỞ SÁCH & ĐỌC CHI TIẾT -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
       <div class="book-object-wrapper animate-book-open" @click.stop>
         
-        <!-- Nút đóng sách -->
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
-        <!-- Bìa/Giao diện Cuốn Sách Mở -->
         <div class="open-book-spread">
-          
-          <!-- Trang bên trái: Thông tin tác giả & tiêu đề sách nghệ thuật -->
           <div class="book-page left-page">
             <div class="page-header-author">
               <span class="author-badge-icon">✒️ Tác Giả:</span>
@@ -175,20 +169,17 @@
             </div>
           </div>
 
-          <!-- Trang bên phải: Nội dung chi tiết có phân trang thực tế -->
           <div class="book-page right-page">
             <div class="page-content-header">
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
             </div>
 
-            <!-- Khung nội dung trang hiện tại -->
             <div class="book-scrollable-content">
               <p class="book-text-body">
                 {{ currentPageContent }}
               </p>
             </div>
 
-            <!-- Thanh chuyển trang thực tế dưới chân trang sách -->
             <div class="book-footer-pagination">
               <button class="btn-page-nav" @click="prevPage" :disabled="currentBookPage === 1" :class="{ disabled: currentBookPage === 1 }">
                 ◀ Trang trước
@@ -224,9 +215,8 @@ export default {
       searchQuery: '',
       selectedDoc: null,
       currentBookPage: 1,
-      charsPerPage: 600, // Số ký tự mỗi trang sách
+      charsPerPage: 600,
       
-      // Quản lý trạng thái mở thủ công các ngăn tủ
       manualToggles: {},
 
       rightSort: 'date-desc',
@@ -284,7 +274,6 @@ export default {
   },
   methods: {
     isDrawerOpen(cat) {
-      // Khi tìm kiếm có từ khóa -> Tự động mở các ngăn có kết quả
       if (this.searchQuery.trim()) {
         const matches = this.getDocsByCategory(cat).length > 0;
         if (matches) return true;
@@ -292,7 +281,6 @@ export default {
       if (this.manualToggles[cat] !== undefined) {
         return this.manualToggles[cat];
       }
-      // Mặc định mở ngăn đầu tiên khi chưa tìm kiếm
       return cat === this.leftCategories[0];
     },
     toggleDrawer(cat) {
@@ -481,7 +469,22 @@ export default {
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
 }
+
+/* CỐ ĐỊNH CHIỀU CAO KHUNG TỦ SÁCH KHÔNG THAY ĐỔI NỮA */
+.fixed-shelf-box {
+  height: 540px;
+  max-height: 540px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 215, 0, 0.4) rgba(0,0,0,0.2);
+}
+
+.fixed-shelf-box::-webkit-scrollbar { width: 6px; }
+.fixed-shelf-box::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.4); border-radius: 10px; }
 
 .shelf-main-header, .shelf-header {
   display: flex;
@@ -490,6 +493,7 @@ export default {
   border-bottom: 1px solid rgba(255, 215, 0, 0.2);
   padding-bottom: 16px;
   margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .shelf-title-group { display: flex; align-items: center; gap: 14px; }
@@ -519,7 +523,7 @@ export default {
   border: 1px solid rgba(255, 215, 0, 0.15);
   border-radius: 14px;
   overflow: hidden;
-  transition: all 0.3s;
+  transition: border-color 0.3s;
 }
 
 .drawer-item.is-open {
@@ -574,7 +578,7 @@ export default {
 .drawer-arrow { font-size: 0.7rem; transition: transform 0.3s; }
 .drawer-arrow.rotated { transform: rotate(180deg); }
 
-/* Nội dung ngăn kéo khi mở ra kèm hiệu ứng phát sáng */
+/* Nội dung ngăn kéo */
 .drawer-drawer-content {
   position: relative;
   background: linear-gradient(180deg, rgba(20, 8, 8, 0.95) 0%, rgba(10, 4, 4, 0.98) 100%);
@@ -691,7 +695,7 @@ export default {
 
 
 /* --- TỦ PHÁP LUẬT BÊN PHẢI --- */
-.right-list { display: flex; flex-direction: column; gap: 12px; max-height: 520px; overflow-y: auto; padding-right: 4px; }
+.right-list { display: flex; flex-direction: column; gap: 12px; }
 .doc-card {
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(30, 15, 15, 0.8);
@@ -757,7 +761,7 @@ export default {
 .dropdown-option.active { background: rgba(255, 215, 0, 0.25); color: #ffd700; font-weight: 700; }
 
 
-/* --- HIỆU ỨNG MỞ SÁCH (BOOK POPUP & FLIP EFFECT) --- */
+/* --- HIỆU ỨNG MỞ SÁCH --- */
 .book-modal-overlay {
   position: fixed;
   inset: 0;
@@ -877,7 +881,6 @@ export default {
 
 .page-footer-info { font-size: 0.8rem; color: #94a3b8; }
 
-/* Trang bên phải: Nội dung chi tiết */
 .right-page {
   background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
 }
@@ -910,7 +913,6 @@ export default {
   margin: 0;
 }
 
-/* Thanh chuyển trang & công cụ dưới chân trang sách */
 .book-footer-pagination {
   display: flex;
   justify-content: space-between;
@@ -955,22 +957,9 @@ export default {
 }
 .btn-download-page:hover { opacity: 0.9; }
 
-/* Animations */
 @keyframes bookOpenPop {
   0% { transform: scale(0.85) rotateX(10deg); opacity: 0; }
   100% { transform: scale(1) rotateX(0deg); opacity: 1; }
 }
 .animate-book-open { animation: bookOpenPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-
-.drawer-slide-enter-active, .drawer-slide-leave-active {
-  transition: all 0.3s ease;
-  max-height: 400px;
-  overflow: hidden;
-}
-.drawer-slide-enter-from, .drawer-slide-leave-to {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
 </style>
