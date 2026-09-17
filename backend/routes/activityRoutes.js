@@ -3,22 +3,47 @@ const router = express.Router();
 const pool = require('../config/db');
 const multer = require('multer');
 const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads'));
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
+// Khởi tạo Supabase Client (sử dụng biến môi trường)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
+// Sử dụng memoryStorage để lưu file vào RAM dưới dạng Buffer trước khi đẩy lên Supabase
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 50 * 1024 * 1024 } // Giới hạn tối đa 50MB
 });
-const upload = multer({ storage: storage });
+
+// Hàm hỗ trợ upload lên Supabase Storage và trả về Public URL
+async function uploadToSupabase(file) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const fileName = uniqueSuffix + path.extname(file.originalname);
+    const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket
+
+    // Thay 'uploads' bằng tên bucket chính xác mà bạn đã tạo trên Supabase Storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('uploads') 
+        .upload(filePath, file.buffer, {
+            contentType: file.mimetype,
+            upsert: false
+        });
+
+    if (uploadError) {
+        throw new Error(uploadError.message);
+    }
+
+    // Lấy Public URL vĩnh viễn của file
+    const { data: { publicUrl } } = supabase.storage
+        .from('uploads')
+        .getPublicUrl(filePath);
+
+    return publicUrl;
+}
 
 // GET: Lấy danh sách hoạt động (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
     try {
-        // Dùng ORDER BY id DESC để tránh lỗi nếu bảng chưa tạo cột created_at
         const result = await pool.query('SELECT * FROM activities ORDER BY id DESC');
         res.json(result.rows);
     } catch (err) {
@@ -34,9 +59,8 @@ router.post('/', upload.single('image'), async (req, res) => {
         let image_url = null;
         
         if (req.file) {
-            // Tự động nhận diện domain hiện tại (Hỗ trợ cả Localhost và Render Cloud)
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
-            image_url = `${baseUrl}/uploads/${req.file.filename}`;
+            // Upload lên Supabase Storage thay vì lưu vào ổ đĩa local
+            image_url = await uploadToSupabase(req.file);
         }
 
         let query, values;
@@ -72,8 +96,8 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         let image_url = null;
         
         if (req.file) {
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
-            image_url = `${baseUrl}/uploads/${req.file.filename}`;
+            // Upload ảnh mới lên Supabase Storage nếu có chọn ảnh mới
+            image_url = await uploadToSupabase(req.file);
         }
 
         let query, values;

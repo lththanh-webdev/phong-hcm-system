@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 const upload = require('../middlewares/upload');
 const verifyAdmin = require('../middlewares/auth');
+const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+
+// Khởi tạo Supabase Client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 // Khuyến nghị: Nên đặt biến JWT_SECRET vào mục Environment trên Render, nếu không có sẽ dùng chuỗi mặc định an toàn này
 const JWT_SECRET = process.env.JWT_SECRET || 'phong-hcm-secure-jwt-secret-key-2026';
@@ -41,17 +46,36 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// API Upload file dùng chung cho Admin (Hỗ trợ trả về URL tuyệt đối chuẩn Cloud)
-router.post('/upload', verifyAdmin, upload.single('file'), (req, res) => {
+// API Upload file dùng chung cho Admin (Đã chuyển sang Supabase Storage)
+router.post('/upload', verifyAdmin, upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'Chưa chọn file upload' });
         }
-        // Tự động nhận diện domain của Render hoặc Localhost
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
-        const fileUrl = `${baseUrl}/uploads/${req.file.filename}`;
+
+        // 1. Tạo tên file độc đáo tránh trùng lặp
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileName = uniqueSuffix + path.extname(req.file.originalname);
+        const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket trên Supabase
+
+        // 2. Upload file dạng Buffer lên Supabase Storage (Bucket 'uploads')
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('uploads')
+            .upload(filePath, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: false
+            });
+
+        if (uploadError) {
+            throw new Error(uploadError.message);
+        }
+
+        // 3. Lấy Public URL vĩnh viễn từ Supabase Storage
+        const { data: { publicUrl } } = supabase.storage
+            .from('uploads')
+            .getPublicUrl(filePath);
         
-        res.json({ success: true, fileUrl });
+        res.json({ success: true, fileUrl: publicUrl });
     } catch (err) {
         console.error('Lỗi upload file:', err.message);
         res.status(500).json({ success: false, message: err.message });

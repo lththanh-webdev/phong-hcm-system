@@ -3,23 +3,43 @@ const router = express.Router();
 const pool = require('../config/db');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Khởi tạo Supabase Client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
+// Sử dụng memoryStorage để giữ file trong RAM dạng Buffer (tránh ghi vào ổ đĩa tạm của Render)
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 50 * 1024 * 1024 } // Giới hạn tối đa 50MB cho file nhạc/video
 });
-const upload = multer({ storage: storage });
+
+// Hàm hỗ trợ upload lên Supabase Storage và trả về Public URL vĩnh viễn
+async function uploadToSupabase(file) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const fileName = uniqueSuffix + path.extname(file.originalname);
+    const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket trên Supabase
+
+    // Thay 'uploads' bằng tên bucket của bạn trên Supabase (nếu bạn dùng chung bucket)
+    const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('uploads') 
+        .upload(filePath, file.buffer, {
+            contentType: file.mimetype,
+            upsert: false
+        });
+
+    if (uploadError) {
+        throw new Error(uploadError.message);
+    }
+
+    // Lấy Public URL chuẩn Cloud của file
+    const { data: { publicUrl } } = supabase.storage
+        .from('uploads')
+        .getPublicUrl(filePath);
+
+    return publicUrl;
+}
 
 // GET: Lấy danh sách media (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
@@ -32,16 +52,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST: Tải lên file MP3/MP4 mới
+// POST: Tải lên file MP3/MP4 mới (Đã chuyển sang Supabase Storage)
 router.post('/', upload.single('file'), async (req, res) => {
     try {
         const { title, artist, media_type } = req.body;
         let file_url = '';
         
         if (req.file) {
-            // Tự động nhận diện domain chuẩn trên Render hoặc Localhost
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
-            file_url = `${baseUrl}/uploads/${req.file.filename}`;
+            // Upload trực tiếp lên đám mây thay vì lưu local
+            file_url = await uploadToSupabase(req.file);
         }
 
         const query = `
