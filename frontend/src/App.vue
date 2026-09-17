@@ -112,6 +112,7 @@ onUnmounted(() => {
 
 body {
   margin: 0;
+  padding: 0;
   background-color: #1a0202;
   color: var(--text-light);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
