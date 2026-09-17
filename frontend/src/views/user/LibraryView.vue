@@ -166,14 +166,14 @@
       </div>
     </div>
 
-    <!-- MODAL ĐỌC SÁCH CHI TIẾT VỚI HIỆU ỨNG LẬT TRANG GIẤY 3D CHÂN THỰC -->
+    <!-- MODAL ĐỌC SÁCH CHI TIẾT VỚI HIỆU ỨNG LẬT TRANG MƯỢT MÀ, TINH TẾ -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
       <div class="book-object-wrapper animate-book-open" @click.stop>
         
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
         <div class="open-book-spread">
-          <!-- Gáy sách trung tâm tạo chiều sâu 3D -->
+          <!-- Gáy sách trung tâm tạo chiều sâu -->
           <div class="book-spine-center-shadow"></div>
 
           <div class="book-page left-page">
@@ -192,7 +192,7 @@
             </div>
           </div>
 
-          <!-- Trang phải chứa nội dung văn bản với hiệu ứng lật trang 3D -->
+          <!-- Trang phải chứa nội dung văn bản với hiệu ứng chuyển trang mượt -->
           <div class="book-page right-page" :class="{ 'is-flipping': isFlipping }">
             <div class="page-content-header">
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
@@ -240,7 +240,7 @@ export default {
       selectedDoc: null,
       currentBookPage: 1,
       charsPerPage: 600,
-      isFlipping: false, // Biến điều khiển hiệu ứng lật trang
+      isFlipping: false,
       
       selectedCategory: null,
       categorySort: 'date-desc',
@@ -372,8 +372,8 @@ export default {
         this.isFlipping = true;
         setTimeout(() => {
           this.currentBookPage--;
-          setTimeout(() => { this.isFlipping = false; }, 300);
-        }, 200);
+          setTimeout(() => { this.isFlipping = false; }, 180);
+        }, 150);
       }
     },
     nextPage() {
@@ -381,8 +381,8 @@ export default {
         this.isFlipping = true;
         setTimeout(() => {
           this.currentBookPage++;
-          setTimeout(() => { this.isFlipping = false; }, 300);
-        }, 200);
+          setTimeout(() => { this.isFlipping = false; }, 180);
+        }, 150);
       }
     },
     handleDownload(doc) {
@@ -521,7 +521,7 @@ export default {
   flex-direction: column;
 }
 
-/* KHUNG CỐ ĐỊNH CHUẨN - Triệt tiêu hoàn toàn hiện tượng kéo dài thõng xuống dưới chân */
+/* KHUNG CỐ ĐỊNH CHUẨN - Triệt tiêu hoàn toàn hiện tượng kéo dài thõng xuống */
 .fixed-shelf-box {
   height: 440px;
   max-height: 440px;
@@ -699,7 +699,7 @@ export default {
   .shelf-stats, .sort-box { align-self: flex-end; margin-top: 4px; }
 }
 
-/* Modal Ánh sáng & Sách Mở 3D */
+/* Modal Sách Mở */
 .book-modal-overlay {
   position: fixed;
   inset: 0;
@@ -783,20 +783,19 @@ export default {
   height: 100%;
   position: relative;
   background: rgba(255, 215, 0, 0.15);
-  perspective: 2000px; /* Tạo không gian 3D sâu thẳm */
 }
 
-/* Hiệu ứng gáy sách trung tâm tạo bóng 3D chân thực */
+/* Gáy sách trung tâm tạo chiều sâu */
 .book-spine-center-shadow {
   position: absolute;
-  left: calc(50% - 12px);
+  left: calc(50% - 10px);
   top: 0;
   bottom: 0;
-  width: 24px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.6));
+  width: 20px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.5));
   z-index: 20;
   pointer-events: none;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
 }
 
 @media(max-width: 768px) {
@@ -861,18 +860,15 @@ export default {
 
 .page-footer-info { font-size: 0.75rem; color: #94a3b8; }
 
+/* HIỆU ỨNG CHUYỂN TRANG MƯỢT MÀ, TINH TẾ (Đơn giản, nhẹ nhàng hơn) */
 .right-page {
   background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.3s ease;
+  transition: transform 0.25s ease-in-out, opacity 0.22s ease-in-out;
 }
 
-/* Hiệu ứng lật trang giấy 3D thực thụ khi bấm chuyển trang */
 .right-page.is-flipping {
-  transform: rotateY(-35deg) scale(0.98);
-  opacity: 0.4;
-  box-shadow: inset 40px 0 50px rgba(0,0,0,0.8);
+  transform: translateX(10px);
+  opacity: 0.15;
 }
 
 .page-content-header h4 {
@@ -952,8 +948,8 @@ export default {
 .btn-download-page:hover { opacity: 0.9; }
 
 @keyframes bookOpenPop {
-  0% { transform: scale(0.85) rotateX(10deg); opacity: 0; }
-  100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+  0% { transform: scale(0.9) translateY(10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
-.animate-book-open { animation: bookOpenPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.animate-book-open { animation: bookOpenPop 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 </style>
