@@ -53,9 +53,7 @@
             <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Phòng Hồ Chí Minh Số</p>
           </div>
         </div>
-        <div class="header-stats-badge">
-          <span>🟢 Trạng thái: <strong>Hoạt động ổn định</strong></span>
-        </div>
+
       </header>
 
       <div class="main-content-wrapper">
