@@ -14,9 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 💡 Lưu ý: Không cần tạo thư mục uploads hay app.use('/uploads') nữa 
-// vì toàn bộ file ảnh/media giờ đã được đẩy trực tiếp lên Supabase Storage đám mây!
-
 // 📊 Middleware tự động ghi nhận lượt truy cập website vào Database
 app.use(async (req, res, next) => {
     // Chỉ ghi log cho các request gọi vào đường dẫn /api
@@ -31,7 +28,6 @@ app.use(async (req, res, next) => {
                 [ip, userAgent, endpoint]
             );
         } catch (err) {
-            // In ra console để dễ debug nhưng không làm gián đoạn luồng trả về của API chính
             console.error('Lỗi ghi nhận visitor log:', err.message);
         }
     }
@@ -54,8 +50,28 @@ app.get('/', (req, res) => {
     res.json({ message: '[Phòng Hồ Chí Minh Server] API đang hoạt động bình thường trên Cloud Storage!' });
 });
 
+// 🛡️ Middleware xử lý lỗi tập trung toàn cục (Global Error Handler)
+app.use((err, req, res, next) => {
+    console.error('Lỗi Server không bắt được:', err.stack);
+    res.status(500).json({ 
+        success: false, 
+        message: 'Đã xảy ra lỗi hệ thống nội bộ!', 
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined 
+    });
+});
+
 // 🔌 Khởi động Server
 const PORT = process.env.PORT || 5002;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`[Phòng Hồ Chí Minh Server] API đang chạy tại cổng ${PORT}`);
+});
+
+// Xử lý đóng ứng dụng an toàn (Graceful Shutdown)
+process.on('SIGTERM', () => {
+    console.log('Nhận tín hiệu tắt server, đang dọn dẹp kết nối...');
+    server.close(() => {
+        pool.end();
+        console.log('Đã đóng kết nối Database và Server.');
+        process.exit(0);
+    });
 });

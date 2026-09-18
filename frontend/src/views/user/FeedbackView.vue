@@ -129,12 +129,17 @@ export default {
     }
   },
   methods: {
+    // Xử lý lấy đường dẫn API an toàn và tự động đồng bộ Render
+    getApiUrl() {
+      const rawUrl = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+      return rawUrl.endsWith('/api') ? rawUrl.slice(0, -4) : rawUrl;
+    },
+
     async handleSubmit() {
       this.isSubmitting = true;
       
       try {
-        // Gửi request thực tế đến API backend
-        const response = await fetch('/api/feedback', {
+        const response = await fetch(`${this.getApiUrl()}/api/feedback`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -144,7 +149,7 @@ export default {
 
         const data = await response.json();
 
-        if (response.ok && data.success) {
+        if (response.ok) {
           this.triggerNotification(
             'Gửi Góp Ý Thành Công', 
             `Đồng chí ${this.form.name} đã gửi ý kiến thành công về đơn vị. Xin trân trọng tiếp thu!`
@@ -165,18 +170,20 @@ export default {
         console.error('Lỗi kết nối API feedback:', err);
         this.triggerNotification(
           'Lỗi Kết Nối', 
-          'Không thể kết nối đến máy chủ backend. Vui lòng kiểm tra lại server!'
+          'Không thể kết nối đến máy chủ backend trên Render. Vui lòng kiểm tra lại mạng!'
         );
       } finally {
         this.isSubmitting = false;
       }
     },
+
     triggerNotification(title, message) {
       if (title) this.alertTitle = title;
       if (message) this.alertMessage = message;
       this.showAlert = true;
       document.body.style.overflow = 'hidden';
     },
+
     closeAlert() {
       this.showAlert = false;
       document.body.style.overflow = 'auto';
