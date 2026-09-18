@@ -61,7 +61,7 @@ const routes = [
   {
   path: '/gop-y',
   name: 'FeedbackView',
-  component: () => import('../views/FeedbackView.vue') // hoặc đường dẫn tương ứng của bạn
+  component: () => import('../views/user/FeedbackView.vue') // hoặc đường dẫn tương ứng của bạn
   },
 ];
 
