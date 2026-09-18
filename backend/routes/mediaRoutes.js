@@ -3,10 +3,9 @@ const router = express.Router();
 const pool = require('../config/db');
 const multer = require('multer');
 const path = require('path');
-const { createClient } = require('@supabase/supabase-js');
 
-// Khởi tạo Supabase Client
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+// Import Supabase client từ file cấu hình dùng chung
+const supabase = require('../config/supabase');
 
 // Sử dụng memoryStorage để giữ file trong RAM dạng Buffer (tránh ghi vào ổ đĩa tạm của Render)
 const storage = multer.memoryStorage();
