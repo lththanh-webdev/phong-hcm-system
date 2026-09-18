@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <!-- Danh sách Hòm thư (Hiển thị dạng bảng trên Desktop, dạng Cards linh hoạt trên Mobile) -->
+    <!-- Danh sách Hòm thư -->
     <div class="intro-card table-wrapper-card">
       <div class="card-header-flex">
         <div>
@@ -94,22 +94,24 @@
                   </span>
                 </td>
                 <td class="content-cell">
-                  <p class="message-text">{{ item.message || item.content }}</p>
+                  <p class="message-snippet">{{ truncateText(item.message || item.content, 90) }}</p>
+                  <button @click="openDetailModal(item)" class="btn-link-detail">Xem chi tiết 🔍</button>
                 </td>
                 <td class="time-cell">
                   {{ formatDate(item.created_at || item.createdAt) }}
                 </td>
-                <td class="text-center">
-                  <button @click="confirmDelete(item)" class="btn-delete-icon" title="Xóa thư">
-                    🗑️ Xóa
-                  </button>
+                <td class="text-center action-col">
+                  <div class="action-btn-group">
+                    <button @click="openDetailModal(item)" class="btn-detail-icon" title="Xem chi tiết nội dung">👁️ Xem</button>
+                    <button @click="confirmDelete(item)" class="btn-delete-icon" title="Xóa thư">🗑️ Xóa</button>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Danh sách dạng Thẻ (Cards) tối ưu tuyệt đối cho điện thoại / Tablet -->
+        <!-- Danh sách dạng Thẻ (Cards) cho Mobile -->
         <div class="mobile-cards-container">
           <div v-for="(item, index) in filteredFeedbackList" :key="'m-' + (item.id || item._id)" class="feedback-item-card">
             <div class="item-card-header">
@@ -122,13 +124,15 @@
               <h4 class="m-sender">{{ item.sender_name || item.name || 'Ẩn danh' }}</h4>
               <p class="m-unit">📍 {{ item.unit || 'Chưa cập nhật đơn vị' }}</p>
               <div class="m-content-box">
-                <p>{{ item.message || item.content }}</p>
+                <p>{{ truncateText(item.message || item.content, 110) }}</p>
+                <button @click="openDetailModal(item)" class="btn-link-detail">Xem đầy đủ nội dung 🔍</button>
               </div>
               <div class="m-footer">
                 <span class="m-time">🕒 {{ formatDate(item.created_at || item.createdAt) }}</span>
-                <button @click="confirmDelete(item)" class="btn-delete-mobile">
-                  🗑️ Xóa thư
-                </button>
+                <div class="mobile-actions-group">
+                  <button @click="openDetailModal(item)" class="btn-detail-mobile">👁️ Xem</button>
+                  <button @click="confirmDelete(item)" class="btn-delete-mobile">🗑️ Xóa</button>
+                </div>
               </div>
             </div>
           </div>
@@ -143,7 +147,49 @@
       </div>
     </div>
 
-    <!-- 🌟 MODAL XÁC NHẬN XÓA HIỆN ĐẠI -->
+    <!-- 🌟 MODAL XEM CHI TIẾT NỘI DUNG SIÊU XỊN & HIỆN ĐẠI -->
+    <transition name="modal-modern">
+      <div v-if="showDetailModal" class="modal-overlay" @click.self="showDetailModal = false">
+        <div class="modal-container detail-container">
+          <div class="detail-header-bar">
+            <div class="detail-badge-top">★ CHI TIẾT Ý KIẾN ĐÓNG GÓP</div>
+            <button @click="showDetailModal = false" class="btn-close-modal">✕</button>
+          </div>
+
+          <div class="detail-meta-box">
+            <div class="meta-row">
+              <span class="meta-label">Người gửi:</span>
+              <span class="meta-value highlight-text">{{ activeDetail.sender_name || activeDetail.name || 'Ẩn danh' }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Đơn vị:</span>
+              <span class="meta-value">{{ activeDetail.unit || 'Chưa cập nhật đơn vị' }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Lĩnh vực:</span>
+              <span class="badge-category">{{ formatCategoryName(activeDetail.category) }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Thời gian gửi:</span>
+              <span class="meta-value text-time">{{ formatDate(activeDetail.created_at || activeDetail.createdAt) }}</span>
+            </div>
+          </div>
+
+          <div class="detail-content-section">
+            <h5 class="content-heading">Nội dung chi tiết phản ánh:</h5>
+            <div class="scrollable-content-box">
+              <p class="full-message-text">{{ activeDetail.message || activeDetail.content }}</p>
+            </div>
+          </div>
+
+          <div class="detail-modal-footer">
+            <button class="btn-alert-confirm" @click="showDetailModal = false">Đóng cửa sổ</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <!-- 🌟 MODAL XÁC NHẬN XÓA -->
     <transition name="modal-modern">
       <div v-if="showDeleteModal" class="modal-overlay" @click.self="showDeleteModal = false">
         <div class="modal-container alert-container">
@@ -162,7 +208,7 @@
       </div>
     </transition>
 
-    <!-- 🌟 MODAL THÔNG BÁO TOAST / ALERT ĐỒNG BỘ -->
+    <!-- 🌟 MODAL THÔNG BÁO TOAST / ALERT -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="showAlert = false">
         <div class="modal-container alert-container">
@@ -188,6 +234,8 @@ export default {
       feedbackList: [],
       searchQuery: '',
       selectedCategory: 'ALL',
+      showDetailModal: false,
+      activeDetail: {},
       showDeleteModal: false,
       itemToDelete: null,
       showAlert: false,
@@ -233,11 +281,21 @@ export default {
             sender_name: 'Nguyễn Văn A',
             unit: 'Đại đội 1 - Tiểu đoàn PK 16',
             category: 'ThuVien',
-            message: 'Đề nghị cập nhật thêm tài liệu nghiên cứu chuyên sâu về truyền thống đơn vị.',
+            message: 'Trước đó, sông Bùi đã được đặt ở mức báo động III. Báo điện tử Tiền Phong báo điện tử Tiền Phong 1 Báo điện tử Tiền Phong 1 © Báo điện tử Tiền Phong Đến chiều 17/9, nước chưa vẫn rút bớt tại thôn Đồng Dàu. Người dân tiếp tục theo dõi sát mực nước sông Bùi. Báo điện tử Tiền Phong Đến chiều 17/9, nước chưa vẫn rút bớt tại thôn Đồng Dàu. Người dân tiếp tục theo dõi sát mực nước sông Bùi. © Báo điện tử Tiền Phong Báo điện tử Tiền Phong 1 Báo điện tử Tiền Phong 1 © Báo điện tử Tiền Phong Báo điện tử Tiền Phong Đến chiều 17/9...',
             created_at: new Date()
           }
         ];
       }
+    },
+
+    truncateText(text, length) {
+      if (!text) return '';
+      return text.length > length ? text.substring(0, length) + '...' : text;
+    },
+
+    openDetailModal(item) {
+      this.activeDetail = item;
+      this.showDetailModal = true;
     },
 
     formatCategoryName(cat) {
@@ -294,7 +352,7 @@ export default {
   padding: 10px 0;
 }
 
-/* Hero Section chuẩn phong cách hệ thống */
+/* Hero Section */
 .hero-section {
   text-align: center;
   margin-bottom: 30px;
@@ -328,7 +386,7 @@ export default {
   margin: 0;
 }
 
-/* Thống kê (Stats Grid) */
+/* Thống kê */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -375,7 +433,7 @@ export default {
   font-size: 0.8rem;
 }
 
-/* Thanh Tìm kiếm & Lọc thông minh */
+/* Lọc & Tìm kiếm */
 .filter-card {
   background: linear-gradient(145deg, rgba(30, 4, 4, 0.8), rgba(15, 1, 1, 0.9));
   border: 1px solid rgba(255, 215, 0, 0.2);
@@ -429,12 +487,6 @@ export default {
   font-family: inherit;
   outline: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filter-options select:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .filter-options option {
@@ -442,7 +494,7 @@ export default {
   color: #f8fafc;
 }
 
-/* Thẻ Bảng Dữ Liệu Đồng Bộ .intro-card */
+/* Thẻ Bảng Dữ Liệu */
 .table-wrapper-card {
   background: linear-gradient(145deg, rgba(35, 5, 5, 0.85), rgba(18, 2, 2, 0.9));
   border-radius: 16px;
@@ -485,7 +537,6 @@ export default {
 
 .btn-refresh:hover {
   background: rgba(255, 215, 0, 0.2);
-  transform: translateY(-1px);
 }
 
 /* Bảng Desktop */
@@ -512,7 +563,6 @@ export default {
   font-weight: 700;
   background: rgba(15, 2, 2, 0.6);
   font-size: 0.85rem;
-  letter-spacing: 0.5px;
 }
 
 .sender-name {
@@ -530,11 +580,28 @@ export default {
   max-width: 320px;
 }
 
-.message-text {
-  margin: 0;
+.message-snippet {
+  margin: 0 0 6px 0;
   line-height: 1.4;
   color: #cbd5e1;
   word-break: break-word;
+}
+
+/* Nút xem chi tiết dạng link nhỏ gọn trong bảng */
+.btn-link-detail {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.btn-link-detail:hover {
+  color: #93c5fd;
 }
 
 .time-cell {
@@ -552,7 +619,12 @@ export default {
   text-align: center;
 }
 
-/* Huy hiệu danh mục */
+.action-btn-group {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
 .badge-category {
   display: inline-block;
   padding: 4px 10px;
@@ -565,25 +637,37 @@ export default {
   white-space: nowrap;
 }
 
-/* Nút Xóa trên bảng */
-.btn-delete-icon {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  padding: 6px 12px;
+.btn-detail-icon, .btn-delete-icon {
+  padding: 6px 10px;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  border: 1px solid;
+}
+
+.btn-detail-icon {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.btn-detail-icon:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.btn-delete-icon {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
 }
 
 .btn-delete-icon:hover {
   background: rgba(239, 68, 68, 0.3);
-  transform: translateY(-1px);
 }
 
-/* Mobile Cards Container (Tự động hiển thị khi xem trên màn hình nhỏ) */
+/* Mobile Cards Container */
 .mobile-cards-container {
   display: none;
   flex-direction: column;
@@ -636,6 +720,9 @@ export default {
   border: 1px solid rgba(255, 215, 0, 0.1);
   padding: 10px 12px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .m-content-box p {
@@ -660,15 +747,30 @@ export default {
   color: #94a3b8;
 }
 
+.mobile-actions-group {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-detail-mobile, .btn-delete-mobile {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+.btn-detail-mobile {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
 .btn-delete-mobile {
   background: rgba(239, 68, 68, 0.2);
   color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 /* Trạng thái trống */
@@ -694,7 +796,150 @@ export default {
   margin: 0;
 }
 
-/* Modal Styles đồng bộ với Form người dùng */
+/* 🌟 MODAL XEM CHI TIẾT SIÊU XỊN & HIỆN ĐẠI */
+.detail-container {
+  background: linear-gradient(145deg, #250404, #0d0101);
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 650px;
+  padding: 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 85vh;
+}
+
+.detail-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  padding-bottom: 12px;
+}
+
+.detail-badge-top {
+  color: #ffd700;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.btn-close-modal {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-close-modal:hover {
+  background: rgba(239, 68, 68, 0.5);
+}
+
+.detail-meta-box {
+  background: rgba(15, 2, 2, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.meta-label {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meta-value {
+  font-size: 0.95rem;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.highlight-text {
+  color: #ffd700;
+}
+
+.text-time {
+  color: #38bdf8;
+}
+
+.detail-content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content-heading {
+  color: #ffd700;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.scrollable-content-box {
+  background: rgba(10, 1, 1, 0.9);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+  padding: 18px;
+  max-height: 280px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* Tối ưu typography cho văn bản dài cực đẹp */
+.full-message-text {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+
+.scrollable-content-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-content-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 4px;
+}
+
+.scrollable-content-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.6);
+}
+
+.detail-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  padding-top: 14px;
+}
+
+/* Modal Xóa chung */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -770,17 +1015,17 @@ export default {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 12px 0;
+  padding: 12px 24px;
   border-radius: 30px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  flex: 1;
   box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
 .btn-danger-action {
   background: linear-gradient(135deg, #dc2626, #991b1b);
+  flex: 1;
 }
 
 .btn-alert-cancel {
@@ -791,15 +1036,10 @@ export default {
   border-radius: 30px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
   flex: 1;
 }
 
-.btn-alert-cancel:hover {
-  background: rgba(100, 116, 139, 0.5);
-}
-
-/* Modal Transitions */
+/* Modal Transition */
 .modal-modern-enter-active,
 .modal-modern-leave-active {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -821,7 +1061,7 @@ export default {
   opacity: 0;
 }
 
-/* Responsive Breakpoints */
+/* Responsive */
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: 1fr;
@@ -836,14 +1076,8 @@ export default {
   .mobile-cards-container {
     display: flex;
   }
-}
-
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 1.6rem;
-  }
-  .table-wrapper-card {
-    padding: 16px;
+  .detail-meta-box {
+    grid-template-columns: 1fr;
   }
 }
 </style>
