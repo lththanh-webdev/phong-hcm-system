@@ -8,24 +8,24 @@ const { createClient } = require('@supabase/supabase-js');
 // Khởi tạo Supabase Client (sử dụng biến môi trường)
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-// Sử dụng memoryStorage để lưu file vào RAM dưới dạng Buffer trước khi đẩy lên Supabase
+// Cấu hình Multer lưu file tạm vào RAM (Memory Storage) dưới dạng Buffer
 const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage,
-    limits: { fileSize: 50 * 1024 * 1024 } // Giới hạn tối đa 50MB
+    limits: { fileSize: 50 * 1024 * 1024 } // Giới hạn tối đa 50MB (đủ cho Ảnh, MP3, Video MP4 dung lượng vừa)
 });
 
 // Hàm hỗ trợ upload lên Supabase Storage và trả về Public URL
 async function uploadToSupabase(file) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const fileName = uniqueSuffix + path.extname(file.originalname);
-    const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket
+    const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket 'uploads'
 
-    // Thay 'uploads' bằng tên bucket chính xác mà bạn đã tạo trên Supabase Storage
+    // Tiến hành upload buffer lên Supabase
     const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('uploads') 
+        .from('uploads') // Đảm bảo tên bucket chính xác trên Supabase của bạn là 'uploads'
         .upload(filePath, file.buffer, {
-            contentType: file.mimetype,
+            contentType: file.mimetype, // CỰC KỲ QUAN TRỌNG: Giúp trình duyệt nhận diện đúng định dạng ảnh, mp3 hay mp4
             upsert: false
         });
 
@@ -41,7 +41,24 @@ async function uploadToSupabase(file) {
     return publicUrl;
 }
 
-// GET: Lấy danh sách hoạt động (Sắp xếp an toàn theo id giảm dần)
+// Hàm hỗ trợ xóa file rác trên Supabase Storage
+async function deleteFromSupabase(fileUrl) {
+    if (!fileUrl) return;
+    try {
+        const marker = '/uploads/';
+        const parts = fileUrl.split(marker);
+        if (parts.length > 1) {
+            const filePath = parts[1]; // Lấy phần đường dẫn phía sau bucket (ví dụ: public/17000000-abc.mp4)
+            await supabase.storage.from('uploads').remove([filePath]);
+        }
+    } catch (err) {
+        console.error('Lỗi khi xóa file cũ trên Supabase:', err.message);
+    }
+}
+
+// ================= ROUTE XỬ LÝ =================
+
+// GET: Lấy danh sách hoạt động
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM activities ORDER BY id DESC');
@@ -52,14 +69,14 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST: Thêm hoạt động mới
+// POST: Thêm hoạt động mới (Hỗ trợ upload file ảnh, mp3, mp4)
 router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { title, category, summary, content, created_at } = req.body;
         let image_url = null;
         
         if (req.file) {
-            // Upload lên Supabase Storage thay vì lưu vào ổ đĩa local
+            // Đẩy tệp lên Supabase Storage
             image_url = await uploadToSupabase(req.file);
         }
 
@@ -88,15 +105,22 @@ router.post('/', upload.single('image'), async (req, res) => {
     }
 });
 
-// PUT: Cập nhật hoạt động
+// PUT: Cập nhật hoạt động (Thay file mới thì tự động xóa file cũ trên Storage)
 router.put('/:id', upload.single('image'), async (req, res) => {
     try {
         const { id } = req.params;
         const { title, category, summary, content, created_at } = req.body;
-        let image_url = null;
+        
+        // Lấy thông tin record hiện tại trong database
+        const oldRecord = await pool.query('SELECT image_url FROM activities WHERE id = $1', [id]);
+        let image_url = oldRecord.rows.length > 0 ? oldRecord.rows[0].image_url : null;
         
         if (req.file) {
-            // Upload ảnh mới lên Supabase Storage nếu có chọn ảnh mới
+            // Nếu người dùng chọn tải lên file mới, xóa file cũ đi trước để tiết kiệm dung lượng Supabase
+            if (image_url) {
+                await deleteFromSupabase(image_url);
+            }
+            // Upload file mới lên Supabase
             image_url = await uploadToSupabase(req.file);
         }
 
@@ -123,12 +147,19 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     }
 });
 
-// DELETE: Xóa hoạt động
+// DELETE: Xóa hoạt động (Đồng thời xóa tệp trên Supabase Storage)
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        
+        // Lấy đường dẫn file để xóa khỏi Supabase Storage trước khi xóa dòng trong database
+        const oldRecord = await pool.query('SELECT image_url FROM activities WHERE id = $1', [id]);
+        if (oldRecord.rows.length > 0 && oldRecord.rows[0].image_url) {
+            await deleteFromSupabase(oldRecord.rows[0].image_url);
+        }
+
         await pool.query('DELETE FROM activities WHERE id = $1', [id]);
-        res.json({ message: 'Đã xóa hoạt động thành công' });
+        res.json({ message: 'Đã xóa hoạt động và tệp liên quan thành công!' });
     } catch (err) {
         console.error('Lỗi xóa hoạt động:', err.message);
         res.status(500).json({ error: err.message });

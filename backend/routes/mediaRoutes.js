@@ -21,11 +21,10 @@ async function uploadToSupabase(file) {
     const fileName = uniqueSuffix + path.extname(file.originalname);
     const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket trên Supabase
 
-    // Thay 'uploads' bằng tên bucket của bạn trên Supabase (nếu bạn dùng chung bucket)
     const { data: uploadData, error: uploadError } = await supabase.storage
         .from('uploads') 
         .upload(filePath, file.buffer, {
-            contentType: file.mimetype,
+            contentType: file.mimetype, // Cực kỳ quan trọng để nhận diện MP3, MP4, Ảnh
             upsert: false
         });
 
@@ -41,6 +40,21 @@ async function uploadToSupabase(file) {
     return publicUrl;
 }
 
+// Hàm hỗ trợ xóa file trên Supabase Storage khi xóa bản ghi
+async function deleteFromSupabase(fileUrl) {
+    if (!fileUrl) return;
+    try {
+        const marker = '/uploads/';
+        const parts = fileUrl.split(marker);
+        if (parts.length > 1) {
+            const filePath = parts[1]; // Lấy đường dẫn phía sau bucket (ví dụ: public/17000000-abc.mp4)
+            await supabase.storage.from('uploads').remove([filePath]);
+        }
+    } catch (err) {
+        console.error('Lỗi khi xóa file trên Supabase:', err.message);
+    }
+}
+
 // GET: Lấy danh sách media (Sắp xếp an toàn theo id giảm dần)
 router.get('/', async (req, res) => {
     try {
@@ -52,14 +66,14 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST: Tải lên file MP3/MP4 mới (Đã chuyển sang Supabase Storage)
+// POST: Tải lên file MP3/MP4/Ảnh mới lên Supabase Storage
 router.post('/', upload.single('file'), async (req, res) => {
     try {
         const { title, artist, media_type } = req.body;
         let file_url = '';
         
         if (req.file) {
-            // Upload trực tiếp lên đám mây thay vì lưu local
+            // Đẩy tệp trực tiếp lên Supabase
             file_url = await uploadToSupabase(req.file);
         }
 
@@ -76,12 +90,21 @@ router.post('/', upload.single('file'), async (req, res) => {
     }
 });
 
-// DELETE: Xóa bản ghi media
+// DELETE: Xóa bản ghi media VÀ xóa luôn file tương ứng trên Supabase Storage
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
+
+        // 1. Lấy file_url để biết đường dẫn file cần xóa trên Supabase
+        const oldRecord = await pool.query('SELECT file_url FROM media WHERE id = $1', [id]);
+        if (oldRecord.rows.length > 0 && oldRecord.rows[0].file_url) {
+            await deleteFromSupabase(oldRecord.rows[0].file_url);
+        }
+
+        // 2. Xóa dữ liệu trong PostgreSQL
         await pool.query('DELETE FROM media WHERE id = $1', [id]);
-        res.json({ message: 'Đã xóa media thành công' });
+        
+        res.json({ message: 'Đã xóa media và tệp liên quan thành công!' });
     } catch (err) {
         console.error('Lỗi xóa media:', err.message);
         res.status(500).json({ error: err.message });
