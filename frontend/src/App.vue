@@ -1,14 +1,10 @@
-```vue
 <template>
   <div id="app" class="app-layout">
 
-    <!-- ================= HEADER ================= -->
     <header class="navbar-header">
 
-      <!-- HEADER CHÍNH -->
       <div class="header-container">
 
-        <!-- LOGO + TIÊU ĐỀ -->
         <div class="brand-section">
 
           <img
@@ -33,7 +29,6 @@
 
         </div>
 
-        <!-- WIDGET DESKTOP -->
         <div class="header-widgets desktop-widgets">
 
           <div class="network-badge">
@@ -65,7 +60,6 @@
 
         </div>
 
-        <!-- NÚT MOBILE -->
         <button
           class="mobile-menu-btn"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
@@ -83,7 +77,6 @@
       </div>
 
 
-      <!-- ================= MOBILE WIDGET ================= -->
       <div class="mobile-widgets-bar">
 
         <div class="network-badge">
@@ -114,7 +107,6 @@
       </div>
 
 
-      <!-- ================= NAVIGATION ================= -->
       <nav
         :class="[
           'nav-bar',
@@ -169,6 +161,13 @@
             Thi Trắc Nghiệm
           </router-link>
 
+          <router-link
+            to="/gop-y"
+            class="nav-item"
+          >
+            Hòm Thư Góp Ý
+          </router-link>
+
         </div>
 
       </nav>
@@ -176,13 +175,11 @@
     </header>
 
 
-    <!-- ================= MAIN ================= -->
     <main class="main-body">
       <router-view />
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
     <footer class="app-footer">
 
       <div class="footer-glow-line"></div>

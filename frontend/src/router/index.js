@@ -57,7 +57,12 @@ const routes = [
   { 
     path: '/:pathMatch(.*)*', 
     redirect: '/tuong-niem' 
-  }
+  },
+  {
+  path: '/gop-y',
+  name: 'FeedbackView',
+  component: () => import('../views/FeedbackView.vue') // hoặc đường dẫn tương ứng của bạn
+  },
 ];
 
 const router = createRouter({
