@@ -2,8 +2,8 @@
   <div class="tab-pane">
     <div class="section-top">
       <div>
-        <h3>Hòm Thư Góp Ý & Trợ Lý AI</h3>
-        <p class="subtitle">Quản lý phản hồi từ người dùng và kích hoạt AI trả lời tự động</p>
+        <h3>Hòm Thư Góp Ý &amp; Trợ Lý AI</h3>
+        <p class="subtitle">Quản lý phản hồi từ đơn vị và kiểm soát tương tác tự động thông minh</p>
       </div>
     </div>
 
@@ -14,33 +14,39 @@
         <table class="data-table">
           <thead>
             <tr>
-              <th>Người gửi</th>
-              <th>Email</th>
-              <th>Nội dung góp ý</th>
+              <th>Người gửi &amp; Đơn vị</th>
+              <th>Lĩnh vực</th>
+              <th>Nội dung góp ý / Chat</th>
               <th>Thời gian</th>
               <th>Trạng thái</th>
+              <th>Lịch sử phản hồi (AI / Admin)</th>
               <th>Thao tác</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in feedbackList" :key="item.id">
-              <td><strong>{{ item.sender_name }}</strong></td>
-              <td>{{ item.sender_email }}</td>
-              <td>{{ item.message }}</td>
+              <td>
+                <strong>{{ item.name }}</strong><br>
+                <small style="color: #94a3b8;">{{ item.unit }}</small>
+              </td>
+              <td><span class="badge badge-amber">{{ item.category }}</span></td>
+              <td style="max-width: 230px; word-break: break-word; white-space: pre-line;">{{ item.content }}</td>
               <td>{{ formatDate(item.created_at) }}</td>
               <td>
                 <span class="badge" :class="item.status === 'replied' ? 'badge-blue' : 'badge-amber'">
                   {{ item.status === 'replied' ? 'Đã phản hồi' : 'Chờ xử lý' }}
                 </span>
               </td>
+              <td style="max-width: 250px; font-size: 0.85rem; color: #cbd5e1; white-space: pre-line;">
+                {{ item.admin_reply || 'Chưa có phản hồi' }}
+              </td>
               <td class="action-btns">
                 <button @click="openReplyModal(item)" class="btn-edit">✉️ Phản hồi</button>
-                <button @click="triggerAIResponse(item)" class="btn-ai" title="Dùng AI trả lời ngay">🤖 AI Trả lời</button>
                 <button @click="deleteFeedback(item.id)" class="btn-del">🗑️ Xóa</button>
               </td>
             </tr>
             <tr v-if="feedbackList.length === 0">
-              <td colspan="6" class="no-data">Chưa có thư góp ý nào.</td>
+              <td colspan="7" class="no-data">Chưa có thư góp ý nào.</td>
             </tr>
           </tbody>
         </table>
@@ -50,11 +56,11 @@
     <!-- Modal Phản Hồi -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-content">
-        <h4>Phản hồi góp ý cho: {{ activeFeedback.sender_name }}</h4>
-        <p class="modal-sub">Nội dung gốc: "{{ activeFeedback.message }}"</p>
-        <textarea v-model="replyContent" rows="4" placeholder="Nhập nội dung phản hồi..."></textarea>
+        <h4>Phản hồi cho: {{ activeFeedback.name }} ({{ activeFeedback.unit }})</h4>
+        <p class="modal-sub">Nội dung gốc: "{{ activeFeedback.content }}"</p>
+        <textarea v-model="replyContent" rows="4" placeholder="Nhập nội dung phản hồi chính thức từ Ban biên tập..."></textarea>
         <div class="modal-actions">
-          <button @click="sendReply" class="btn-primary">Gửi phản hồi</button>
+          <button @click="sendAdminReply" class="btn-primary">Gửi phản hồi</button>
           <button @click="showModal = false" class="btn-cancel">Hủy</button>
         </div>
       </div>
@@ -64,6 +70,7 @@
 
 <script>
 export default {
+  name: 'FeedbackAdminView',
   data() {
     return {
       feedbackList: [],
@@ -83,12 +90,11 @@ export default {
     async fetchFeedback() {
       try {
         const res = await fetch(`${this.getApiUrl()}/api/feedback`);
-        if (res.ok) this.feedbackList = await res.json();
+        if (res.ok) {
+          this.feedbackList = await res.json();
+        }
       } catch (err) {
-        // Dữ liệu mẫu demo nếu chưa có API backend sẵn
-        this.feedbackList = [
-          { id: 1, sender_name: 'Nguyễn Văn A', sender_email: 'vana@gmail.com', message: 'Phòng Hồ Chí Minh Số cập nhật tài liệu rất hữu ích!', created_at: new Date(), status: 'pending' }
-        ];
+        console.error('Lỗi tải danh sách feedback:', err);
       }
     },
     formatDate(dateStr) {
@@ -100,30 +106,49 @@ export default {
       this.replyContent = '';
       this.showModal = true;
     },
-    async sendReply() {
-      this.$emit('toast', `Đã gửi phản hồi thành công đến ${this.activeFeedback.sender_email}!`, 'success');
-      this.showModal = false;
-      // Gọi API gửi email/phản hồi tại đây
-    },
-    async triggerAIResponse(item) {
-      this.$emit('toast', '🤖 AI đang phân tích và tạo câu trả lời tự động...', 'success');
-      setTimeout(() => {
-        item.status = 'replied';
-        this.$emit('toast', `AI đã tự động phản hồi thành công cho ${item.sender_name}!`, 'success');
-      }, 1500);
-      // Kết nối API AI (Gemini/ChatGPT API) ở Backend tại đây
+    async sendAdminReply() {
+      if (!this.replyContent.trim()) {
+        alert('Vui lòng nhập nội dung phản hồi!');
+        return;
+      }
+      try {
+        const res = await fetch(`${this.getApiUrl()}/api/feedback/reply/${this.activeFeedback.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ replyContent: this.replyContent })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          alert('Đã gửi phản hồi thành công!');
+          this.showModal = false;
+          this.fetchFeedback();
+        } else {
+          alert(data.message || 'Lỗi khi gửi phản hồi.');
+        }
+      } catch (err) {
+        console.error('Lỗi kết nối:', err);
+        alert('Không thể kết nối đến server.');
+      }
     },
     async deleteFeedback(id) {
-      if (!confirm('Bạn có chắc muốn xóa thư này?')) return;
-      this.feedbackList = this.feedbackList.filter(f => f.id !== id);
-      this.$emit('toast', 'Đã xóa thư góp ý!', 'success');
+      if (!confirm('Bạn có chắc muốn xóa thư góp ý này không?')) return;
+      try {
+        const res = await fetch(`${this.getApiUrl()}/api/feedback/${id}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          this.feedbackList = this.feedbackList.filter(f => f.id !== id);
+          alert('Đã xóa thành công!');
+        }
+      } catch (err) {
+        console.error('Lỗi xóa:', err);
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* CSS bổ sung riêng cho Feedback & AI Modal */
 .tab-pane { display: flex; flex-direction: column; gap: 25px; }
 .section-top { display: flex; justify-content: space-between; align-items: center; }
 .section-top h3 { margin: 0 0 4px 0; font-size: 1.25rem; color: #fff; }
@@ -132,15 +157,14 @@ export default {
 .data-table-container h4 { margin: 0 0 15px 0; font-size: 1.1rem; color: #ffd700; }
 .table-responsive { width: 100%; overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-.data-table th, .data-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.data-table th, .data-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); color: #f8fafc; }
 .data-table th { color: #94a3b8; font-weight: 600; background: rgba(15, 23, 42, 0.4); }
 .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 .badge-blue { background: #2563eb; color: #fff; }
 .badge-amber { background: #d97706; color: #fff; }
 .action-btns { display: flex; gap: 8px; }
-.btn-edit, .btn-del, .btn-ai { padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.btn-edit, .btn-del { padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 .btn-edit { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-.btn-ai { background: rgba(147, 51, 234, 0.2); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3); }
 .btn-del { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 .no-data { text-align: center; color: #8d99ae; padding: 25px !important; }
 

@@ -63,7 +63,7 @@
           </div>
 
           <button type="submit" class="btn-submit" :disabled="isSubmitting">
-            <span v-if="isSubmitting">Đang gửi hệ thống...</span>
+            <span v-if="isSubmitting">Đang gửi lên hệ thống...</span>
             <span v-else>Gửi Góp Ý Ngay 🚀</span>
           </button>
         </form>
@@ -93,7 +93,7 @@
 
     </div>
 
-    <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI (Đồng bộ với IntroView) -->
+    <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="closeAlert">
         <div class="modal-container alert-container">
@@ -129,23 +129,47 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       this.isSubmitting = true;
       
-      // Giả lập độ trễ kết nối mạng an toàn (Network request simulation)
-      setTimeout(() => {
-        this.isSubmitting = false;
+      try {
+        // Gửi request thực tế đến API backend
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.form)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          this.triggerNotification(
+            'Gửi Góp Ý Thành Công', 
+            `Đồng chí ${this.form.name} đã gửi ý kiến thành công về đơn vị. Xin trân trọng tiếp thu!`
+          );
+          
+          // Reset form sau khi gửi thành công lên database
+          this.form.name = '';
+          this.form.unit = '';
+          this.form.category = 'Chung';
+          this.form.content = '';
+        } else {
+          this.triggerNotification(
+            'Thông Báo', 
+            data.message || 'Không thể gửi góp ý, vui lòng thử lại!'
+          );
+        }
+      } catch (err) {
+        console.error('Lỗi kết nối API feedback:', err);
         this.triggerNotification(
-          'Gửi Góp Ý Thành Công', 
-          `Đồng chí ${this.form.name} đã gửi ý kiến thành công về phân hệ "${this.form.category}". Đơn vị xin trân trọng tiếp thu!`
+          'Lỗi Kết Nối', 
+          'Không thể kết nối đến máy chủ backend. Vui lòng kiểm tra lại server!'
         );
-        
-        // Reset form sau khi gửi thành công
-        this.form.name = '';
-        this.form.unit = '';
-        this.form.category = 'Chung';
-        this.form.content = '';
-      }, 700);
+      } finally {
+        this.isSubmitting = false;
+      }
     },
     triggerNotification(title, message) {
       if (title) this.alertTitle = title;
@@ -166,7 +190,7 @@ export default {
   padding: 10px 0;
 }
 
-/* Hero Section (Đồng bộ tuyệt đối với IntroView) */
+/* Hero Section */
 .hero-section {
   text-align: center;
   margin-bottom: 40px;
@@ -200,7 +224,7 @@ export default {
   margin: 0;
 }
 
-/* Grid Layout chia 2 cột cho màn hình lớn và tự động dồn cột trên mobile */
+/* Grid Layout */
 .feedback-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -214,7 +238,6 @@ export default {
   gap: 24px;
 }
 
-/* Kế thừa hoàn toàn kiểu dáng thẻ .intro-card từ IntroView */
 .intro-card {
   background: linear-gradient(145deg, rgba(35, 5, 5, 0.85), rgba(18, 2, 2, 0.9));
   border-radius: 16px;
@@ -333,7 +356,7 @@ export default {
   cursor: not-allowed;
 }
 
-/* Card List cho sidebar */
+/* Card List */
 .card-list {
   color: #cbd5e1;
   font-size: 0.9rem;
@@ -350,7 +373,7 @@ export default {
   color: #f8fafc;
 }
 
-/* Mini Banner trong sidebar */
+/* Mini Banner */
 .info-banner-mini {
   background: linear-gradient(135deg, rgba(92, 6, 6, 0.4), rgba(30, 2, 2, 0.7));
   border: 1px solid rgba(255, 215, 0, 0.3);
@@ -389,7 +412,7 @@ export default {
   font-size: 0.8rem;
 }
 
-/* 🌟 STYLE CHO MODAL THÔNG BÁO HIỆN ĐẠI (Đồng bộ 100% với IntroView) */
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -469,7 +492,7 @@ export default {
   box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
 }
 
-/* Modal Smooth Transitions */
+/* Modal Transitions */
 .modal-modern-enter-active,
 .modal-modern-leave-active {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -491,7 +514,7 @@ export default {
   opacity: 0;
 }
 
-/* Responsive tối ưu cho Mobile & Tablet */
+/* Responsive */
 @media (max-width: 900px) {
   .feedback-grid {
     grid-template-columns: 1fr;

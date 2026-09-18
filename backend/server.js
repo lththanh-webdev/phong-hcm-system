@@ -47,6 +47,7 @@ app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/stats', require('./routes/statsRoutes'));        // Thống kê truy cập
 app.use('/api/visitors', require('./routes/visitorRoutes')); // Quản lý visitor
+app.use('/api/feedback', require('./routes/feedbackRoutes')); // 🌟 Quản lý Hòm thư góp ý
 
 // 🏠 Trang chủ API kiểm tra trạng thái server
 app.get('/', (req, res) => {
