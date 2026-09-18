@@ -9,8 +9,11 @@ const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
 // Khởi tạo Supabase Client
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-
+// Khởi tạo Supabase Client sử dụng Service Key có sẵn trên Render
+const supabase = createClient(
+    process.env.SUPABASE_URL, 
+    process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY
+);
 // Khuyến nghị: Nên đặt biến JWT_SECRET vào mục Environment trên Render, nếu không có sẽ dùng chuỗi mặc định an toàn này
 const JWT_SECRET = process.env.JWT_SECRET || 'phong-hcm-secure-jwt-secret-key-2026';
 
