@@ -51,15 +51,7 @@
       </div>
     </div>
 
-    <!-- Khung thông tin ban biên tập / liên hệ -->
-    <div class="info-banner">
-      <div class="banner-emblem">★</div>
-      <div class="banner-content">
-        <h4>ĐƠN VỊ QUẢN LÝ VÀ VẬN HÀNH</h4>
-        <p>Cán bộ chính trị / Tiểu Đoàn Phòng Không 16 • Phục vụ công tác giáo dục chính trị và tuyên truyền nội bộ đơn vị.</p>
-      </div>
-    </div>
-
+ 
     <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI (Thay thế alert mặc định) -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="closeAlert">

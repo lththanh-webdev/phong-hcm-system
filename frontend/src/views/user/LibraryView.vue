@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <!-- Bố cục Tủ Sách Chính & Pháp Luật -->
+    <!-- Bố cục Tủ Sách Chính & Pháp Luật (Đồng bộ chiều cao kích thước) -->
     <div class="shelves-container">
       
       <!-- TỦ CHÍNH TRỊ - VĂN HỌC -->
@@ -468,17 +468,18 @@ export default {
 }
 
 .section-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
   font-weight: 900;
   background: linear-gradient(135deg, #fff 30%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 6px;
+  word-break: break-word;
 }
 
 .section-subtitle {
   color: #cbd5e1;
-  font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
   max-width: 650px;
   margin: 0 auto 16px auto;
   padding: 0 10px;
@@ -503,12 +504,13 @@ export default {
 .search-input:focus { border-color: #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
 .clear-search { position: absolute; right: 14px; background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; }
 
-/* Shelves Container */
+/* Shelves Container: 2 tủ bằng nhau tuyệt đối về chiều cao và kích thước */
 .shelves-container {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 100%;
+  align-items: stretch;
 }
 
 @media(max-width: 1024px) {
@@ -520,21 +522,31 @@ export default {
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 215, 0, 0.15);
   border-radius: 16px;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
   width: 100%;
   min-width: 0;
+  height: 530px; /* Cố định chiều cao chuẩn xác giúp 2 tủ luôn bằng nhau */
 }
 
+@media(max-width: 1024px) {
+  .book-shelf { height: 480px; }
+}
+
+/* Đảm bảo các ngăn tủ bự lên fulll và lấp đầy khoảng trống */
 .fixed-shelf-box {
-  height: 420px;
-  max-height: 420px;
+  flex: 1;
+  height: auto !important;
+  max-height: none !important;
   overflow-y: auto;
   padding-right: 4px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 215, 0, 0.4) rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .fixed-shelf-box::-webkit-scrollbar { width: 5px; }
@@ -545,113 +557,116 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 14px;
   flex-shrink: 0;
   gap: 10px;
 }
 
-.shelf-title-group { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.shelf-title-group { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
 .shelf-icon-wrapper {
-  width: 38px; height: 38px;
+  width: 42px; height: 42px;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 140, 0, 0.1));
   border: 1px solid rgba(255, 215, 0, 0.4);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   flex-shrink: 0;
 }
 .law-icon { background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(16, 185, 129, 0.1)); border-color: rgba(34, 197, 94, 0.4); }
 
 .shelf-text-wrap { min-width: 0; flex: 1; }
-.shelf-text-wrap h3 { color: #ffd700; font-size: 1.05rem; font-weight: 800; margin: 0 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.shelf-desc { font-size: 0.72rem; color: #94a3b8; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.stat-pill { background: rgba(255,215,0,0.1); color: #ffd700; padding: 4px 10px; border-radius: 20px; font-size: 0.73rem; font-weight: 700; border: 1px solid rgba(255,215,0,0.25); white-space: nowrap; }
+.shelf-text-wrap h3 { color: #ffd700; font-size: clamp(0.95rem, 1.5vw, 1.15rem); font-weight: 800; margin: 0 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shelf-desc { font-size: 0.75rem; color: #94a3b8; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat-pill { background: rgba(255,215,0,0.1); color: #ffd700; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(255,215,0,0.25); white-space: nowrap; }
 
 .drawers-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  flex: 1;
 }
 
+/* Làm các ngăn tủ bự lên đầy đặn (full) */
 .drawer-item-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 14px;
+  padding: 16px 18px;
   background: linear-gradient(90deg, rgba(45, 20, 20, 0.9) 0%, rgba(20, 10, 10, 0.9) 100%);
-  border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
   user-select: none;
   width: 100%;
+  flex: 1; /* Chia đều chiều cao lấp đầy khung tủ */
 }
 
 .drawer-item-card:hover {
   background: linear-gradient(90deg, rgba(65, 28, 28, 0.95), rgba(35, 15, 15, 0.95));
   border-color: #ffd700;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(255, 215, 0, 0.2);
 }
 
-.drawer-left-info { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+.drawer-left-info { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
 .drawer-number {
   background: rgba(255, 215, 0, 0.15);
   color: #ffd700;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 6px;
   flex-shrink: 0;
 }
 .drawer-title {
   color: #38bdf8;
-  font-size: 0.86rem;
+  font-size: clamp(0.82rem, 1.3vw, 0.95rem);
   font-weight: 700;
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
 }
-.bullet-glow { width: 5px; height: 5px; background: #38bdf8; border-radius: 50%; box-shadow: 0 0 5px #38bdf8; flex-shrink: 0; }
+.bullet-glow { width: 6px; height: 6px; background: #38bdf8; border-radius: 50%; box-shadow: 0 0 6px #38bdf8; flex-shrink: 0; }
 
-.drawer-right-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.drawer-count { font-size: 0.72rem; color: #94a3b8; }
-.drawer-arrow-icon { color: #ffd700; font-size: 0.85rem; font-weight: 700; transition: transform 0.2s; }
+.drawer-right-meta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.drawer-count { font-size: 0.78rem; color: #94a3b8; }
+.drawer-arrow-icon { color: #ffd700; font-size: 0.95rem; font-weight: 700; transition: transform 0.2s; }
 .drawer-item-card:hover .drawer-arrow-icon { transform: translateX(4px); }
 
-.right-list { display: flex; flex-direction: column; gap: 8px; }
+.right-list { display: flex; flex-direction: column; gap: 10px; }
 .doc-card {
   display: flex; 
   align-items: center; 
   justify-content: space-between;
-  background: rgba(30, 15, 15, 0.8);
-  padding: 10px 12px;
-  border-radius: 10px;
+  background: rgba(30, 15, 15, 0.85);
+  padding: 14px 16px;
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.06);
   cursor: pointer;
   transition: 0.2s;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
 .doc-card:hover { border-color: #ffd700; }
 .doc-info { flex: 1; min-width: 0; }
-.doc-top-row { display: flex; gap: 8px; margin-bottom: 2px; align-items: center; flex-wrap: wrap; }
-.doc-date { font-size: 0.68rem; color: #94a3b8; }
-.doc-title { color: #fff; font-size: 0.85rem; font-weight: 700; margin: 0 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.doc-meta { font-size: 0.7rem; color: #cbd5e1; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.doc-actions { display: flex; gap: 5px; flex-shrink: 0; }
-.btn-action { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+.doc-top-row { display: flex; gap: 8px; margin-bottom: 3px; align-items: center; flex-wrap: wrap; }
+.doc-date { font-size: 0.72rem; color: #94a3b8; }
+.doc-title { color: #fff; font-size: clamp(0.82rem, 1.3vw, 0.9rem); font-weight: 700; margin: 0 0 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-meta { font-size: 0.75rem; color: #cbd5e1; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-action { padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
 .btn-read { background: rgba(59,130,246,0.2); color: #93c5fd; }
 .btn-read:hover { background: #3b82f6; color: #fff; }
 .btn-download { background: rgba(239,68,68,0.2); color: #fca5a5; }
 .btn-download:hover { background: #ef4444; color: #fff; }
-.no-data { color: #94a3b8; font-style: italic; text-align: center; padding: 20px; font-size: 0.85rem; }
+.no-data { color: #94a3b8; font-style: italic; text-align: center; padding: 30px; font-size: 0.88rem; }
 
 /* Custom Dropdown */
 .sort-box { position: relative; flex-shrink: 0; }
@@ -659,17 +674,18 @@ export default {
   background: rgba(30, 15, 15, 0.9);
   border: 1px solid rgba(255, 215, 0, 0.3);
   color: #ffd700;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   user-select: none;
+  white-space: nowrap;
 }
-.dropdown-arrow { font-size: 0.55rem; transition: transform 0.2s; }
+.dropdown-arrow { font-size: 0.58rem; transition: transform 0.2s; }
 .dropdown-arrow.is-open { transform: rotate(180deg); }
 .custom-dropdown-menu {
   position: absolute;
@@ -684,8 +700,8 @@ export default {
   overflow: hidden;
 }
 .dropdown-option {
-  padding: 7px 10px;
-  font-size: 0.75rem;
+  padding: 8px 12px;
+  font-size: 0.78rem;
   color: #cbd5e1;
   cursor: pointer;
   transition: background 0.2s;
@@ -695,11 +711,12 @@ export default {
 
 @media(max-width: 600px) {
   .library-page { padding: 10px 8px; }
-  .fixed-shelf-box { height: 360px; max-height: 360px; }
-  .doc-card { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .book-shelf { height: auto; min-height: 440px; padding: 14px; }
+  .fixed-shelf-box { max-height: 380px; }
+  .doc-card { flex-direction: column; align-items: flex-start; gap: 8px; }
   .doc-actions { width: 100%; justify-content: flex-end; }
   .shelf-main-header, .shelf-header { flex-direction: column; align-items: flex-start; }
-  .shelf-stats, .sort-box { align-self: flex-end; margin-top: 2px; }
+  .shelf-stats, .sort-box { align-self: flex-end; margin-top: 4px; }
 }
 
 /* Modal Sách Mở */
