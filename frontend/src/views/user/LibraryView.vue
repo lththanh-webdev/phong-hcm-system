@@ -166,15 +166,19 @@
       </div>
     </div>
 
-    <!-- MODAL ĐỌC SÁCH FULL MÀN HÌNH TỐI ƯU CHO MOBILE & DESKTOP -->
+    <!-- MODAL ĐỌC SÁCH FULL MÀN HÌNH TỐI ƯU (CÓ TÍNH NĂNG MỞ RỘNG 3/4 MÀN HÌNH) -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
-      <div class="book-object-wrapper animate-book-open fullscreen-reader-wrapper" @click.stop>
-        
+      <div 
+        class="book-object-wrapper animate-book-open fullscreen-reader-wrapper" 
+        :class="{ 'is-expanded-reader': isReaderExpanded }"
+        @click.stop
+      >
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
-        <div class="reader-container">
-          <!-- Header của tài liệu -->
-          <div class="reader-header">
+        <div class="reader-container" :class="{ 'expanded-layout': isReaderExpanded }">
+          
+          <!-- Header của tài liệu: Thu nhỏ lại chiếm 1 phần khi mở rộng -->
+          <div class="reader-header" :class="{ 'compact-header': isReaderExpanded }">
             <span class="reader-author-badge">✒️ {{ selectedDoc.author || 'Đang cập nhật' }}</span>
             <h2 class="reader-title">{{ selectedDoc.title }}</h2>
             <div class="reader-meta-info">
@@ -183,10 +187,13 @@
             <div class="gold-divider"></div>
           </div>
 
-          <!-- Nội dung sách cuộn mượt mà / phân trang -->
-          <div class="reader-content-box">
+          <!-- Nội dung sách: Mở rộng chiếm 3/4 khi nhấn nút full -->
+          <div class="reader-content-box" :class="{ 'expanded-content-box': isReaderExpanded }">
             <div class="page-content-header">
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
+              <button class="btn-expand-toggle" @click="isReaderExpanded = !isReaderExpanded" :title="isReaderExpanded ? 'Thu nhỏ bảng điều khiển' : 'Phóng to nội dung'">
+                {{ isReaderExpanded ? '🗗 Thu nhỏ' : '🗖 Phóng to (3/4)' }}
+              </button>
             </div>
 
             <div class="book-scrollable-content" :key="currentBookPage">
@@ -239,6 +246,9 @@ export default {
 
       rightSort: 'date-desc',
       rightDropdownOpen: false,
+
+      // Trạng thái phóng to nội dung đọc sách (3/4 màn hình)
+      isReaderExpanded: false,
 
       leftCategories: [
         'Mảng sách về Đảng',
@@ -353,10 +363,12 @@ export default {
     openBookDetail(doc) {
       this.selectedDoc = doc;
       this.currentBookPage = 1;
+      this.isReaderExpanded = false; // Reset trạng thái khi mở sách mới
     },
     closeBookDetail() {
       this.selectedDoc = null;
       this.currentBookPage = 1;
+      this.isReaderExpanded = false;
     },
     prevPage() {
       if (this.currentBookPage > 1) {
@@ -736,6 +748,13 @@ export default {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  transition: max-width 0.3s ease, height 0.3s ease;
+}
+
+.book-object-wrapper.is-expanded-reader {
+  max-width: 1050px;
+  height: 94vh;
+  max-height: none;
 }
 
 .category-modal-wrapper {
@@ -793,7 +812,7 @@ export default {
 }
 .close-book-btn:hover { background: #ef4444; }
 
-/* GIAO DIỆN ĐỌC FULL MÀN HÌNH (ĐÃ XÓA CHIA TRANG & BỎ GÁY SÁCH THỪA) */
+/* GIAO DIỆN ĐỌC FULL MÀN HÌNH & TÍNH NĂNG MỞ RỘNG 3/4 */
 .fullscreen-reader-wrapper {
   max-width: 850px;
   height: 90vh;
@@ -810,13 +829,40 @@ export default {
   overflow: hidden;
 }
 
+/* Khi bấm mở rộng: Chuyển sang bố cục chia đôi (1/4 thông tin, 3/4 nội dung) trên màn hình lớn */
+.reader-container.expanded-layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 8px;
+}
+
 .reader-header {
   text-align: center;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(255, 215, 0, 0.2);
   margin-bottom: 12px;
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
+
+/* Kiểu thu gọn thông tin sách (chiếm 1/4 hoặc cực kỳ gọn gàng) */
+.reader-header.compact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  margin-bottom: 4px;
+  background: rgba(255, 215, 0, 0.04);
+  border-radius: 8px;
+  text-align: left;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.compact-header .reader-author-badge { margin-bottom: 0; font-size: 0.68rem; padding: 2px 6px; }
+.compact-header .reader-title { font-size: 0.95rem; margin: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.compact-header .reader-meta-info { font-size: 0.68rem; margin-bottom: 0; }
+.compact-header .gold-divider { display: none; }
 
 .reader-author-badge {
   font-size: 0.75rem;
@@ -853,13 +899,44 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Khi mở rộng, khung chứa nội dung chiếm ưu thế lớn (3/4 màn hình) */
+.reader-content-box.expanded-content-box {
+  flex: 3;
+}
+
+.page-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .page-content-header h4 {
   color: #38bdf8;
   font-size: 0.9rem;
-  margin: 0 0 8px 0;
+  margin: 0;
   font-weight: 700;
+}
+
+/* Nút bấm Phóng to / Thu nhỏ */
+.btn-expand-toggle {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-expand-toggle:hover {
+  background: #38bdf8;
+  color: #0f172a;
 }
 
 .book-scrollable-content {
