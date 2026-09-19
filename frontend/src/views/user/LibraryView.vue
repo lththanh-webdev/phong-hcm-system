@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <!-- Bố cục Tủ Sách Chính & Pháp Luật (Đồng bộ chiều cao kích thước) -->
+    <!-- Bố cục Tủ Sách Chính & Pháp Luật -->
     <div class="shelves-container">
       
       <!-- TỦ CHÍNH TRỊ - VĂN HỌC -->
@@ -93,7 +93,7 @@
               <div class="doc-top-row">
                 <span class="doc-date">📅 {{ formatDate(doc.created_at) }}</span>
               </div>
-              <h4 class="doc-title" :title="doc.title">{{ doc.title }}</h4>
+              <h4 class="doc-title">{{ doc.title }}</h4>
               <p class="doc-meta">🏛️ {{ doc.author || 'Cơ quan biên soạn' }}</p>
             </div>
             <div class="doc-actions" @click.stop>
@@ -153,7 +153,7 @@
                 <div class="doc-top-row">
                   <span class="doc-date">📅 {{ formatDate(doc.created_at) }}</span>
                 </div>
-                <h4 class="doc-title" :title="doc.title">{{ doc.title }}</h4>
+                <h4 class="doc-title">{{ doc.title }}</h4>
                 <p class="doc-meta">✍️ {{ doc.author || 'Đang cập nhật' }}</p>
               </div>
               <div class="doc-actions" @click.stop>
@@ -166,35 +166,25 @@
       </div>
     </div>
 
-    <!-- MODAL ĐỌC SÁCH VỚI HIỆU ỨNG LẬT TRANG 3D TỪ PHẢI QUA TRÁI -->
+    <!-- MODAL ĐỌC SÁCH FULL MÀN HÌNH TỐI ƯU CHO MOBILE & DESKTOP -->
     <div v-if="selectedDoc" class="book-modal-overlay" @click="closeBookDetail">
-      <div class="book-object-wrapper animate-book-open" @click.stop>
+      <div class="book-object-wrapper animate-book-open fullscreen-reader-wrapper" @click.stop>
         
         <button class="close-book-btn" @click="closeBookDetail">&times;</button>
 
-        <!-- Rãnh gáy sách trung tâm mô phỏng chân thực -->
-        <div class="book-spine-center"></div>
-
-        <div class="open-book-spread">
-          <!-- Trang trái -->
-          <div class="book-page left-page">
-            <div class="page-header-author">
-              <span class="author-badge-icon">✒️ Tác Giả:</span>
-              <h3 class="book-author-top">{{ selectedDoc.author || 'Đang cập nhật' }}</h3>
-            </div>
-            
-            <div class="book-center-title-box">
-              <h2 class="book-title-center">{{ selectedDoc.title }}</h2>
-              <div class="gold-divider"></div>
-            </div>
-
-            <div class="page-footer-info">
+        <div class="reader-container">
+          <!-- Header của tài liệu -->
+          <div class="reader-header">
+            <span class="reader-author-badge">✒️ {{ selectedDoc.author || 'Đang cập nhật' }}</span>
+            <h2 class="reader-title">{{ selectedDoc.title }}</h2>
+            <div class="reader-meta-info">
               <span>📅 Ngày cập nhật: {{ formatDate(selectedDoc.created_at) }}</span>
             </div>
+            <div class="gold-divider"></div>
           </div>
 
-          <!-- Trang phải với hiệu ứng lật 3D từ phải sang trái -->
-          <div class="book-page right-page" :class="{ 'is-flipping': isFlipping }">
+          <!-- Nội dung sách cuộn mượt mà / phân trang -->
+          <div class="reader-content-box">
             <div class="page-content-header">
               <h4>📖 Nội Dung Chi Tiết Tác Phẩm</h4>
             </div>
@@ -204,22 +194,23 @@
                 {{ para }}
               </div>
             </div>
-
-            <div class="book-footer-pagination">
-              <button class="btn-page-nav" @click="prevPage" :disabled="currentBookPage === 1 || isFlipping" :class="{ disabled: currentBookPage === 1 }">
-                ◀ Trang trước
-              </button>
-              <span class="page-indicator">Trang {{ currentBookPage }} / {{ totalBookPages }}</span>
-              <button class="btn-page-nav" @click="nextPage" :disabled="currentBookPage === totalBookPages || isFlipping" :class="{ disabled: currentBookPage === totalBookPages }">
-                Trang sau ▶
-              </button>
-              <button class="btn-download-page" @click="handleDownload(selectedDoc)" title="Tải file sách">
-                📥 Tải Sách
-              </button>
-            </div>
           </div>
 
+          <!-- Thanh điều hướng trang dưới cùng -->
+          <div class="book-footer-pagination">
+            <button class="btn-page-nav" @click="prevPage" :disabled="currentBookPage === 1" :class="{ disabled: currentBookPage === 1 }">
+              ◀ Trang trước
+            </button>
+            <span class="page-indicator">Trang {{ currentBookPage }} / {{ totalBookPages }}</span>
+            <button class="btn-page-nav" @click="nextPage" :disabled="currentBookPage === totalBookPages" :class="{ disabled: currentBookPage === totalBookPages }">
+              Trang sau ▶
+            </button>
+            <button class="btn-download-page" @click="handleDownload(selectedDoc)" title="Tải file sách">
+              📥 Tải Sách
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -241,7 +232,6 @@ export default {
       selectedDoc: null,
       currentBookPage: 1,
       charsPerPage: 600,
-      isFlipping: false,
       
       selectedCategory: null,
       categorySort: 'date-desc',
@@ -369,21 +359,13 @@ export default {
       this.currentBookPage = 1;
     },
     prevPage() {
-      if (this.currentBookPage > 1 && !this.isFlipping) {
-        this.isFlipping = true;
-        setTimeout(() => {
-          this.currentBookPage--;
-          setTimeout(() => { this.isFlipping = false; }, 250);
-        }, 180);
+      if (this.currentBookPage > 1) {
+        this.currentBookPage--;
       }
     },
     nextPage() {
-      if (this.currentBookPage < this.totalBookPages && !this.isFlipping) {
-        this.isFlipping = true;
-        setTimeout(() => {
-          this.currentBookPage++;
-          setTimeout(() => { this.isFlipping = false; }, 250);
-        }, 180);
+      if (this.currentBookPage < this.totalBookPages) {
+        this.currentBookPage++;
       }
     },
     handleDownload(doc) {
@@ -504,7 +486,7 @@ export default {
 .search-input:focus { border-color: #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
 .clear-search { position: absolute; right: 14px; background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; }
 
-/* Shelves Container: 2 tủ bằng nhau tuyệt đối về chiều cao và kích thước */
+/* Shelves Container */
 .shelves-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -528,14 +510,13 @@ export default {
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  height: 530px; /* Cố định chiều cao chuẩn xác giúp 2 tủ luôn bằng nhau */
+  height: 530px;
 }
 
 @media(max-width: 1024px) {
   .book-shelf { height: 480px; }
 }
 
-/* Đảm bảo các ngăn tủ bự lên fulll và lấp đầy khoảng trống */
 .fixed-shelf-box {
   flex: 1;
   height: auto !important;
@@ -587,7 +568,6 @@ export default {
   flex: 1;
 }
 
-/* Làm các ngăn tủ bự lên đầy đặn (full) */
 .drawer-item-card {
   display: flex;
   justify-content: space-between;
@@ -600,7 +580,7 @@ export default {
   transition: all 0.3s;
   user-select: none;
   width: 100%;
-  flex: 1; /* Chia đều chiều cao lấp đầy khung tủ */
+  flex: 1;
 }
 
 .drawer-item-card:hover {
@@ -658,7 +638,18 @@ export default {
 .doc-info { flex: 1; min-width: 0; }
 .doc-top-row { display: flex; gap: 8px; margin-bottom: 3px; align-items: center; flex-wrap: wrap; }
 .doc-date { font-size: 0.72rem; color: #94a3b8; }
-.doc-title { color: #fff; font-size: clamp(0.82rem, 1.3vw, 0.9rem); font-weight: 700; margin: 0 0 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.doc-title { 
+  color: #fff; 
+  font-size: clamp(0.82rem, 1.3vw, 0.9rem); 
+  font-weight: 700; 
+  margin: 0 0 3px 0; 
+  white-space: normal; 
+  word-break: break-word; 
+  overflow-wrap: break-word; 
+  line-height: 1.4;
+}
+
 .doc-meta { font-size: 0.75rem; color: #cbd5e1; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .doc-actions { display: flex; gap: 6px; flex-shrink: 0; }
 .btn-action { padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
@@ -719,25 +710,25 @@ export default {
   .shelf-stats, .sort-box { align-self: flex-end; margin-top: 4px; }
 }
 
-/* Modal Sách Mở */
+/* Modal Sách Mở Chung */
 .book-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(12px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 10px;
+  padding: 12px;
 }
 
 .book-object-wrapper {
   background: linear-gradient(135deg, #200d0d 0%, #0c0404 100%);
   width: 100%;
   max-width: 900px;
-  height: 82vh;
-  max-height: 700px;
+  height: 85vh;
+  max-height: 750px;
   border-radius: 14px;
   border: 2px solid rgba(255, 215, 0, 0.4);
   box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(255, 215, 0, 0.2);
@@ -788,107 +779,66 @@ export default {
 
 .close-book-btn {
   position: absolute;
-  top: 8px; right: 10px;
+  top: 10px; right: 12px;
   background: rgba(255,255,255,0.1);
   border: none;
   color: #fff;
-  width: 28px; height: 28px;
+  width: 32px; height: 32px;
   border-radius: 50%;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  z-index: 20;
+  z-index: 30;
   transition: 0.2s;
   display: flex; align-items: center; justify-content: center;
 }
 .close-book-btn:hover { background: #ef4444; }
 
-/* Rãnh gáy sách trung tâm mô phỏng chân thực */
-.book-spine-center {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 20px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, 
-    rgba(10, 2, 2, 0.6) 0%, 
-    rgba(0, 0, 0, 0.95) 50%, 
-    rgba(10, 2, 2, 0.6) 100%);
-  z-index: 5;
-  pointer-events: none;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+/* GIAO DIỆN ĐỌC FULL MÀN HÌNH (ĐÃ XÓA CHIA TRANG & BỎ GÁY SÁCH THỪA) */
+.fullscreen-reader-wrapper {
+  max-width: 850px;
+  height: 90vh;
+  padding: 24px;
 }
 
-@media(max-width: 768px) {
-  .book-spine-center { display: none; }
-}
-
-/* Bố cục trang sách mở */
-.open-book-spread {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100%;
-  position: relative;
-  perspective: 2500px;
-  background: #120505;
-  overflow: hidden;
-}
-
-@media(max-width: 768px) {
-  .open-book-spread { grid-template-columns: 1fr; overflow-y: auto; }
-  .book-object-wrapper { height: 90vh; max-height: none; }
-}
-
-.book-page {
-  background: linear-gradient(145deg, #1b0e0e 0%, #110606 100%);
-  padding: 20px;
+.reader-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  position: relative;
   height: 100%;
+  width: 100%;
+  background: linear-gradient(145deg, #180a0a 0%, #0d0404 100%);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-@media(max-width: 768px) {
-  .book-page { height: auto; min-height: 380px; }
-}
-
-.left-page {
+.reader-header {
   text-align: center;
-  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
-.page-header-author {
-  margin-top: 4px;
-}
-
-.author-badge-icon {
+.reader-author-badge {
   font-size: 0.75rem;
   color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 4px;
 }
 
-.book-author-top {
-  color: #ffd700;
-  font-size: 1.05rem;
-  font-weight: 800;
-  margin: 3px 0 0 0;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-.book-center-title-box {
-  margin: auto 0;
-  padding: 10px 0;
-}
-
-.book-title-center {
+.reader-title {
   color: #fff;
-  font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
   font-weight: 900;
-  line-height: 1.3;
-  margin: 10px 0;
+  line-height: 1.35;
+  margin: 4px 0 8px 0;
+}
+
+.reader-meta-info {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 8px;
 }
 
 .gold-divider {
@@ -898,29 +848,18 @@ export default {
   margin: 0 auto;
 }
 
-.page-footer-info { font-size: 0.72rem; color: #94a3b8; }
-
-/* HIỆU ỨNG LẬT TRANG SÁCH 3D TỪ PHẢI QUA TRÁI */
-.right-page {
-  background: linear-gradient(145deg, #150909 0%, #0d0404 100%);
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.4s ease-in-out;
-  z-index: 6;
-}
-
-.right-page.is-flipping {
-  transform: rotateY(-90deg);
-  opacity: 0.15;
+.reader-content-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .page-content-header h4 {
   color: #38bdf8;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   margin: 0 0 8px 0;
   font-weight: 700;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding-bottom: 5px;
 }
 
 .book-scrollable-content {
@@ -929,17 +868,15 @@ export default {
   padding-right: 6px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 215, 0, 0.3) rgba(0,0,0,0.2);
-  min-height: 180px;
 }
 
 .book-scrollable-content::-webkit-scrollbar { width: 5px; }
 .book-scrollable-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 10px; }
 
-/* Trình bày văn bản chuẩn sách in */
 .book-paragraph {
   color: #e2e8f0;
-  font-size: 0.88rem;
-  line-height: 1.75;
+  font-size: 0.9rem;
+  line-height: 1.8;
   text-align: justify;
   text-indent: 1.2em;
   margin-bottom: 12px;
@@ -951,21 +888,21 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 215, 0, 0.15);
-  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  margin-top: 12px;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
 .btn-page-nav {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #cbd5e1;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
@@ -974,7 +911,7 @@ export default {
 .btn-page-nav.disabled { opacity: 0.4; cursor: not-allowed; }
 
 .page-indicator {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #ffd700;
   font-weight: 700;
 }
@@ -983,9 +920,9 @@ export default {
   background: linear-gradient(135deg, #16a34a, #15803d);
   color: #fff;
   border: none;
-  padding: 4px 10px;
+  padding: 6px 14px;
   border-radius: 6px;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s;
