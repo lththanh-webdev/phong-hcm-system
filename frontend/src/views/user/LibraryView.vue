@@ -247,7 +247,6 @@ export default {
       rightSort: 'date-desc',
       rightDropdownOpen: false,
 
-      // Trạng thái phóng to nội dung đọc sách (3/4 màn hình)
       isReaderExpanded: false,
 
       leftCategories: [
@@ -363,7 +362,7 @@ export default {
     openBookDetail(doc) {
       this.selectedDoc = doc;
       this.currentBookPage = 1;
-      this.isReaderExpanded = false; // Reset trạng thái khi mở sách mới
+      this.isReaderExpanded = false;
     },
     closeBookDetail() {
       this.selectedDoc = null;
@@ -568,7 +567,7 @@ export default {
 }
 .law-icon { background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(16, 185, 129, 0.1)); border-color: rgba(34, 197, 94, 0.4); }
 
-.shelf-text-wrap { min-width: 0; flex: 1; }
+.shelf-text-wrap { min-width: 0; flex: 1; overflow: hidden; }
 .shelf-text-wrap h3 { color: #ffd700; font-size: clamp(0.95rem, 1.5vw, 1.15rem); font-weight: 800; margin: 0 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .shelf-desc { font-size: 0.75rem; color: #94a3b8; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat-pill { background: rgba(255,215,0,0.1); color: #ffd700; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(255,215,0,0.25); white-space: nowrap; }
@@ -770,8 +769,8 @@ export default {
   border-bottom: 1px solid rgba(255, 215, 0, 0.25);
   padding-bottom: 12px;
   margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-wrap: nowrap; /* Đảm bảo các thành phần không bị dồn ép rớt dòng dọc */
+  gap: 15px;
   flex-shrink: 0;
 }
 
@@ -780,12 +779,15 @@ export default {
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap; /* Khắc phục lỗi rớt chữ dọc */
+  display: block;
 }
 
 .category-modal-toolbar {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .category-modal-body {
@@ -829,7 +831,6 @@ export default {
   overflow: hidden;
 }
 
-/* Khi bấm mở rộng: Chuyển sang bố cục chia đôi (1/4 thông tin, 3/4 nội dung) trên màn hình lớn */
 .reader-container.expanded-layout {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -845,7 +846,6 @@ export default {
   transition: all 0.3s ease;
 }
 
-/* Kiểu thu gọn thông tin sách (chiếm 1/4 hoặc cực kỳ gọn gàng) */
 .reader-header.compact-header {
   display: flex;
   align-items: center;
@@ -902,7 +902,6 @@ export default {
   transition: all 0.3s ease;
 }
 
-/* Khi mở rộng, khung chứa nội dung chiếm ưu thế lớn (3/4 màn hình) */
 .reader-content-box.expanded-content-box {
   flex: 3;
 }
@@ -922,7 +921,6 @@ export default {
   font-weight: 700;
 }
 
-/* Nút bấm Phóng to / Thu nhỏ */
 .btn-expand-toggle {
   background: rgba(56, 189, 248, 0.15);
   border: 1px solid rgba(56, 189, 248, 0.4);
