@@ -2,89 +2,118 @@
   <div class="feedback-page">
     <!-- Tiêu đề trang -->
     <div class="hero-section">
-      <div class="hero-badge">HÒM THƯ ĐƠN VỊ</div>
-      <h2 class="section-title">GÓP Ý &amp; PHẢN ÁNH CHÍNH TRỊ</h2>
-      <p class="section-desc">Tiếp thu ý kiến đóng góp xây dựng Phòng Hồ Chí Minh số và các hoạt động của Tiểu đoàn</p>
+      <div class="hero-glow"></div>
+      <div class="hero-badge animate-fade-down">HÒM THƯ ĐƠN VỊ</div>
+      <h2 class="section-title animate-fade-in">GÓP Ý &amp; PHẢN ÁNH CHÍNH TRỊ</h2>
+      <p class="section-desc animate-fade-up">Tiếp thu ý kiến đóng góp xây dựng Phòng Hồ Chí Minh số và các hoạt động toàn Tiểu đoàn</p>
     </div>
 
-    <!-- Nội dung chính dạng lưới 2 cột (Form gửi & Thông tin hướng dẫn) -->
+    <!-- Nội dung chính dạng lưới 2 cột -->
     <div class="feedback-grid">
       
-      <!-- Cột 1: Form gửi góp ý -->
-      <div class="intro-card form-card">
-        <div class="card-icon">✍️</div>
-        <h3 class="card-title">Gửi Ý Kiến Đóng Góp</h3>
-        <p class="card-text form-subtitle">
-          Ý kiến của đồng chí sẽ được tổng hợp trực tiếp về ban biên tập để cải tiến chất lượng phục vụ.
-        </p>
+      <!-- Cột 1: Form gửi góp ý thông minh -->
+      <div class="intro-card form-card animate-fade-right">
+        <div class="card-header-flex">
+          <div class="card-icon">✍️</div>
+          <div>
+            <h3 class="card-title">Gửi Ý Kiến Đóng Góp</h3>
+            <p class="card-subtitle-top">Mọi ý kiến được tổng hợp bảo mật về ban biên tập</p>
+          </div>
+        </div>
 
         <form @submit.prevent="handleSubmit" class="feedback-form">
           <div class="form-group">
             <label for="senderName">Họ và tên / Quân hàm, chức vụ:</label>
-            <input 
-              type="text" 
-              id="senderName" 
-              v-model="form.name" 
-              placeholder="Ví dụ: Trung sĩ Nguyễn Văn A" 
-              required
-            />
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input 
+                type="text" 
+                id="senderName" 
+                v-model="form.name" 
+                placeholder="Ví dụ: Trung sĩ Nguyễn Văn A" 
+                required
+              />
+            </div>
           </div>
 
           <div class="form-group">
             <label for="senderUnit">Bộ phận / Đại đội / Trung đội:</label>
-            <input 
-              type="text" 
-              id="senderUnit" 
-              v-model="form.unit" 
-              placeholder="Ví dụ: Đại đội 1, Tiểu đoàn PK 16" 
-              required
-            />
+            <div class="input-wrapper">
+              <span class="input-icon">🏛️</span>
+              <input 
+                type="text" 
+                id="senderUnit" 
+                v-model="form.unit" 
+                placeholder="Ví dụ: Đại đội 1, Tiểu đoàn PK 16" 
+                required
+              />
+            </div>
           </div>
 
           <div class="form-group">
             <label for="feedbackCategory">Lĩnh vực góp ý:</label>
-            <select id="feedbackCategory" v-model="form.category" class="custom-select">
-              <option value="Chung">Ý kiến chung về Phòng Hồ Chí Minh số</option>
-              <option value="ThuVien">Kho tài liệu &amp; Thư viện số</option>
-              <option value="TracNghiem">Hệ thống Thi trắc nghiệm</option>
-              <option value="HoatDong">Các hoạt động văn hóa, ca khúc</option>
-            </select>
+            <div class="input-wrapper select-wrapper">
+              <span class="input-icon">📂</span>
+              <select id="feedbackCategory" v-model="form.category" class="custom-select">
+                <option value="Chung">Ý kiến chung về Phòng Hồ Chí Minh số</option>
+                <option value="ThuVien">Kho tài liệu &amp; Thư viện số</option>
+                <option value="TracNghiem">Hệ thống Thi trắc nghiệm</option>
+                <option value="HoatDong">Các hoạt động văn hóa, ca khúc</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="feedbackContent">Nội dung chi tiết:</label>
+            <div class="label-flex">
+              <label for="feedbackContent">Nội dung chi tiết:</label>
+              <span class="char-counter" :class="{ warning: form.content.length > 450 }">
+                {{ form.content.length }}/500 ký tự
+              </span>
+            </div>
             <textarea 
               id="feedbackContent" 
               v-model="form.content" 
               rows="4" 
+              maxlength="500"
               placeholder="Nhập nội dung đóng góp, đề xuất hoặc phản ánh tại đây..." 
               required
             ></textarea>
           </div>
 
           <button type="submit" class="btn-submit" :disabled="isSubmitting">
-            <span v-if="isSubmitting">Đang gửi lên hệ thống...</span>
+            <span v-if="isSubmitting" class="loading-state">
+              <span class="spinner"></span> Đang gửi lên hệ thống...
+            </span>
             <span v-else>Gửi Góp Ý Ngay 🚀</span>
           </button>
         </form>
       </div>
 
       <!-- Cột 2: Hướng dẫn & Quy định hòm thư -->
-      <div class="info-sidebar">
+      <div class="info-sidebar animate-fade-left">
         <div class="intro-card info-card-item">
           <div class="card-icon">🛡️</div>
           <h3 class="card-title">Quy Định &amp; Nguyên Tắc</h3>
           <ul class="card-list">
-            <li><strong>Tính xây dựng:</strong> Mọi ý kiến đóng góp cần mang tính chất xây dựng tập thể, đoàn kết đơn vị.</li>
-            <li><strong>Bảo mật thông tin:</strong> Thông tin cá nhân và nội dung phản ánh được bảo mật theo quy định công tác Đảng, công tác chính trị.</li>
-            <li><strong>Trách nhiệm:</strong> Đề cao tính trung thực, chính xác khi phản ánh các vấn đề liên quan đến hạ tầng số và sinh hoạt.</li>
+            <li>
+              <span class="bullet-dot"></span>
+              <div><strong>Tính xây dựng:</strong> Mọi ý kiến đóng góp cần mang tính chất xây dựng tập thể, đoàn kết đơn vị.</div>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <div><strong>Bảo mật thông tin:</strong> Thông tin cá nhân và nội dung phản ánh được bảo mật theo quy định công tác Đảng, công tác chính trị.</div>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <div><strong>Trách nhiệm:</strong> Đề cao tính trung thực, chính xác khi phản ánh các vấn đề liên quan đến hạ tầng số và sinh hoạt.</div>
+            </li>
           </ul>
         </div>
 
-        <!-- Banner cam kết -->
+        <!-- Banner cam kết cao cấp -->
         <div class="info-banner-mini">
           <div class="banner-emblem-mini">★</div>
-          <div>
+          <div class="banner-text-content">
             <h4>TIỂU ĐOÀN PHÒNG KHÔNG 16</h4>
             <p>Lắng nghe, tiếp thu và hành động vì sự phát triển vững mạnh toàn diện của đơn vị.</p>
           </div>
@@ -93,10 +122,11 @@
 
     </div>
 
-    <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI -->
+    <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI (MODAL) -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="closeAlert">
         <div class="modal-container alert-container">
+          <div class="alert-glow"></div>
           <div class="alert-icon-wrapper">
             <span class="alert-star">★</span>
           </div>
@@ -129,7 +159,6 @@ export default {
     }
   },
   methods: {
-    // Xử lý lấy đường dẫn API an toàn và tự động đồng bộ Render
     getApiUrl() {
       const rawUrl = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
       return rawUrl.endsWith('/api') ? rawUrl.slice(0, -4) : rawUrl;
@@ -155,7 +184,6 @@ export default {
             `Đồng chí ${this.form.name} đã gửi ý kiến thành công về đơn vị. Xin trân trọng tiếp thu!`
           );
           
-          // Reset form sau khi gửi thành công lên database
           this.form.name = '';
           this.form.unit = '';
           this.form.category = 'Chung';
@@ -194,49 +222,82 @@ export default {
 
 <style scoped>
 .feedback-page {
-  padding: 10px 0;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  color: #f1f5f9;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: radial-gradient(circle at 50% 0%, #1a0f0f 0%, #0c0404 60%, #050101 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.feedback-page *, .feedback-page *::before, .feedback-page *::after {
+  box-sizing: border-box;
 }
 
 /* Hero Section */
 .hero-section {
+  position: relative;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+  padding: 32px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.06) 0%, rgba(139, 0, 0, 0.2) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 80px;
+  background: #ffd700;
+  filter: blur(70px);
+  opacity: 0.15;
+  pointer-events: none;
 }
 
 .hero-badge {
   display: inline-block;
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(255, 215, 0, 0.12);
   color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 4px 14px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  padding: 5px 16px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   margin-bottom: 10px;
 }
 
 .section-title {
-  font-size: 2.2rem;
+  font-size: clamp(1.5rem, 2.5vw, 2.3rem);
   font-weight: 900;
-  color: #ffd700;
+  background: linear-gradient(135deg, #fff 30%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0 0 8px 0;
-  text-shadow: 0 2px 15px rgba(255, 215, 0, 0.3);
-  letter-spacing: 1px;
 }
 
 .section-desc {
   color: #cbd5e1;
-  font-size: 0.95rem;
-  margin: 0;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 /* Grid Layout */
 .feedback-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.25fr 0.75fr;
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .info-sidebar {
@@ -246,57 +307,60 @@ export default {
 }
 
 .intro-card {
-  background: linear-gradient(145deg, rgba(35, 5, 5, 0.85), rgba(18, 2, 2, 0.9));
-  border-radius: 16px;
+  background: rgba(22, 10, 10, 0.85);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
   padding: 28px;
   border: 1px solid rgba(255, 215, 0, 0.2);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-  transition: all 0.35s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
 }
 
 .intro-card:hover {
   border-color: rgba(255, 215, 0, 0.5);
-  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.12);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
+}
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
 .card-icon {
-  font-size: 2.2rem;
-  margin-bottom: 15px;
+  font-size: 1.8rem;
   background: rgba(255, 215, 0, 0.1);
-  width: 55px;
-  height: 55px;
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  flex-shrink: 0;
 }
 
 .card-title {
   color: #ffd700;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 4px 0;
 }
 
-.card-text {
-  color: #cbd5e1;
-  font-size: 0.9rem;
-  line-height: 1.5;
+.card-subtitle-top {
+  color: #94a3b8;
+  font-size: 0.82rem;
   margin: 0;
-}
-
-.form-subtitle {
-  margin-bottom: 20px;
 }
 
 /* Form Styles */
 .feedback-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .form-group {
@@ -308,21 +372,70 @@ export default {
 .form-group label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #e2e8f0;
+}
+
+.label-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.char-counter.warning {
+  color: #f43f5e;
+  font-weight: 700;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 0.95rem;
+  pointer-events: none;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  background: rgba(15, 2, 2, 0.9);
+  background: rgba(12, 3, 3, 0.9);
   border: 1px solid rgba(255, 215, 0, 0.25);
-  border-radius: 8px;
-  padding: 11px 14px;
+  border-radius: 10px;
+  padding: 12px 14px 12px 42px;
   color: #f8fafc;
   font-size: 0.9rem;
   font-family: inherit;
   transition: all 0.3s ease;
+}
+
+.form-group textarea {
+  padding-left: 14px; /* Textarea không cần icon trái */
+  resize: vertical;
+  min-height: 110px;
+}
+
+.custom-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: '▼';
+  position: absolute;
+  right: 16px;
+  font-size: 0.75rem;
+  color: #ffd700;
+  pointer-events: none;
 }
 
 .form-group input:focus,
@@ -330,12 +443,14 @@ export default {
 .form-group textarea:focus {
   outline: none;
   border-color: #ffd700;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+  background: rgba(20, 5, 5, 0.95);
 }
 
 .custom-select option {
   background: #1b0202;
   color: #f8fafc;
+  padding: 10px;
 }
 
 .btn-submit {
@@ -343,7 +458,7 @@ export default {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 13px;
+  padding: 14px;
   border-radius: 30px;
   font-weight: 700;
   font-size: 0.95rem;
@@ -356,6 +471,7 @@ export default {
   background: linear-gradient(135deg, #f43f5e, #b91c1c);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  border-color: #fff;
 }
 
 .btn-submit:disabled {
@@ -363,17 +479,53 @@ export default {
   cursor: not-allowed;
 }
 
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,215,0,0.3);
+  border-top-color: #ffd700;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Card List */
 .card-list {
-  color: #cbd5e1;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  list-style: none;
+  padding: 0;
   margin: 0;
-  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .card-list li {
-  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.bullet-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #ffd700;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px #ffd700;
 }
 
 .card-list strong {
@@ -382,49 +534,52 @@ export default {
 
 /* Mini Banner */
 .info-banner-mini {
-  background: linear-gradient(135deg, rgba(92, 6, 6, 0.4), rgba(30, 2, 2, 0.7));
+  background: linear-gradient(135deg, rgba(92, 6, 6, 0.5), rgba(30, 2, 2, 0.8));
   border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 14px;
-  padding: 18px;
+  border-radius: 16px;
+  padding: 20px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  gap: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .banner-emblem-mini {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #ffd700;
-  background: rgba(0, 0, 0, 0.4);
-  width: 45px;
-  height: 45px;
+  background: rgba(0, 0, 0, 0.5);
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 215, 0, 0.4);
   flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
 
-.info-banner-mini h4 {
+.banner-text-content h4 {
   color: #ffd700;
-  margin: 0 0 3px 0;
-  font-size: 0.9rem;
+  margin: 0 0 4px 0;
+  font-size: 0.88rem;
   font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-.info-banner-mini p {
+.banner-text-content p {
   color: #cbd5e1;
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -433,22 +588,37 @@ export default {
 }
 
 .alert-container {
+  position: relative;
   background: linear-gradient(145deg, #2b0404, #100101);
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 24px;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   padding: 35px 25px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+.alert-glow {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 50px;
+  background: #ffd700;
+  filter: blur(40px);
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .alert-icon-wrapper {
-  width: 65px;
-  height: 65px;
+  width: 70px;
+  height: 70px;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 50%;
@@ -456,13 +626,13 @@ export default {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
 }
 
 .alert-star {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #ffd700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
 }
 
 .alert-title {
@@ -477,6 +647,10 @@ export default {
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 25px;
+}
+
+.alert-actions {
+  width: 100%;
 }
 
 .btn-alert-confirm {
@@ -494,7 +668,7 @@ export default {
 
 .btn-alert-confirm:hover {
   background: linear-gradient(135deg, #f43f5e, #b91c1c);
-  border-color: #ffd700;
+  border-color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
 }
@@ -521,16 +695,16 @@ export default {
   opacity: 0;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* Responsive adjustments */
+@media (max-width: 992px) {
   .feedback-grid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
-  .section-title {
-    font-size: 1.6rem;
+  .hero-section {
+    padding: 24px 16px;
   }
   .intro-card {
     padding: 20px;
