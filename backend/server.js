@@ -50,6 +50,8 @@ app.get('/', (req, res) => {
     res.json({ message: '[Phòng Hồ Chí Minh Server] API đang hoạt động bình thường trên Cloud Storage!' });
 });
 
+app.use('/api/borrows', require('./routes/bookBorrowRoutes'));
+
 // 🛡️ Middleware xử lý lỗi tập trung toàn cục (Global Error Handler)
 app.use((err, req, res, next) => {
     console.error('Lỗi Server không bắt được:', err.stack);

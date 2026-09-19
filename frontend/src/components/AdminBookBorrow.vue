@@ -384,19 +384,7 @@ export default {
         'Mảng sách khác'
       ],
       
-      // Mock Data khớp chính xác với 10 cột trong cơ sở dữ liệu Supabase của bạn
-      books: [
-        { id: 21, so_vao_so: '0067', title: 'Dự Thảo Các Văn Kiện Trình ĐH XIII', author: 'Nhiều tác giả', category: 'Mảng sách về Đảng', noi_xuat_ban: 'H', nam_xuat_ban: '2025', kho_sach: '13×19', so_trang: '76', gia_tien: '14.000đ', mon_loai: '3KV4', status: 'available' },
-        { id: 22, so_vao_so: '0068', title: 'Xây Dựng QĐNDVN Trong Tình Hình Mới', author: 'Phan Văn Giang', category: 'Mảng sách về Quân sự', noi_xuat_ban: 'H', nam_xuat_ban: '2025', kho_sach: '13×19', so_trang: '76', gia_tien: '14.000đ', mon_loai: '3KV4', status: 'available' },
-        { id: 23, so_vao_so: '0069', title: 'Tư Tưởng Hồ Chí Minh Về Quân Sự', author: 'Nhiều tác giả', category: 'Mảng sách về Bác Hồ', noi_xuat_ban: 'H', nam_xuat_ban: '2006', kho_sach: '13×19', so_trang: '100', gia_tien: '4.500đ', mon_loai: '3KV4', status: 'borrowed' },
-        { id: 24, so_vao_so: '0070', title: 'Giáo Trình Lí Luận Chính Trị', author: 'Nguyễn Văn A', category: 'Mảng sách về Đảng', noi_xuat_ban: 'H', nam_xuat_ban: '2007', kho_sach: '13×19', so_trang: '80', gia_tien: '4.300đ', mon_loai: '3KV4', status: 'available' },
-        { id: 25, so_vao_so: '0071', title: 'Nghiên Cứu Tác Tác Chiến Hiện Đại', author: 'Lê Văn C', category: 'Mảng sách về Quân sự', noi_xuat_ban: 'H', nam_xuat_ban: '2008', kho_sach: '13×19', so_trang: '40', gia_tien: '2.500đ', mon_loai: '3KV4', status: 'available' }
-      ],
-
-      borrowList: [
-        { id: 101, book_id: 23, book_title: 'Tư Tưởng Hồ Chí Minh Về Quân Sự', user_name: 'Trần Văn B', rank: 'Thượng Sĩ', position: 'Tiểu đội trưởng', borrow_date: '2026-09-10', due_date: '2026-09-17', status: 'borrowed' }
-      ],
-
+     
       showDetailModal: false,
       showBorrowModal: false,
       showReturnModal: false,

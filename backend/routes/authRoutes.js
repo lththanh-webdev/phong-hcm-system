@@ -10,10 +10,10 @@ const path = require('path');
 // Import Supabase client từ file cấu hình dùng chung
 const supabase = require('../config/supabase');
 
-// Khuyến nghị: Nên đặt biến JWT_SECRET vào mục Environment trên Render, nếu không có sẽ dùng chuỗi mặc định an toàn này
+// Biến môi trường JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET || 'phong-hcm-secure-jwt-secret-key-2026';
 
-// Đăng nhập Admin
+// 1. POST: Đăng nhập Admin
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -45,20 +45,20 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// API Upload file dùng chung cho Admin (Đã chuyển sang Supabase Storage)
+// 2. POST: API Upload file dùng chung cho Admin (Upload lên Supabase Storage)
 router.post('/upload', verifyAdmin, upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'Chưa chọn file upload' });
         }
 
-        // 1. Tạo tên file độc đáo tránh trùng lặp
+        // Tạo tên file độc đáo tránh trùng lặp
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const fileName = uniqueSuffix + path.extname(req.file.originalname);
-        const filePath = `public/${fileName}`; // Thư mục lưu bên trong Bucket trên Supabase
+        const filePath = `public/${fileName}`;
 
-        // 2. Upload file dạng Buffer lên Supabase Storage (Bucket 'uploads')
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        // Upload file dạng Buffer lên Supabase Storage (Bucket 'uploads')
+        const { error: uploadError } = await supabase.storage
             .from('uploads')
             .upload(filePath, req.file.buffer, {
                 contentType: req.file.mimetype,
@@ -69,7 +69,7 @@ router.post('/upload', verifyAdmin, upload.single('file'), async (req, res) => {
             throw new Error(uploadError.message);
         }
 
-        // 3. Lấy Public URL vĩnh viễn từ Supabase Storage
+        // Lấy Public URL vĩnh viễn
         const { data: { publicUrl } } = supabase.storage
             .from('uploads')
             .getPublicUrl(filePath);
