@@ -7,12 +7,7 @@
       <h2 class="section-title animate-fade-in">GIỚI THIỆU PHÒNG HỒ CHÍ MINH SỐ</h2>
       <p class="section-desc animate-fade-up">Không gian văn hóa, tư tưởng & nền tảng chuyển đổi số chính trị Tiểu đoàn Phòng không 16</p>
       
-      <!-- Nút tương tác thông minh: Dâng hoa tưởng niệm Bác -->
-      <div class="hero-action-container">
-        <button class="btn-hero-offer" @click="handleOfferFlower">
-          <span class="offer-icon">🌸</span> Thành Kính Dâng Hoa Tưởng Niệm
-        </button>
-      </div>
+
     </div>
 
     <!-- Nội dung chính dạng lưới thông tin -->
