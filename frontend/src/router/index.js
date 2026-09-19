@@ -7,7 +7,7 @@ const routes = [
   },
   
   // ==========================
-  // KHU VỰC TRANG USER
+  // KHU VỰC TRANG USER (CÔNG KHAI)
   // ==========================
   { 
     path: '/tuong-niem', 
@@ -46,7 +46,7 @@ const routes = [
   },
 
   // ==========================
-  // KHU VỰC ADMIN
+  // KHU VỰC ADMIN (QUẢN TRỊ)
   // ==========================
   {
     path: '/admin/login',
@@ -54,13 +54,13 @@ const routes = [
     component: () => import('../views/admin/LoginView.vue') 
   },
   {
-    path: '/admin/hoat-dong',
-    name: 'AdminActivities',
-    component: () => import('../views/admin/ManageActivities.vue') 
+    path: '/admin',
+    name: 'AdminDashboard',
+    component: () => import('../views/admin/ManageActivities.vue') // Hoặc file chứa Layout tổng Admin của bạn
   },
   {
-    path: '/admin',
-    redirect: '/admin/hoat-dong'
+    path: '/admin/:pathMatch(.*)*',
+    redirect: '/admin'
   },
 
   // ==========================

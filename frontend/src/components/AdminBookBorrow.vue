@@ -1,42 +1,37 @@
 <template>
-  <div class="admin-library-container">
-    <!-- Header tiêu đề & chuyển Tab -->
+  <div class="admin-borrow-container">
     <div class="section-top">
       <div class="header-title">
-        <div class="icon-badge">📚</div>
+        <div class="icon-badge">📖</div>
         <div>
-          <h3>Quản Lý Thư Viện & Mượn Trả</h3>
-          <p class="subtitle">Hệ thống tra cứu, quản lý danh mục sách và theo dõi mượn trả</p>
+          <h3>Quản Lý Mượn & Trả Sách</h3>
+          <p class="subtitle">Tra cứu danh mục sách thực tế và theo dõi nhật ký mượn trả toàn hệ thống</p>
         </div>
       </div>
       
-      <!-- Tab Navigation -->
       <div class="tab-nav">
         <button :class="{ active: activeTab === 'library' }" @click="activeTab = 'library'">
-          <span>📚</span> Danh Mục Sách ({{ books.length }})
+          📚 Danh Mục Sách ({{ books.length }})
         </button>
         <button :class="{ active: activeTab === 'manager' }" @click="activeTab = 'manager'">
-          <span>🔄</span> Quản Lý Mượn/Trả ({{ borrowList.length }})
+          🔄 Nhật Ký Mượn/Trả ({{ borrowList.length }})
         </button>
       </div>
     </div>
 
-    <!-- ================= TAB 1: DANH MỤC SÁCH ================= -->
     <div v-if="activeTab === 'library'" class="glass-panel slide-in">
       
-      <!-- Thanh công cụ: Tìm kiếm & Lọc Mảng sách (Gọn gàng, hiện đại) -->
       <div class="toolbar-wrapper">
         <div class="search-box">
           <span class="search-icon">🔍</span>
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="Tìm theo tên sách, tác giả, số vào sổ, môn loại..." 
+            placeholder="Tìm tên sách, tác giả, số vào sổ, môn loại..." 
           />
           <button v-if="searchQuery" class="clear-btn" @click="searchQuery = ''">✕</button>
         </div>
 
-        <!-- Category Pills dạng cuộn mượt -->
         <div class="category-pills">
           <button 
             v-for="cat in categories" 
@@ -49,12 +44,10 @@
         </div>
       </div>
 
-      <!-- Bảng Danh Sách Sách (Đủ 10 trường dữ liệu + Nút Sắp xếp Phễu/Mũi tên) -->
       <div class="table-responsive mt-3">
         <table class="data-table book-table">
           <thead>
             <tr>
-              <!-- 1. STT (id) -->
               <th @click="sortBy('id')" class="sortable-th">
                 <div class="th-content">
                   STT 
@@ -63,8 +56,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 2. Tác giả (author) -->
               <th @click="sortBy('author')" class="sortable-th">
                 <div class="th-content">
                   Tác giả 
@@ -73,8 +64,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 3. Tên sách (title) -->
               <th @click="sortBy('title')" class="sortable-th">
                 <div class="th-content">
                   Tên sách 
@@ -83,8 +72,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 4. Nơi XB (noi_xuat_ban) -->
               <th @click="sortBy('noi_xuat_ban')" class="sortable-th">
                 <div class="th-content">
                   Nơi XB 
@@ -93,8 +80,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 5. Năm XB (nam_xuat_ban) -->
               <th @click="sortBy('nam_xuat_ban')" class="sortable-th">
                 <div class="th-content">
                   Năm XB 
@@ -103,8 +88,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 6. Khổ (kho_sach) -->
               <th @click="sortBy('kho_sach')" class="sortable-th">
                 <div class="th-content">
                   Khổ 
@@ -113,8 +96,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 7. Trang (so_trang) -->
               <th @click="sortBy('so_trang')" class="sortable-th text-center">
                 <div class="th-content center">
                   Trang 
@@ -123,8 +104,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 8. Giá tiền (gia_tien) -->
               <th @click="sortBy('gia_tien')" class="sortable-th text-right">
                 <div class="th-content right">
                   Giá tiền 
@@ -133,8 +112,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 9. Số vào sổ (so_vao_so) -->
               <th @click="sortBy('so_vao_so')" class="sortable-th text-center">
                 <div class="th-content center">
                   Số vào sổ 
@@ -143,8 +120,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- 10. Môn loại (mon_loai) -->
               <th @click="sortBy('mon_loai')" class="sortable-th text-center">
                 <div class="th-content center">
                   Môn loại 
@@ -153,8 +128,6 @@
                   </span>
                 </div>
               </th>
-
-              <!-- Trạng thái mượn trả -->
               <th class="text-center">Trạng thái</th>
             </tr>
           </thead>
@@ -166,41 +139,16 @@
               :class="{ 'row-borrowed': book.status === 'borrowed' }"
               class="clickable-row"
             >
-              <!-- 1. STT -->
               <td class="text-subtle font-mono">{{ index + 1 }}</td>
-              
-              <!-- 2. Tác giả -->
               <td class="text-author">{{ book.author || '-' }}</td>
-              
-              <!-- 3. Tên sách -->
               <td class="font-bold text-title">{{ book.title }}</td>
-              
-              <!-- 4. Nơi XB -->
               <td class="text-subtle text-center">{{ book.noi_xuat_ban || '-' }}</td>
-              
-              <!-- 5. Năm XB -->
               <td class="text-subtle text-center">{{ book.nam_xuat_ban || '-' }}</td>
-              
-              <!-- 6. Khổ -->
               <td class="text-subtle">{{ book.kho_sach || '-' }}</td>
-              
-              <!-- 7. Trang -->
               <td class="text-center font-mono">{{ book.so_trang || '-' }}</td>
-              
-              <!-- 8. Giá tiền -->
               <td class="text-right font-mono text-price">{{ book.gia_tien || '-' }}</td>
-              
-              <!-- 9. Số vào sổ -->
-              <td class="text-center">
-                <span class="code-badge">{{ book.so_vao_so }}</span>
-              </td>
-              
-              <!-- 10. Môn loại -->
-              <td class="text-center">
-                <span class="cat-tag">{{ book.mon_loai || '-' }}</span>
-              </td>
-              
-              <!-- Trạng thái -->
+              <td class="text-center"><span class="code-badge">{{ book.so_vao_so || '-' }}</span></td>
+              <td class="text-center"><span class="cat-tag">{{ book.mon_loai || '-' }}</span></td>
               <td class="text-center">
                 <span class="badge" :class="book.status === 'available' ? 'badge-success' : 'badge-warning'">
                   {{ book.status === 'available' ? 'Sẵn sàng' : 'Đang mượn' }}
@@ -209,22 +157,16 @@
             </tr>
 
             <tr v-if="filteredAndSortedBooks.length === 0">
-              <td colspan="11" class="no-data">
-                <div class="empty-state">
-                  <span>🔍</span>
-                  <p>Không tìm thấy dữ liệu sách phù hợp.</p>
-                </div>
-              </td>
+              <td colspan="11" class="no-data">Không tìm thấy dữ liệu sách.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ================= TAB 2: QUẢN LÝ MƯỢN TRẢ ================= -->
     <div v-if="activeTab === 'manager'" class="glass-panel slide-in">
       <div class="d-flex justify-between align-center mb-3">
-        <h4 class="m-0">Danh sách phiếu mượn trả hiện tại</h4>
+        <h4 class="m-0 text-gold">Danh sách phiếu mượn trả</h4>
       </div>
       <div class="table-responsive">
         <table class="data-table">
@@ -242,7 +184,7 @@
           <tbody>
             <tr v-for="item in enrichedBorrowList" :key="item.id">
               <td><strong class="text-highlight">{{ item.user_name }}</strong></td>
-              <td>{{ item.rank }}<br><small class="text-muted">{{ item.position }}</small></td>
+              <td>{{ item.rank || '-' }}<br><small class="text-muted">{{ item.position }}</small></td>
               <td class="font-bold">{{ item.book_title }}</td>
               <td class="text-center font-mono">{{ formatDate(item.borrow_date) }}</td>
               <td class="text-center font-mono">
@@ -260,16 +202,13 @@
               </td>
             </tr>
             <tr v-if="borrowList.length === 0">
-              <td colspan="7" class="no-data">Chưa có bản ghi mượn trả nào.</td>
+              <td colspan="7" class="no-data">Chưa có bản ghi mượn sách nào.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ================= MODALS ================= -->
-    
-    <!-- Modal Chi Tiết Sách -->
     <div v-if="showDetailModal" class="modal-overlay" @click.self="showDetailModal = false">
       <div class="modal-content glass-panel">
         <div class="modal-header">
@@ -281,13 +220,13 @@
             <h2 class="book-modal-title">{{ selectedBook.title }}</h2>
             <div class="info-grid">
               <p><strong>Tác giả:</strong> {{ selectedBook.author || 'Nhiều tác giả' }}</p>
-              <p><strong>Mảng loại:</strong> {{ selectedBook.category }}</p>
-              <p><strong>Số vào sổ:</strong> {{ selectedBook.so_vao_so }}</p>
-              <p><strong>Môn loại:</strong> {{ selectedBook.mon_loai }}</p>
-              <p><strong>Nơi XB:</strong> {{ selectedBook.noi_xuat_ban }} ({{ selectedBook.nam_xuat_ban }})</p>
-              <p><strong>Khổ sách:</strong> {{ selectedBook.kho_sach }}</p>
-              <p><strong>Số trang:</strong> {{ selectedBook.so_trang }} trang</p>
-              <p><strong>Giá tiền:</strong> {{ selectedBook.gia_tien }}</p>
+              <p><strong>Mảng sách:</strong> {{ selectedBook.category }}</p>
+              <p><strong>Số vào sổ:</strong> {{ selectedBook.so_vao_so || '-' }}</p>
+              <p><strong>Môn loại:</strong> {{ selectedBook.mon_loai || '-' }}</p>
+              <p><strong>Nơi XB:</strong> {{ selectedBook.noi_xuat_ban || '-' }} ({{ selectedBook.nam_xuat_ban || '-' }})</p>
+              <p><strong>Khổ sách:</strong> {{ selectedBook.kho_sach || '-' }}</p>
+              <p><strong>Số trang:</strong> {{ selectedBook.so_trang || '-' }} trang</p>
+              <p><strong>Giá tiền:</strong> {{ selectedBook.gia_tien || '-' }}</p>
             </div>
             <div class="status-box mt-3" :class="selectedBook.status === 'available' ? 'bg-success-light' : 'bg-warning-light'">
               Trạng thái: <strong>{{ selectedBook.status === 'available' ? 'Sẵn sàng cho mượn' : 'Đang cho mượn' }}</strong>
@@ -301,7 +240,6 @@
       </div>
     </div>
 
-    <!-- Modal Đăng Ký Mượn Sách -->
     <div v-if="showBorrowModal" class="modal-overlay" @click.self="showBorrowModal = false">
       <div class="modal-content glass-panel">
         <div class="modal-header">
@@ -312,7 +250,7 @@
           <label>Tên sách mượn</label>
           <input type="text" :value="selectedBook.title" disabled class="input-disabled" />
           
-          <label>Họ và tên người mượn (*)</label>
+          <label class="mt-2">Họ và tên người mượn (*)</label>
           <input type="text" v-model="borrowForm.user_name" placeholder="Nhập họ tên người mượn..." />
           
           <div class="flex-row mt-2">
@@ -337,7 +275,6 @@
       </div>
     </div>
 
-    <!-- Modal Trả Sách -->
     <div v-if="showReturnModal" class="modal-overlay" @click.self="showReturnModal = false">
       <div class="modal-content glass-panel">
         <div class="modal-header">
@@ -365,14 +302,26 @@
 </template>
 
 <script>
+const getApiUrl = () => {
+  const rawUrl = import.meta.env.VITE_API_URL || 'https://phong-hcm-system.onrender.com/api';
+  return rawUrl.endsWith('/api') ? rawUrl.slice(0, -4) : rawUrl;
+};
+
 export default {
+  name: 'AdminBookBorrow',
+  props: {
+    library: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       activeTab: 'library',
       searchQuery: '',
       selectedCategory: 'Tất cả sách',
       sortKey: 'id',
-      sortOrder: 'asc', // 'asc' hoặc 'desc'
+      sortOrder: 'asc',
       
       categories: [
         'Tất cả sách', 
@@ -381,10 +330,12 @@ export default {
         'Mảng sách về Quân sự', 
         'Sách về văn học', 
         'Sách pháp luật', 
-        'Mảng sách khác'
+        'Các loại sách khác'
       ],
       
-     
+      books: [],
+      borrowList: [],
+
       showDetailModal: false,
       showBorrowModal: false,
       showReturnModal: false,
@@ -396,7 +347,6 @@ export default {
     };
   },
   computed: {
-    // Tìm kiếm + Lọc + Sắp xếp động A-Z / Z-A
     filteredAndSortedBooks() {
       let result = this.books.filter(book => {
         const matchCategory = this.selectedCategory === 'Tất cả sách' || book.category === this.selectedCategory;
@@ -410,13 +360,11 @@ export default {
         return matchCategory && matchSearch;
       });
 
-      // Xử lý sắp xếp theo cột
       if (this.sortKey) {
         result.sort((a, b) => {
           let valA = a[this.sortKey] ?? '';
           let valB = b[this.sortKey] ?? '';
 
-          // Ép kiểu số nếu là trang hoặc id
           if (this.sortKey === 'id' || this.sortKey === 'so_trang') {
             valA = Number(valA) || 0;
             valB = Number(valB) || 0;
@@ -442,8 +390,54 @@ export default {
       })).sort((a, b) => new Date(b.borrow_date) - new Date(a.borrow_date));
     }
   },
+  watch: {
+    library: {
+      immediate: true,
+      handler(val) {
+        if (Array.isArray(val) && val.length > 0) {
+          this.books = val;
+        } else {
+          this.fetchBooks();
+        }
+      }
+    }
+  },
+  mounted() {
+    this.fetchBooks();
+    this.fetchBorrows();
+  },
   methods: {
-    // Hàm đảo chiều sắp xếp khi nhấn vào tiêu đề cột
+    getAuthHeaders() {
+      const token = localStorage.getItem('token');
+      return token 
+        ? { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } 
+        : { 'Content-Type': 'application/json' };
+    },
+
+    async fetchBooks() {
+      try {
+        const res = await fetch(`${getApiUrl()}/api/library`, { headers: this.getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          this.books = Array.isArray(data) ? data : (data.data || []);
+        }
+      } catch (err) {
+        console.error("Lỗi lấy danh sách sách:", err);
+      }
+    },
+
+    async fetchBorrows() {
+      try {
+        const res = await fetch(`${getApiUrl()}/api/borrows`, { headers: this.getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          this.borrowList = Array.isArray(data) ? data : (data.data || []);
+        }
+      } catch (err) {
+        console.error("Lỗi lấy danh sách phiếu mượn:", err);
+      }
+    },
+
     sortBy(key) {
       if (this.sortKey === key) {
         this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -454,17 +448,11 @@ export default {
     },
 
     getTodayDateString() {
-      const today = new Date();
-      return today.toISOString().split('T')[0];
-    },
-    addDaysToDate(dateString, days) {
-      const date = new Date(dateString);
-      date.setDate(date.getDate() + days);
-      return date.toISOString().split('T')[0];
+      return new Date().toISOString().split('T')[0];
     },
     formatDate(dateString) {
       if (!dateString) return '';
-      const [year, month, day] = dateString.split('-');
+      const [year, month, day] = dateString.split('T')[0].split('-');
       return `${day}/${month}/${year}`;
     },
 
@@ -489,7 +477,7 @@ export default {
       this.showBorrowModal = true;
     },
     findAndOpenReturnModal() {
-      const record = this.borrowList.find(b => b.book_id === this.selectedBook.id && b.status === 'borrowed');
+      const record = this.borrowList.find(b => b.library_id === this.selectedBook.id && b.status === 'borrowed');
       if (record) {
         this.openReturnModal(record);
         this.showDetailModal = false;
@@ -505,95 +493,125 @@ export default {
       this.showReturnModal = true;
     },
 
-    submitBorrow() {
+    async submitBorrow() {
       if (!this.borrowForm.user_name.trim()) {
-        alert("Vui lòng nhập họ tên người mượn!");
+        this.$emit('toast', 'Vui lòng nhập họ tên người mượn!', 'error');
         return;
       }
-      const borrowDate = this.borrowForm.borrow_date || this.getTodayDateString();
-      const dueDate = this.addDaysToDate(borrowDate, 7);
 
-      this.borrowList.push({
-        id: Date.now(),
-        book_id: this.selectedBook.id,
-        book_title: this.selectedBook.title,
-        user_name: this.borrowForm.user_name,
-        rank: this.borrowForm.rank,
-        position: this.borrowForm.position,
-        borrow_date: borrowDate,
-        due_date: dueDate,
-        status: 'borrowed'
-      });
+      try {
+        const payload = {
+          library_id: this.selectedBook.id,
+          user_name: this.borrowForm.user_name,
+          rank: this.borrowForm.rank,
+          position: this.borrowForm.position,
+          borrow_date: this.borrowForm.borrow_date || this.getTodayDateString()
+        };
 
-      const bookIdx = this.books.findIndex(b => b.id === this.selectedBook.id);
-      if (bookIdx > -1) this.books[bookIdx].status = 'borrowed';
+        const res = await fetch(`${getApiUrl()}/api/borrows`, {
+          method: 'POST',
+          headers: this.getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
 
-      this.showBorrowModal = false;
-    },
-
-    submitReturn() {
-      const recordIdx = this.borrowList.findIndex(b => b.id === this.selectedBorrowRecord.id);
-      if (recordIdx > -1) {
-        this.borrowList[recordIdx].status = 'returned';
-        this.borrowList[recordIdx].return_date = this.returnForm.return_date || this.getTodayDateString();
+        if (res.ok) {
+          this.$emit('toast', `Đã tạo phiếu mượn cho ${this.borrowForm.user_name}`, 'success');
+          this.showBorrowModal = false;
+          this.fetchBooks();
+          this.fetchBorrows();
+          this.$emit('refresh');
+        } else {
+          this.$emit('toast', 'Lỗi khi đăng ký mượn sách!', 'error');
+        }
+      } catch (err) {
+        this.$emit('toast', 'Lỗi kết nối máy chủ!', 'error');
       }
-
-      const bookIdx = this.books.findIndex(b => b.id === this.selectedBorrowRecord.book_id);
-      if (bookIdx > -1) this.books[bookIdx].status = 'available';
-
-      this.showReturnModal = false;
     },
 
-    deleteBorrow(id) {
-      if (!confirm('Bạn có chắc muốn xóa bản ghi mượn này?')) return;
-      this.borrowList = this.borrowList.filter(b => b.id !== id);
+    async submitReturn() {
+      try {
+        const payload = {
+          return_date: this.returnForm.return_date || this.getTodayDateString()
+        };
+
+        const res = await fetch(`${getApiUrl()}/api/borrows/${this.selectedBorrowRecord.id}/return`, {
+          method: 'PUT',
+          headers: this.getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          this.$emit('toast', `Đã thu hồi thành công cuốn sách!`, 'success');
+          this.showReturnModal = false;
+          this.fetchBooks();
+          this.fetchBorrows();
+          this.$emit('refresh');
+        } else {
+          this.$emit('toast', 'Lỗi khi xác nhận trả sách!', 'error');
+        }
+      } catch (err) {
+        this.$emit('toast', 'Lỗi kết nối máy chủ!', 'error');
+      }
+    },
+
+    async deleteBorrow(id) {
+      if (!confirm('Bạn có chắc chắn muốn xóa bản ghi phiếu mượn này?')) return;
+      try {
+        const res = await fetch(`${getApiUrl()}/api/borrows/${id}`, {
+          method: 'DELETE',
+          headers: this.getAuthHeaders()
+        });
+
+        if (res.ok) {
+          this.$emit('toast', 'Đã xóa bản ghi phiếu mượn thành công!', 'success');
+          this.fetchBorrows();
+        } else {
+          this.$emit('toast', 'Không thể xóa bản ghi này!', 'error');
+        }
+      } catch (err) {
+        this.$emit('toast', 'Lỗi kết nối máy chủ!', 'error');
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* ================= PREMIER DARK THEME ================= */
-.admin-library-container {
+.admin-borrow-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   color: #f1f5f9;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0b0f17;
-  padding: 24px;
-  border-radius: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* HEADER */
 .section-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
   flex-wrap: wrap;
   gap: 16px;
 }
 .header-title { display: flex; align-items: center; gap: 14px; }
 .icon-badge {
   font-size: 1.8rem;
-  background: rgba(59, 130, 246, 0.15);
+  background: rgba(255, 215, 0, 0.15);
   padding: 10px;
   border-radius: 14px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
-.section-top h3 { margin: 0; font-size: 1.4rem; font-weight: 700; color: #ffffff; letter-spacing: -0.3px; }
+.section-top h3 { margin: 0; font-size: 1.4rem; font-weight: 700; color: #ffd700; }
 .subtitle { margin: 4px 0 0 0; font-size: 0.85rem; color: #94a3b8; }
 
-/* TAB NAV */
 .tab-nav {
   display: flex;
   gap: 6px;
-  background: #161f30;
+  background: rgba(15, 23, 42, 0.8);
   padding: 4px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
 }
 .tab-nav button {
   background: transparent;
@@ -605,267 +623,135 @@ export default {
   font-weight: 600;
   font-size: 0.88rem;
   transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 .tab-nav button.active {
-  background: #2563eb;
+  background: linear-gradient(135deg, #da251d 0%, #7f0a0a 100%);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 14px rgba(218, 37, 29, 0.35);
 }
 
-/* GLASS PANEL */
 .glass-panel {
-  background: rgba(18, 26, 43, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.15);
   border-radius: 16px;
   padding: 20px;
   backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .slide-in { animation: fadeIn 0.3s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* TOOLBAR & SEARCH BAR */
-.toolbar-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-.search-icon {
-  position: absolute;
-  left: 14px;
-  font-size: 0.95rem;
-  opacity: 0.6;
-}
+.toolbar-wrapper { display: flex; flex-direction: column; gap: 16px; }
+.search-box { position: relative; display: flex; align-items: center; width: 100%; }
+.search-icon { position: absolute; left: 14px; font-size: 0.95rem; opacity: 0.6; }
 .search-box input {
   width: 100%;
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0b132b;
+  border: 1px solid rgba(255, 215, 0, 0.2);
   color: #fff;
   padding: 12px 40px 12px 42px;
   border-radius: 12px;
   font-size: 0.92rem;
   outline: none;
-  transition: all 0.2s;
 }
-.search-box input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-.clear-btn {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #94a3b8;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
+.search-box input:focus { border-color: #ffd700; }
+.clear-btn { position: absolute; right: 12px; background: none; border: none; color: #94a3b8; cursor: pointer; }
 
-/* CATEGORY PILLS */
-.category-pills {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: thin;
-}
+.category-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
 .category-pills button {
   white-space: nowrap;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #cbd5e1;
   padding: 7px 16px;
   border-radius: 20px;
   font-size: 0.83rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
-.category-pills button:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 .category-pills button.active {
-  background: #10b981;
-  color: #042f2e;
+  background: #ffd700;
+  color: #150101;
   font-weight: 700;
-  border-color: #10b981;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+  border-color: #ffd700;
 }
 
-/* TABLE STYLING */
 .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; }
-.data-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.88rem;
-}
-.data-table th {
-  background: #0f172a;
-  color: #94a3b8;
-  font-weight: 600;
-  padding: 12px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  white-space: nowrap;
-  user-select: none;
-}
-.data-table th:first-child { border-top-left-radius: 10px; }
-.data-table th:last-child { border-top-right-radius: 10px; }
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.88rem; }
+.data-table th { background: #0b132b; color: #ffd700; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); white-space: nowrap; }
+.data-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
-.data-table td {
-  padding: 12px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  vertical-align: middle;
-}
-
-/* SORTABLE HEADERS */
-.sortable-th { cursor: pointer; transition: background 0.2s; }
-.sortable-th:hover { background: #1a2436; color: #fff; }
+.sortable-th { cursor: pointer; }
 .th-content { display: flex; align-items: center; gap: 6px; }
 .th-content.center { justify-content: center; }
 .th-content.right { justify-content: flex-end; }
 .sort-icon { font-size: 0.72rem; opacity: 0.4; }
-.sort-icon.active { opacity: 1; color: #38bdf8; font-weight: bold; }
+.sort-icon.active { opacity: 1; color: #ffd700; }
 
-/* CLICKABLE ROW & HOVER */
-.clickable-row { cursor: pointer; transition: background 0.15s ease; }
-.clickable-row:hover { background: rgba(255, 255, 255, 0.03); }
+.clickable-row { cursor: pointer; transition: background 0.2s ease; }
+.clickable-row:hover { background: rgba(255, 215, 0, 0.05); }
+.row-borrowed { background-color: rgba(245, 158, 11, 0.1) !important; }
 
-/* ĐẶC BIỆT: Hàng sách đang mượn (Highlight nhẹ nhàng sang trọng) */
-.row-borrowed {
-  background-color: rgba(245, 158, 11, 0.08) !important;
-}
-.row-borrowed:hover { background-color: rgba(245, 158, 11, 0.14) !important; }
-
-/* TEXT FORMATTING & BADGES */
-.font-mono { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+.font-mono { font-family: monospace; }
 .font-bold { font-weight: 600; }
-.text-title { color: #f8fafc; font-size: 0.9rem; }
+.text-title { color: #f8fafc; }
 .text-author { color: #cbd5e1; }
-.text-subtle { color: #94a3b8; font-size: 0.83rem; }
+.text-subtle { color: #94a3b8; }
 .text-price { color: #38bdf8; font-weight: 600; }
 .text-highlight { color: #60a5fa; }
+.text-gold { color: #ffd700; }
+.text-muted { color: #64748b; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 
-.code-badge {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 0.8rem;
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-.cat-tag {
-  background: rgba(99, 102, 241, 0.12);
-  color: #a5b4fc;
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-size: 0.78rem;
-}
+.code-badge { background: rgba(255, 255, 255, 0.08); padding: 3px 8px; border-radius: 6px; font-family: monospace; }
+.cat-tag { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; }
 
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-.badge-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-.badge-info { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+.badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.badge-info { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
 
-/* BUTTONS & ACTIONS */
-.btn-action {
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s;
-}
-.btn-return { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.btn-return:hover { background: rgba(16, 185, 129, 0.35); }
-.btn-delete { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); margin-left: 6px; }
-.btn-delete:hover { background: rgba(239, 68, 68, 0.3); }
+.btn-action { padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; }
+.btn-return { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+.btn-delete { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); margin-left: 6px; }
+.btn-primary { background: #da251d; color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+.btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
 
-.btn-primary {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.btn-primary:hover { background: #1d4ed8; }
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* MODAL STYLING */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(3, 7, 18, 0.75);
+  background: rgba(3, 7, 18, 0.85);
   backdrop-filter: blur(8px);
   display: flex; justify-content: center; align-items: center;
   z-index: 1000;
 }
 .modal-content {
-  background: #111827;
+  background: #0f172a;
   width: 90%; max-width: 520px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.25);
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
-.modal-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-.modal-header h4 { margin: 0; font-size: 1.1rem; color: #fff; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.modal-header h4 { margin: 0; font-size: 1.1rem; color: #ffd700; }
 .btn-close { background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; }
 .modal-body { padding: 20px; }
-.modal-footer { padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.modal-footer { padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  font-size: 0.88rem;
-}
-.book-modal-title { color: #38bdf8; font-size: 1.25rem; margin-top: 0; margin-bottom: 14px; }
-.status-box { padding: 10px; border-radius: 8px; text-align: center; font-size: 0.9rem; }
-.bg-success-light { background: rgba(16, 185, 129, 0.1); color: #34d399; }
-.bg-warning-light { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.88rem; }
+.book-modal-title { color: #ffd700; font-size: 1.25rem; margin-top: 0; }
+.status-box { padding: 10px; border-radius: 8px; text-align: center; }
+.bg-success-light { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.bg-warning-light { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
 
-/* FORMS IN MODAL */
 .form-group label { display: block; font-size: 0.83rem; color: #94a3b8; margin-bottom: 6px; }
 .form-group input {
   width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px;
-  background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff; outline: none; font-size: 0.9rem;
+  background: #0b132b; border: 1px solid rgba(255, 215, 0, 0.2); color: #fff; outline: none;
 }
-.input-disabled { background: rgba(255, 255, 255, 0.03) !important; color: #64748b !important; }
+.input-disabled { background: rgba(255, 255, 255, 0.05) !important; color: #64748b !important; }
 .note-text { font-size: 0.78rem; color: #64748b; margin-top: 6px; }
 
-/* UTILS */
 .m-0 { margin: 0; }
 .mt-2 { margin-top: 10px; }
 .mt-3 { margin-top: 15px; }
@@ -877,5 +763,5 @@ export default {
 .justify-between { justify-content: space-between; }
 .align-center { align-items: center; }
 .no-data { text-align: center; padding: 40px 0; color: #64748b; }
-.empty-state span { font-size: 2rem; display: block; margin-bottom: 8px; }
+.overdue-text { color: #ef4444; font-weight: bold; font-size: 0.8rem; margin-left: 4px; }
 </style>

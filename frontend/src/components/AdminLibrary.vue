@@ -125,13 +125,13 @@
           <tbody>
             <tr v-for="item in filteredLibrary" :key="item.id">
               <td><span class="code-badge">{{ item.so_vao_so || '-' }}</span></td>
-              <td><strong>{{ item.title }}</strong></td>
-              <td>{{ item.author || '-' }}</td>
+              <td><strong class="text-title">{{ item.title }}</strong></td>
+              <td class="text-author">{{ item.author || '-' }}</td>
               <td><span class="badge">{{ item.category }}</span></td>
               <td><span class="cat-tag">{{ item.mon_loai || '-' }}</span></td>
-              <td>{{ item.noi_xuat_ban || '-' }}</td>
-              <td>{{ item.nam_xuat_ban || '-' }}</td>
-              <td>{{ item.kho_sach || '-' }}</td>
+              <td class="text-subtle">{{ item.noi_xuat_ban || '-' }}</td>
+              <td class="text-subtle">{{ item.nam_xuat_ban || '-' }}</td>
+              <td class="text-subtle">{{ item.kho_sach || '-' }}</td>
               <td class="text-center font-mono">{{ item.so_trang || '-' }}</td>
               <td class="text-right font-mono text-price">{{ item.gia_tien || '-' }}</td>
               <td class="action-btns text-center">
@@ -156,6 +156,7 @@ const getApiUrl = () => {
 };
 
 export default {
+  name: 'AdminLibrary',
   props: {
     library: {
       type: Array,
@@ -226,7 +227,6 @@ export default {
         description: item.description || ''
       };
 
-      // Cuộn lên đầu form khi nhấn sửa
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
 
@@ -301,9 +301,9 @@ export default {
 </script>
 
 <style scoped>
-.tab-pane { display: flex; flex-direction: column; gap: 25px; }
+.tab-pane { display: flex; flex-direction: column; gap: 25px; color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 .section-top { display: flex; justify-content: space-between; align-items: center; }
-.section-top h3 { margin: 0 0 4px 0; font-size: 1.3rem; color: #fff; }
+.section-top h3 { margin: 0 0 4px 0; font-size: 1.3rem; color: #ffd700; }
 .subtitle { margin: 0; font-size: 0.85rem; color: #94a3b8; }
 
 /* Grid Form 3 Cột Hiện Đại */
@@ -311,18 +311,19 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.15);
   padding: 24px;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group.full-width { grid-column: 1 / -1; }
 .form-group label { font-size: 0.83rem; font-weight: 600; color: #cbd5e1; }
 .form-group input, .form-group select, .form-group textarea {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0b132b;
+  border: 1px solid rgba(255, 215, 0, 0.2);
   padding: 10px 14px;
   border-radius: 8px;
   color: #fff;
@@ -332,13 +333,13 @@ export default {
   font-size: 0.9rem;
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: #ffd700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
 }
 
 /* Nút Bấm */
 .btn-primary {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #da251d 0%, #7f0a0a 100%);
   color: #fff;
   border: none;
   padding: 12px;
@@ -346,16 +347,18 @@ export default {
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s;
+  box-shadow: 0 4px 14px rgba(218, 37, 29, 0.35);
 }
 .btn-primary:hover { opacity: 0.9; }
 .btn-cancel { background: #64748b; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
 /* Bảng Dữ Liệu */
 .data-table-container {
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 16px;
   padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 .table-header {
   display: flex;
@@ -367,8 +370,8 @@ export default {
 }
 .table-header h4 { margin: 0; font-size: 1.1rem; color: #ffd700; }
 .table-search-input {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0b132b;
+  border: 1px solid rgba(255, 215, 0, 0.2);
   padding: 8px 14px;
   border-radius: 8px;
   color: #fff;
@@ -376,16 +379,20 @@ export default {
   font-size: 0.85rem;
   width: 250px;
 }
+.table-search-input:focus { border-color: #ffd700; }
 
 .table-responsive { width: 100%; overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
 .data-table th, .data-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-.data-table th { color: #94a3b8; font-weight: 600; background: rgba(15, 23, 42, 0.6); white-space: nowrap; }
+.data-table th { color: #ffd700; font-weight: 600; background: #0b132b; white-space: nowrap; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
 
-/* Badges */
-.code-badge { background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 6px; font-family: monospace; color: #e2e8f0; }
-.badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; background: #334155; color: #fff; }
-.cat-tag { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; }
+/* Text & Badges Styling */
+.text-title { color: #f8fafc; }
+.text-author { color: #cbd5e1; }
+.text-subtle { color: #94a3b8; }
+.code-badge { background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 6px; font-family: monospace; color: #e2e8f0; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+.cat-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; }
 
 /* Formatting */
 .font-mono { font-family: monospace; }
@@ -395,10 +402,10 @@ export default {
 
 /* Action Buttons */
 .action-btns { display: flex; gap: 6px; justify-content: center; }
-.btn-edit, .btn-del { padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.btn-edit, .btn-del { padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; }
 .btn-edit { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
 .btn-del { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-.no-data { text-align: center; color: #8d99ae; padding: 25px !important; }
+.no-data { text-align: center; color: #64748b; padding: 30px !important; }
 
 @media (max-width: 1024px) {
   .form-grid { grid-template-columns: repeat(2, 1fr); }

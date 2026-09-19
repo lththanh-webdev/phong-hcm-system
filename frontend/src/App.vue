@@ -76,6 +76,7 @@
           <router-link to="/media" class="nav-item">Ca Khúc & Điệu Nhảy</router-link>
           <router-link to="/trac-nghiem" class="nav-item">Thi Trắc Nghiệm</router-link>
           <router-link to="/gop-y" class="nav-item">Hòm Thư Góp Ý</router-link>
+          <router-link to="/admin" class="nav-item admin-link">🔐 Quản Trị</router-link>
         </div>
       </nav>
     </header>
@@ -355,6 +356,13 @@ body {
   white-space: nowrap;
 }
 
+.nav-item.admin-link {
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
 .nav-item:hover {
   color: var(--gold-primary);
   background: rgba(255, 215, 0, 0.05);
@@ -556,7 +564,7 @@ body {
     transition: max-height 0.3s ease-in-out;
   }
   .nav-bar.mobile-open {
-    max-height: 500px;
+    max-height: 600px;
     padding: 8px 0;
   }
   .nav-links-container {
@@ -571,6 +579,10 @@ body {
     font-size: 0.85rem;
     border-bottom: none;
     border-left: 3px solid transparent;
+  }
+  .nav-item.admin-link {
+    margin-left: 0;
+    border-radius: 0;
   }
   .nav-item.router-link-active {
     border-bottom: none;
