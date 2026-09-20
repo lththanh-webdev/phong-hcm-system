@@ -34,23 +34,25 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// 🚀 Khai báo các Routes chính của hệ thống
+// 🚀 Khai báo các Routes chính của hệ thống (Đã đồng bộ chuẩn tên với Frontend)
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/activities', require('./routes/activityRoutes'));
 app.use('/api/tributes', require('./routes/tributeRoutes'));
 app.use('/api/quizzes', require('./routes/quizRoutes'));
 app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
-app.use('/api/stats', require('./routes/statsRoutes'));        // Thống kê truy cập
+app.use('/api/stats', require('./routes/statsRoutes'));         // Thống kê truy cập
 app.use('/api/visitors', require('./routes/visitorRoutes')); // Quản lý visitor
-app.use('/api/feedback', require('./routes/feedbackRoutes')); // 🌟 Quản lý Hòm thư góp ý
+
+// 👉 Các route đã được sửa lỗi lệch tên và bổ sung đầy đủ:
+app.use('/api/books', require('./routes/bookRoutes'));         // 1. Quản lý sách (bổ sung route mới)
+app.use('/api/feedbacks', require('./routes/feedbackRoutes')); // 2. Thêm chữ 's' khớp với /api/feedbacks
+app.use('/api/borrowings', require('./routes/bookBorrowRoutes'));// 3. Đổi từ /api/borrows thành /api/borrowings
 
 // 🏠 Trang chủ API kiểm tra trạng thái server
 app.get('/', (req, res) => {
     res.json({ message: '[Phòng Hồ Chí Minh Server] API đang hoạt động bình thường trên Cloud Storage!' });
 });
-
-app.use('/api/borrows', require('./routes/bookBorrowRoutes'));
 
 // 🛡️ Middleware xử lý lỗi tập trung toàn cục (Global Error Handler)
 app.use((err, req, res, next) => {
