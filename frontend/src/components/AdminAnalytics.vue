@@ -51,8 +51,8 @@
       <div class="stat-card-modern">
         <div class="stat-icon-box bg-emerald">📖</div>
         <div class="stat-info">
-          <span class="stat-label">Mượn Trả Sách</span>
-          <h3 class="stat-value">{{ borrowings.length }}</h3>
+          <span class="stat-label">Mượn Trả (Đang mượn / Tổng)</span>
+          <h3 class="stat-value">{{ currentlyBorrowedBooks }} / {{ books.length || borrowings.length }}</h3>
         </div>
       </div>
 
@@ -132,9 +132,19 @@ export default {
     media: { type: Array, default: () => [] },
     quizzes: { type: Array, default: () => [] },
     borrowings: { type: Array, default: () => [] },
-    feedbacks: { type: Array, default: () => [] }
+    feedbacks: { type: Array, default: () => [] },
+    books: { type: Array, default: () => [] } // Bổ sung prop nhận dữ liệu từ bảng books
   },
   computed: {
+    // Tính số lượng sách đang được mượn từ bảng books (dựa vào trạng thái status hoặc cờ đánh dấu)
+    currentlyBorrowedBooks() {
+      if (!this.books || this.books.length === 0) return this.borrowings.length;
+      return this.books.filter(item => 
+        item.status === 'borrowed' || 
+        item.is_borrowed === true || 
+        item.status === 'Đang mượn'
+      ).length;
+    },
     monthlyStatistics() {
       const statsMap = {};
       
@@ -167,6 +177,7 @@ export default {
       if (this.quizzes) this.quizzes.forEach(item => addItem(item, 'quizzes'));
       if (this.borrowings) this.borrowings.forEach(item => addItem(item, 'borrowings'));
       if (this.feedbacks) this.feedbacks.forEach(item => addItem(item, 'feedbacks'));
+      if (this.books) this.books.forEach(item => addItem(item, 'borrowings'));
 
       return Object.values(statsMap).sort((a, b) => b.sortKey - a.sortKey);
     }
