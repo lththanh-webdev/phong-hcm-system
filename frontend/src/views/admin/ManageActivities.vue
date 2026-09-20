@@ -81,6 +81,9 @@
             :library="libraryList"
             :media="mediaList"
             :quizzes="quizList"
+            :books="booksList"
+            :feedbacks="feedbacksList"
+            :borrowings="borrowingsList"
             @refresh="fetchAllData"
             @toast="showToast"
           />
@@ -132,6 +135,9 @@ export default {
       libraryList: [],
       mediaList: [],
       quizList: [],
+      booksList: [],
+      feedbacksList: [],
+      borrowingsList: [],
       toast: { show: false, message: '', type: 'success' },
       toastTimeout: null
     };
@@ -184,16 +190,35 @@ export default {
       try {
         const baseUrl = getApiUrl();
         const headers = this.getAuthHeaders();
-        const [actRes, libRes, medRes, quizRes] = await Promise.all([
-          fetch(`${baseUrl}/api/activities`, { headers }),
-          fetch(`${baseUrl}/api/library`, { headers }),
-          fetch(`${baseUrl}/api/media`, { headers }),
-          fetch(`${baseUrl}/api/quizzes`, { headers })
+        
+        // Gọi đồng thời tất cả các API cần thiết, dùng catch phòng hờ lỗi từng request riêng lẻ
+        const [actRes, libRes, medRes, quizRes, bookRes, feedbackRes, borrowRes] = await Promise.all([
+          fetch(`${baseUrl}/api/activities`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/library`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/media`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/quizzes`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/books`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/feedbacks`, { headers }).catch(() => ({ ok: false })),
+          fetch(`${baseUrl}/api/borrowings`, { headers }).catch(() => ({ ok: false }))
         ]);
+
         if (actRes.ok) this.activitiesList = await actRes.json();
         if (libRes.ok) this.libraryList = await libRes.json();
         if (medRes.ok) this.mediaList = await medRes.json();
         if (quizRes.ok) this.quizList = await quizRes.json();
+
+        if (bookRes.ok) {
+          const data = await bookRes.json();
+          this.booksList = Array.isArray(data) ? data : (data.data || []);
+        }
+        if (feedbackRes.ok) {
+          const data = await feedbackRes.json();
+          this.feedbacksList = Array.isArray(data) ? data : (data.data || []);
+        }
+        if (borrowRes.ok) {
+          const data = await borrowRes.json();
+          this.borrowingsList = Array.isArray(data) ? data : (data.data || []);
+        }
       } catch (err) {
         console.error('Lỗi tải dữ liệu admin:', err);
       }
