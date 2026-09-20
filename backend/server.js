@@ -45,9 +45,9 @@ app.use('/api/stats', require('./routes/statsRoutes'));         // Thống kê t
 app.use('/api/visitors', require('./routes/visitorRoutes')); // Quản lý visitor
 
 // 👉 Các route đã được sửa lỗi lệch tên và bổ sung đầy đủ:
-app.use('/api/books', require('./routes/statsRoutes'));         // 1. Quản lý sách (bổ sung route mới)
-app.use('/api/feedbacks', require('./routes/statsRoutes')); // 2. Thêm chữ 's' khớp với /api/feedbacks
-app.use('/api/borrowings', require('./routes/statsRoutes'));// 3. Đổi từ /api/borrows thành /api/borrowings
+app.use('/api/books', require('./routes/bookRoutes'));         // 1. Quản lý sách (bổ sung route mới)
+app.use('/api/feedbacks', require('./routes/feedbackRoutes')); // 2. Thêm chữ 's' khớp với /api/feedbacks
+app.use('/api/borrowings', require('./routes/bookBorrowRoutes'));// 3. Đổi từ /api/borrows thành /api/borrowings
 
 // 🏠 Trang chủ API kiểm tra trạng thái server
 app.get('/', (req, res) => {
