@@ -1,5 +1,6 @@
 <template>
   <div class="admin-borrow-container">
+    <!-- Header Section -->
     <div class="section-top">
       <div class="header-title">
         <div class="icon-badge">📖</div>
@@ -11,23 +12,55 @@
       
       <div class="tab-nav">
         <button :class="{ active: activeTab === 'library' }" @click="activeTab = 'library'">
-          📚 Danh Mục Sách ({{ books.length }})
+          📚 Danh Mục Sách <span class="badge-count">{{ books.length }}</span>
         </button>
         <button :class="{ active: activeTab === 'manager' }" @click="activeTab = 'manager'">
-          🔄 Nhật Ký Mượn/Trả ({{ borrowList.length }})
+          🔄 Nhật Ký Mượn/Trả <span class="badge-count">{{ borrowList.length }}</span>
         </button>
       </div>
     </div>
 
+    <!-- Quick Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon books-icon">📚</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ books.length }}</span>
+          <span class="stat-label">Tổng số đầu sách</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon available-icon">✅</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ availableBooksCount }}</span>
+          <span class="stat-label">Sẵn sàng cho mượn</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon borrowed-icon">⏳</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ activeBorrowsCount }}</span>
+          <span class="stat-label">Đang được mượn</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon overdue-icon">⚠️</div>
+        <div class="stat-info">
+          <span class="stat-value text-danger">{{ overdueBorrowsCount }}</span>
+          <span class="stat-label">Phiếu quá hạn</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 1: Library Catalog -->
     <div v-if="activeTab === 'library'" class="glass-panel slide-in">
-      
       <div class="toolbar-wrapper">
         <div class="search-box">
           <span class="search-icon">🔍</span>
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="Tìm tên sách, tác giả, số vào sổ, môn loại..." 
+            placeholder="Tìm theo tên sách, tác giả, số vào sổ, môn loại..." 
           />
           <button v-if="searchQuery" class="clear-btn" @click="searchQuery = ''">✕</button>
         </div>
@@ -49,84 +82,34 @@
           <thead>
             <tr>
               <th @click="sortBy('id')" class="sortable-th">
-                <div class="th-content">
-                  STT 
-                  <span class="sort-icon" :class="{ active: sortKey === 'id' }">
-                    {{ sortKey === 'id' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">STT <span class="sort-icon" :class="{ active: sortKey === 'id' }">{{ sortKey === 'id' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('author')" class="sortable-th">
-                <div class="th-content">
-                  Tác giả 
-                  <span class="sort-icon" :class="{ active: sortKey === 'author' }">
-                    {{ sortKey === 'author' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">Tác giả <span class="sort-icon" :class="{ active: sortKey === 'author' }">{{ sortKey === 'author' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('title')" class="sortable-th">
-                <div class="th-content">
-                  Tên sách 
-                  <span class="sort-icon" :class="{ active: sortKey === 'title' }">
-                    {{ sortKey === 'title' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">Tên sách <span class="sort-icon" :class="{ active: sortKey === 'title' }">{{ sortKey === 'title' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('noi_xuat_ban')" class="sortable-th">
-                <div class="th-content">
-                  Nơi XB 
-                  <span class="sort-icon" :class="{ active: sortKey === 'noi_xuat_ban' }">
-                    {{ sortKey === 'noi_xuat_ban' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">Nơi XB <span class="sort-icon" :class="{ active: sortKey === 'noi_xuat_ban' }">{{ sortKey === 'noi_xuat_ban' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('nam_xuat_ban')" class="sortable-th">
-                <div class="th-content">
-                  Năm XB 
-                  <span class="sort-icon" :class="{ active: sortKey === 'nam_xuat_ban' }">
-                    {{ sortKey === 'nam_xuat_ban' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">Năm XB <span class="sort-icon" :class="{ active: sortKey === 'nam_xuat_ban' }">{{ sortKey === 'nam_xuat_ban' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('kho_sach')" class="sortable-th">
-                <div class="th-content">
-                  Khổ 
-                  <span class="sort-icon" :class="{ active: sortKey === 'kho_sach' }">
-                    {{ sortKey === 'kho_sach' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content">Khổ <span class="sort-icon" :class="{ active: sortKey === 'kho_sach' }">{{ sortKey === 'kho_sach' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('so_trang')" class="sortable-th text-center">
-                <div class="th-content center">
-                  Trang 
-                  <span class="sort-icon" :class="{ active: sortKey === 'so_trang' }">
-                    {{ sortKey === 'so_trang' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content center">Trang <span class="sort-icon" :class="{ active: sortKey === 'so_trang' }">{{ sortKey === 'so_trang' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('gia_tien')" class="sortable-th text-right">
-                <div class="th-content right">
-                  Giá tiền 
-                  <span class="sort-icon" :class="{ active: sortKey === 'gia_tien' }">
-                    {{ sortKey === 'gia_tien' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content right">Giá tiền <span class="sort-icon" :class="{ active: sortKey === 'gia_tien' }">{{ sortKey === 'gia_tien' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('so_vao_so')" class="sortable-th text-center">
-                <div class="th-content center">
-                  Số vào sổ 
-                  <span class="sort-icon" :class="{ active: sortKey === 'so_vao_so' }">
-                    {{ sortKey === 'so_vao_so' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content center">Số vào sổ <span class="sort-icon" :class="{ active: sortKey === 'so_vao_so' }">{{ sortKey === 'so_vao_so' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th @click="sortBy('mon_loai')" class="sortable-th text-center">
-                <div class="th-content center">
-                  Môn loại 
-                  <span class="sort-icon" :class="{ active: sortKey === 'mon_loai' }">
-                    {{ sortKey === 'mon_loai' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}
-                  </span>
-                </div>
+                <div class="th-content center">Môn loại <span class="sort-icon" :class="{ active: sortKey === 'mon_loai' }">{{ sortKey === 'mon_loai' ? (sortOrder === 'asc' ? '▲' : '▼') : '↕' }}</span></div>
               </th>
               <th class="text-center">Trạng thái</th>
             </tr>
@@ -155,18 +138,18 @@
                 </span>
               </td>
             </tr>
-
             <tr v-if="filteredAndSortedBooks.length === 0">
-              <td colspan="11" class="no-data">Không tìm thấy dữ liệu sách.</td>
+              <td colspan="11" class="no-data">Không tìm thấy dữ liệu sách phù hợp.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
+    <!-- Tab 2: Borrow Manager -->
     <div v-if="activeTab === 'manager'" class="glass-panel slide-in">
       <div class="d-flex justify-between align-center mb-3">
-        <h4 class="m-0 text-gold">Danh sách phiếu mượn trả</h4>
+        <h4 class="m-0 text-gold">Danh sách phiếu mượn & trả sách</h4>
       </div>
       <div class="table-responsive">
         <table class="data-table">
@@ -189,7 +172,7 @@
               <td class="text-center font-mono">{{ formatDate(item.borrow_date) }}</td>
               <td class="text-center font-mono">
                 {{ formatDate(item.due_date) }}
-                <span v-if="item.isOverdue && item.status === 'borrowed'" class="overdue-text">(Quá hạn)</span>
+                <span v-if="item.isOverdue && item.status === 'borrowed'" class="overdue-badge">(Quá hạn)</span>
               </td>
               <td class="text-center">
                 <span class="badge" :class="getBorrowStatusClass(item)">
@@ -202,15 +185,16 @@
               </td>
             </tr>
             <tr v-if="borrowList.length === 0">
-              <td colspan="7" class="no-data">Chưa có bản ghi mượn sách nào.</td>
+              <td colspan="7" class="no-data">Chưa có bản ghi mượn sách nào trong hệ thống.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
+    <!-- Modal: Book Detail -->
     <div v-if="showDetailModal" class="modal-overlay" @click.self="showDetailModal = false">
-      <div class="modal-content glass-panel">
+      <div class="modal-content glass-panel scale-in">
         <div class="modal-header">
           <h4>Thông tin chi tiết sách</h4>
           <button class="btn-close" @click="showDetailModal = false">✕</button>
@@ -240,8 +224,9 @@
       </div>
     </div>
 
+    <!-- Modal: Borrow Form -->
     <div v-if="showBorrowModal" class="modal-overlay" @click.self="showBorrowModal = false">
-      <div class="modal-content glass-panel">
+      <div class="modal-content glass-panel scale-in">
         <div class="modal-header">
           <h4>Phiếu đăng ký mượn sách</h4>
           <button class="btn-close" @click="showBorrowModal = false">✕</button>
@@ -251,7 +236,7 @@
           <input type="text" :value="selectedBook.title" disabled class="input-disabled" />
           
           <label class="mt-2">Họ và tên người mượn (*)</label>
-          <input type="text" v-model="borrowForm.user_name" placeholder="Nhập họ tên người mượn..." />
+          <input type="text" v-model="borrowForm.user_name" placeholder="Nhập họ tên đầy đủ..." />
           
           <div class="flex-row mt-2">
             <div class="w-50">
@@ -266,17 +251,18 @@
 
           <label class="mt-2">Ngày mượn</label>
           <input type="date" v-model="borrowForm.borrow_date" />
-          <p class="note-text"><em>* Hạn trả tự động tính 07 ngày kể từ ngày mượn.</em></p>
+          <p class="note-text"><em>* Hạn trả được tính tự động sau 07 ngày kể từ ngày mượn.</em></p>
         </div>
         <div class="modal-footer flex-row">
-          <button @click="showBorrowModal = false" class="btn-secondary w-50">Hủy</button>
+          <button @click="showBorrowModal = false" class="btn-secondary w-50">Hủy bỏ</button>
           <button @click="submitBorrow" class="btn-primary w-50">Xác nhận mượn</button>
         </div>
       </div>
     </div>
 
+    <!-- Modal: Return Form -->
     <div v-if="showReturnModal" class="modal-overlay" @click.self="showReturnModal = false">
-      <div class="modal-content glass-panel">
+      <div class="modal-content glass-panel scale-in">
         <div class="modal-header">
           <h4>Xác nhận trả sách</h4>
           <button class="btn-close" @click="showReturnModal = false">✕</button>
@@ -292,12 +278,11 @@
           <input type="date" v-model="returnForm.return_date" />
         </div>
         <div class="modal-footer flex-row">
-          <button @click="showReturnModal = false" class="btn-secondary w-50">Hủy</button>
+          <button @click="showReturnModal = false" class="btn-secondary w-50">Hủy bỏ</button>
           <button @click="submitReturn" class="btn-return w-50">Thu hồi sách</button>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -327,7 +312,7 @@ export default {
         'Tất cả sách', 
         'Mảng sách về Đảng', 
         'Mảng sách về Bác Hồ', 
-        'Mảng sách về Quân sự', 
+        'Mảng sách về Quân đội', 
         'Sách về văn học', 
         'Sách pháp luật', 
         'Các loại sách khác'
@@ -347,6 +332,16 @@ export default {
     };
   },
   computed: {
+    availableBooksCount() {
+      return this.books.filter(b => b.status === 'available').length;
+    },
+    activeBorrowsCount() {
+      return this.borrowList.filter(b => b.status === 'borrowed').length;
+    },
+    overdueBorrowsCount() {
+      const today = new Date().toISOString().split('T')[0];
+      return this.borrowList.filter(b => b.status === 'borrowed' && b.due_date < today).length;
+    },
     filteredAndSortedBooks() {
       let result = this.books.filter(book => {
         const matchCategory = this.selectedCategory === 'Tất cả sách' || book.category === this.selectedCategory;
@@ -580,16 +575,18 @@ export default {
 .admin-borrow-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   color: #f1f5f9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 4px;
 }
 
+/* Header Section */
 .section-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 18px;
   border-bottom: 1px solid rgba(255, 215, 0, 0.15);
   flex-wrap: wrap;
   gap: 16px;
@@ -597,100 +594,165 @@ export default {
 .header-title { display: flex; align-items: center; gap: 14px; }
 .icon-badge {
   font-size: 1.8rem;
-  background: rgba(255, 215, 0, 0.15);
-  padding: 10px;
-  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+  padding: 12px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.1);
 }
-.section-top h3 { margin: 0; font-size: 1.4rem; font-weight: 700; color: #ffd700; }
-.subtitle { margin: 4px 0 0 0; font-size: 0.85rem; color: #94a3b8; }
+.section-top h3 { margin: 0; font-size: 1.45rem; font-weight: 700; color: #ffd700; letter-spacing: 0.3px; }
+.subtitle { margin: 4px 0 0 0; font-size: 0.88rem; color: #94a3b8; }
 
+/* Tabs */
 .tab-nav {
   display: flex;
   gap: 6px;
-  background: rgba(15, 23, 42, 0.8);
-  padding: 4px;
-  border-radius: 12px;
+  background: rgba(11, 19, 43, 0.9);
+  padding: 5px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 .tab-nav button {
   background: transparent;
   border: none;
   color: #94a3b8;
-  padding: 9px 18px;
-  border-radius: 9px;
+  padding: 10px 20px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.88rem;
-  transition: all 0.25s ease;
+  font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.tab-nav button:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
 .tab-nav button.active {
   background: linear-gradient(135deg, #da251d 0%, #7f0a0a 100%);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(218, 37, 29, 0.35);
+  box-shadow: 0 4px 16px rgba(218, 37, 29, 0.4);
+}
+.badge-count {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
 }
 
-.glass-panel {
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.stat-card {
   background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 16px;
-  padding: 20px;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
-.slide-in { animation: fadeIn 0.3s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+.stat-icon {
+  font-size: 1.6rem;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.books-icon { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+.available-icon { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.borrowed-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.overdue-icon { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+.stat-info { display: flex; flex-direction: column; }
+.stat-value { font-size: 1.5rem; font-weight: 700; color: #fff; font-family: monospace; }
+.stat-label { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
 
+/* Glass Panel */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 18px;
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.slide-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+/* Toolbar & Search */
 .toolbar-wrapper { display: flex; flex-direction: column; gap: 16px; }
 .search-box { position: relative; display: flex; align-items: center; width: 100%; }
-.search-icon { position: absolute; left: 14px; font-size: 0.95rem; opacity: 0.6; }
+.search-icon { position: absolute; left: 16px; font-size: 1rem; opacity: 0.6; }
 .search-box input {
   width: 100%;
-  background: #0b132b;
+  background: #090e1d;
   border: 1px solid rgba(255, 215, 0, 0.2);
   color: #fff;
-  padding: 12px 40px 12px 42px;
+  padding: 13px 40px 13px 46px;
   border-radius: 12px;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   outline: none;
+  transition: all 0.2s ease;
 }
-.search-box input:focus { border-color: #ffd700; }
-.clear-btn { position: absolute; right: 12px; background: none; border: none; color: #94a3b8; cursor: pointer; }
+.search-box input:focus { border-color: #ffd700; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15); }
+.clear-btn { position: absolute; right: 14px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1rem; }
 
-.category-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+/* Category Pills */
+.category-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+.category-pills::-webkit-scrollbar { height: 4px; }
+.category-pills::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 .category-pills button {
   white-space: nowrap;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
-  padding: 7px 16px;
+  padding: 8px 18px;
   border-radius: 20px;
-  font-size: 0.83rem;
+  font-size: 0.85rem;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
+.category-pills button:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 .category-pills button.active {
   background: #ffd700;
-  color: #150101;
+  color: #0f172a;
   font-weight: 700;
   border-color: #ffd700;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.25);
 }
 
+/* Tables */
 .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; }
-.data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.88rem; }
-.data-table th { background: #0b132b; color: #ffd700; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid rgba(255, 215, 0, 0.2); white-space: nowrap; }
-.data-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9rem; }
+.data-table th { background: #090e1d; color: #ffd700; font-weight: 600; padding: 14px 16px; border-bottom: 2px solid rgba(255, 215, 0, 0.25); white-space: nowrap; }
+.data-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
-.sortable-th { cursor: pointer; }
+.sortable-th { cursor: pointer; user-select: none; }
+.sortable-th:hover { color: #fff; }
 .th-content { display: flex; align-items: center; gap: 6px; }
 .th-content.center { justify-content: center; }
 .th-content.right { justify-content: flex-end; }
-.sort-icon { font-size: 0.72rem; opacity: 0.4; }
+.sort-icon { font-size: 0.75rem; opacity: 0.4; }
 .sort-icon.active { opacity: 1; color: #ffd700; }
 
 .clickable-row { cursor: pointer; transition: background 0.2s ease; }
-.clickable-row:hover { background: rgba(255, 215, 0, 0.05); }
-.row-borrowed { background-color: rgba(245, 158, 11, 0.1) !important; }
+.clickable-row:hover { background: rgba(255, 215, 0, 0.06); }
+.row-borrowed { background-color: rgba(245, 158, 11, 0.08) !important; }
 
+/* Text & Badges */
 .font-mono { font-family: monospace; }
 .font-bold { font-weight: 600; }
 .text-title { color: #f8fafc; }
@@ -702,66 +764,78 @@ export default {
 .text-muted { color: #64748b; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
+.text-danger { color: #f87171 !important; }
 
-.code-badge { background: rgba(255, 255, 255, 0.08); padding: 3px 8px; border-radius: 6px; font-family: monospace; }
-.cat-tag { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; padding: 3px 8px; border-radius: 6px; font-size: 0.78rem; }
+.code-badge { background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 6px; font-family: monospace; border: 1px solid rgba(255,255,255,0.04); }
+.cat-tag { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
 
-.badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-.badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-.badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-.badge-info { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
+.badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+.badge-success { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.badge-warning { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.badge-danger { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.badge-info { background: rgba(14, 165, 233, 0.18); color: #38bdf8; border: 1px solid rgba(14,165,233,0.3); }
+.overdue-badge { color: #ef4444; font-weight: 700; font-size: 0.78rem; margin-left: 4px; }
 
-.btn-action { padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; }
-.btn-return { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-.btn-delete { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); margin-left: 6px; }
-.btn-primary { background: #da251d; color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
-.btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+/* Buttons */
+.btn-action { padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s ease; }
+.btn-return { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+.btn-return:hover { background: rgba(16, 185, 129, 0.3); }
+.btn-delete { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); margin-left: 6px; }
+.btn-delete:hover { background: rgba(239, 68, 68, 0.3); }
+.btn-primary { background: linear-gradient(135deg, #da251d 0%, #a21914 100%); color: #fff; border: none; padding: 11px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(218, 37, 29, 0.35); transition: opacity 0.2s; }
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 11px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
 
+/* Modals */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(3, 7, 18, 0.85);
+  background: rgba(3, 7, 18, 0.8);
   backdrop-filter: blur(8px);
   display: flex; justify-content: center; align-items: center;
   z-index: 1000;
+  padding: 16px;
 }
 .modal-content {
   background: #0f172a;
-  width: 90%; max-width: 520px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 215, 0, 0.25);
+  width: 100%; max-width: 540px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
 }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-.modal-header h4 { margin: 0; font-size: 1.1rem; color: #ffd700; }
-.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; }
-.modal-body { padding: 20px; }
-.modal-footer { padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.modal-header h4 { margin: 0; font-size: 1.15rem; color: #ffd700; font-weight: 600; }
+.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
+.btn-close:hover { color: #fff; }
+.modal-body { padding: 24px; }
+.modal-footer { padding: 18px 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 12px; }
 
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.88rem; }
-.book-modal-title { color: #ffd700; font-size: 1.25rem; margin-top: 0; }
-.status-box { padding: 10px; border-radius: 8px; text-align: center; }
-.bg-success-light { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-.bg-warning-light { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.9rem; }
+.book-modal-title { color: #ffd700; font-size: 1.35rem; margin-top: 0; margin-bottom: 16px; font-weight: 700; }
+.status-box { padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; }
+.bg-success-light { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+.bg-warning-light { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
 
-.form-group label { display: block; font-size: 0.83rem; color: #94a3b8; margin-bottom: 6px; }
+.form-group label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 6px; font-weight: 500; }
 .form-group input {
-  width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px;
-  background: #0b132b; border: 1px solid rgba(255, 215, 0, 0.2); color: #fff; outline: none;
+  width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 10px;
+  background: #090e1d; border: 1px solid rgba(255, 215, 0, 0.2); color: #fff; outline: none; font-size: 0.92rem;
 }
-.input-disabled { background: rgba(255, 255, 255, 0.05) !important; color: #64748b !important; }
-.note-text { font-size: 0.78rem; color: #64748b; margin-top: 6px; }
+.form-group input:focus { border-color: #ffd700; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15); }
+.input-disabled { background: rgba(255, 255, 255, 0.04) !important; color: #64748b !important; border-color: rgba(255,255,255,0.06) !important; }
+.note-text { font-size: 0.8rem; color: #64748b; margin-top: 8px; }
 
+/* Utilities */
 .m-0 { margin: 0; }
-.mt-2 { margin-top: 10px; }
-.mt-3 { margin-top: 15px; }
-.mb-3 { margin-bottom: 15px; }
+.mt-2 { margin-top: 12px; }
+.mt-3 { margin-top: 18px; }
+.mb-3 { margin-bottom: 18px; }
 .w-50 { width: 50%; }
 .w-100 { width: 100%; }
 .flex-row { display: flex; gap: 12px; }
 .d-flex { display: flex; }
 .justify-between { justify-content: space-between; }
 .align-center { align-items: center; }
-.no-data { text-align: center; padding: 40px 0; color: #64748b; }
-.overdue-text { color: #ef4444; font-weight: bold; font-size: 0.8rem; margin-left: 4px; }
+.no-data { text-align: center; padding: 50px 0; color: #64748b; font-size: 0.95rem; }
 </style>

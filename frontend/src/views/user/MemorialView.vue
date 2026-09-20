@@ -12,7 +12,7 @@
       </span>
     </div>
 
-    <!-- Phần phông nền trang trọng nhỏ gọn với hiệu ứng phông đỏ bay lượn -->
+    <!-- Phần phông nền trang trọng với hiệu ứng phông đỏ bay lượn & mở rộng phần trên -->
     <div class="memorial-hero-stage">
       <div class="red-backdrop-banner">
         <!-- Biểu tượng Cờ Đảng và Cờ Tổ quốc phía trên (đứng yên trang nghiêm) -->
@@ -37,9 +37,10 @@
       </div>
     </div>
 
-    <!-- Hộp trưng bày lời dạy / tư tưởng -->
+    <!-- Hộp trưng bày lời dạy / tư tưởng (Phong cách kính mờ hiện đại) -->
     <div class="quote-glass-card">
-      <p class="quote-text">"Không có gì quý hơn độc lập, tự do."</p>
+      <div class="quote-icon-mark">“</div>
+      <p class="quote-text">Không có gì quý hơn độc lập, tự do.</p>
       <span class="quote-source">— Lời kêu gọi chống Mỹ cứu nước (17/07/1966)</span>
     </div>
 
@@ -133,9 +134,9 @@ const triggerFlowerEffect = () => {
   for (let i = 0; i < 20; i++) {
     flowers.push({
       id: Date.now() + i,
-      left: Math.random() * 92 + 4, // Vị trí ngang ngẫu nhiên từ 4% đến 96%
-      duration: Math.random() * 2 + 2.5, // Tốc độ rơi từ 2.5s đến 4.5s
-      size: Math.random() * 1.2 + 1 // Kích thước từ 1rem đến 2.2rem
+      left: Math.random() * 92 + 4,
+      duration: Math.random() * 2 + 2.5,
+      size: Math.random() * 1.2 + 1
     });
   }
   floatingFlowers.value = flowers;
@@ -224,7 +225,7 @@ const lightIncense = async () => {
 
 const offerFlowers = async () => {
   showFlowerPopup.value = true;
-  triggerFlowerEffect(); // Kích hoạt hiệu ứng hoa bay
+  triggerFlowerEffect();
   try {
     const { error } = await supabase.from('tributes').insert([
       {
@@ -275,8 +276,8 @@ const closeTour360 = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  padding: 20px;
+  gap: 28px;
+  padding: 24px;
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
@@ -357,21 +358,22 @@ const closeTour360 = () => {
 
 .memorial-hero-stage {
   width: 100%;
-  max-width: 460px;
+  max-width: 500px;
   display: flex;
   justify-content: center;
 }
 
+/* ĐÃ TĂNG PHẦN TRÊN (PADDING-TOP) CAO HƠN VÀ THOÁNG HƠN */
 .red-backdrop-banner {
   position: relative;
   width: 100%;
-  padding: 26px 16px 20px 16px;
-  background: linear-gradient(135deg, #6e0202 0%, #b22222 40%, #8b0000 70%, #4a0404 100%);
+  padding: 52px 24px 28px 24px; 
+  background: linear-gradient(135deg, #5a0202 0%, #991b1b 35%, #7f1d1d 70%, #3b0303 100%);
   background-size: 300% 300%;
-  animation: fabricWave 6s ease-in-out infinite alternate;
-  border: 2px solid rgba(255, 215, 0, 0.5);
-  border-radius: 14px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(0, 0, 0, 0.4);
+  animation: fabricWave 8s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 215, 0, 0.35), inset 0 0 40px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -402,8 +404,8 @@ const closeTour360 = () => {
 
 .backdrop-flags-header {
   display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
+  gap: 24px;
+  margin-bottom: 16px;
   align-items: center;
   justify-content: center;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
@@ -411,26 +413,26 @@ const closeTour360 = () => {
 }
 
 .flag-symbol {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: #ffd700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.8);
   animation: glowSymbol 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes glowSymbol {
   0% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255,215,0,0.6)); }
-  100% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(255,215,0,1)); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 14px rgba(255,215,0,1)); }
 }
 
 .portrait-wrapper {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   padding: 3px;
   background: linear-gradient(135deg, #ffd700, #b8860b);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-  margin-bottom: 12px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.65), 0 8px 20px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
   z-index: 2;
 }
 
@@ -443,18 +445,18 @@ const closeTour360 = () => {
 
 .gold-heading {
   color: #ffd700;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  letter-spacing: 1px;
-  margin: 0 0 4px 0;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  letter-spacing: 1.2px;
+  margin: 0 0 6px 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.85);
   z-index: 2;
   position: relative;
 }
 
 .memorial-subtitle {
   color: #f1f5f9;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   margin: 0;
   font-style: italic;
   z-index: 2;
@@ -462,28 +464,44 @@ const closeTour360 = () => {
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
+/* HIỆU CHỈNH HỘP QUOTE XỊN XÒ HƠN */
 .quote-glass-card {
-  background: rgba(30, 10, 10, 0.75);
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  border-radius: 16px;
-  padding: 20px 30px;
+  position: relative;
+  background: rgba(35, 10, 10, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 18px;
+  padding: 24px 36px;
   text-align: center;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 215, 0, 0.2);
   width: 100%;
-  max-width: 700px;
+  max-width: 720px;
+}
+
+.quote-icon-mark {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  font-size: 2.5rem;
+  color: rgba(255, 215, 0, 0.4);
+  font-family: serif;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .quote-text {
   color: #ffd700;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-style: italic;
+  font-weight: 500;
   margin: 0 0 8px 0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
 
 .quote-source {
-  color: #94a3b8;
-  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 .action-panel {
@@ -496,32 +514,33 @@ const closeTour360 = () => {
 .btn-action {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #781c1c, #4a0f0f);
+  background: linear-gradient(135deg, #7f1d1d, #450a0a);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.4);
-  padding: 12px 24px;
-  border-radius: 30px;
+  padding: 14px 26px;
+  border-radius: 35px;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 215, 0, 0.25);
 }
 
 .btn-action:hover:not(:disabled) {
-  background: linear-gradient(135deg, #992424, #5e1313);
+  background: linear-gradient(135deg, #991b1b, #571010);
   border-color: #ffd700;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.4);
 }
 
 .incense-btn.lit, .incense-btn.cooling {
-  background: linear-gradient(135deg, #1e3a1e, #0f220f);
+  background: linear-gradient(135deg, #064e3b, #022c22);
   color: #4ade80;
   border-color: #4ade80;
+  box-shadow: 0 6px 20px rgba(6, 78, 59, 0.4), inset 0 1px 0 rgba(74, 222, 128, 0.25);
 }
 
 .incense-btn:disabled {
@@ -580,8 +599,8 @@ const closeTour360 = () => {
 .flower-popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -589,14 +608,14 @@ const closeTour360 = () => {
 }
 
 .flower-popup-card {
-  background: linear-gradient(145deg, #3a0505, #1a0202);
+  background: linear-gradient(145deg, #450a0a, #1a0202);
   border: 2px solid #ffd700;
-  border-radius: 16px;
-  padding: 30px 24px;
+  border-radius: 20px;
+  padding: 36px 28px;
   width: 90%;
-  max-width: 400px;
+  max-width: 420px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(255, 215, 0, 0.15);
   animation: popupScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -606,23 +625,23 @@ const closeTour360 = () => {
 }
 
 .popup-icon-star {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: #ffd700;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  margin-bottom: 8px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.85);
+  margin-bottom: 10px;
 }
 
 .flower-popup-card h3 {
   color: #ffd700;
-  font-size: 1.3rem;
-  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  margin: 0 0 14px 0;
 }
 
 .flower-popup-card p {
   color: #e2e8f0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin: 0 0 20px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
   font-style: italic;
 }
 
@@ -630,18 +649,19 @@ const closeTour360 = () => {
   background: linear-gradient(135deg, #ffd700, #b8860b);
   color: #1a0202;
   border: none;
-  padding: 10px 24px;
-  border-radius: 20px;
+  padding: 12px 28px;
+  border-radius: 25px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.35);
 }
 
 .popup-close-btn:hover {
   transform: scale(1.05);
   background: linear-gradient(135deg, #ffea75, #ffd700);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
 }
 
 .fade-popup-enter-active, .fade-popup-leave-active {
@@ -657,31 +677,31 @@ const closeTour360 = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .modal-360-content {
   background: #1a0202;
   border: 2px solid #ffd700;
-  border-radius: 16px;
+  border-radius: 20px;
   width: 90%;
-  max-width: 900px;
+  max-width: 950px;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 16px 24px;
   background: #2a0505;
-  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.25);
   color: #ffd700;
 }
 
@@ -689,8 +709,13 @@ const closeTour360 = () => {
   background: transparent;
   border: none;
   color: #ffd700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-modal:hover {
+  transform: scale(1.1);
 }
 
 .viewer-container {

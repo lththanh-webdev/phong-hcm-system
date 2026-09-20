@@ -2,9 +2,9 @@
   <div class="feedback-page admin-feedback-page">
     <!-- Tiêu đề trang -->
     <div class="hero-section">
-      <div class="hero-badge">QUẢN TRỊ HỆ THỐNG</div>
+      <div class="hero-badge">QUẢN TRỊ HỆ THỐNG QUÂN SỰ</div>
       <h2 class="section-title">QUẢN LÝ HÒM THƯ GÓP Ý</h2>
-      <p class="section-desc">Theo dõi, kiểm duyệt và quản lý các ý kiến đóng góp từ quân nhân các đơn vị</p>
+      <p class="section-desc">Theo dõi, kiểm duyệt và quản lý minh bạch các ý kiến đóng góp từ cán bộ, chiến sĩ các đơn vị</p>
     </div>
 
     <!-- Thẻ Thống kê tổng quan -->
@@ -26,7 +26,7 @@
       <div class="stat-card">
         <div class="stat-icon">⭐</div>
         <div class="stat-info">
-          <span class="stat-value">Hoạt động</span>
+          <span class="stat-value status-active">Hoạt động ổn định</span>
           <span class="stat-label">Trạng thái hệ thống</span>
         </div>
       </div>
@@ -39,13 +39,13 @@
         <input 
           type="text" 
           v-model="searchQuery" 
-          placeholder="Tìm kiếm theo tên quân nhân hoặc đơn vị..." 
+          placeholder="Tìm kiếm theo tên quân nhân, đơn vị hoặc nội dung..." 
           class="search-input"
         />
       </div>
       <div class="filter-options">
         <select v-model="selectedCategory" class="custom-select">
-          <option value="ALL">Tất cả lĩnh vực</option>
+          <option value="ALL">🌟 Tất cả lĩnh vực</option>
           <option value="Chung">Ý kiến chung</option>
           <option value="ThuVien">Thư viện số</option>
           <option value="TracNghiem">Thi trắc nghiệm</option>
@@ -59,10 +59,10 @@
       <div class="card-header-flex">
         <div>
           <h3 class="card-title">Danh Sách Ý Kiến Đóng Góp</h3>
-          <p class="card-text">Quản lý chi tiết nội dung phản ánh từ cán bộ, chiến sĩ</p>
+          <p class="card-text">Quản lý chi tiết nội dung phản ánh từ cán bộ, chiến sĩ toàn đơn vị</p>
         </div>
         <button @click="fetchFeedback" class="btn-refresh" title="Làm mới dữ liệu">
-          🔄 Làm mới
+          🔄 Làm mới dữ liệu
         </button>
       </div>
 
@@ -73,20 +73,20 @@
           <table class="modern-table">
             <thead>
               <tr>
-                <th>STT</th>
+                <th width="60">STT</th>
                 <th>Người Gửi &amp; Đơn Vị</th>
                 <th>Lĩnh Vực</th>
                 <th>Nội Dung Góp Ý</th>
                 <th>Thời Gian</th>
-                <th class="text-center">Thao Tác</th>
+                <th class="text-center" width="140">Thao Tác</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in filteredFeedbackList" :key="item.id || item._id">
-                <td class="text-muted">#{{ index + 1 }}</td>
+                <td class="text-muted font-bold">#{{ index + 1 }}</td>
                 <td>
                   <div class="sender-name">{{ item.sender_name || item.name || 'Ẩn danh' }}</div>
-                  <div class="sender-unit">{{ item.unit || 'Chưa cập nhật đơn vị' }}</div>
+                  <div class="sender-unit">📍 {{ item.unit || 'Chưa cập nhật đơn vị' }}</div>
                 </td>
                 <td>
                   <span class="badge-category">
@@ -94,15 +94,15 @@
                   </span>
                 </td>
                 <td class="content-cell">
-                  <p class="message-snippet">{{ truncateText(item.message || item.content, 90) }}</p>
+                  <p class="message-snippet">{{ truncateText(item.message || item.content, 85) }}</p>
                   <button @click="openDetailModal(item)" class="btn-link-detail">Xem chi tiết 🔍</button>
                 </td>
                 <td class="time-cell">
-                  {{ formatDate(item.created_at || item.createdAt) }}
+                  🕒 {{ formatDate(item.created_at || item.createdAt) }}
                 </td>
                 <td class="text-center action-col">
                   <div class="action-btn-group">
-                    <button @click="openDetailModal(item)" class="btn-detail-icon" title="Xem chi tiết nội dung">👁️ Xem</button>
+                    <button @click="openDetailModal(item)" class="btn-detail-icon" title="Xem chi tiết">👁️ Xem</button>
                     <button @click="confirmDelete(item)" class="btn-delete-icon" title="Xóa thư">🗑️ Xóa</button>
                   </div>
                 </td>
@@ -124,7 +124,7 @@
               <h4 class="m-sender">{{ item.sender_name || item.name || 'Ẩn danh' }}</h4>
               <p class="m-unit">📍 {{ item.unit || 'Chưa cập nhật đơn vị' }}</p>
               <div class="m-content-box">
-                <p>{{ truncateText(item.message || item.content, 110) }}</p>
+                <p>{{ truncateText(item.message || item.content, 100) }}</p>
                 <button @click="openDetailModal(item)" class="btn-link-detail">Xem đầy đủ nội dung 🔍</button>
               </div>
               <div class="m-footer">
@@ -142,12 +142,12 @@
       <!-- Trường hợp không có dữ liệu -->
       <div v-else class="no-data-state">
         <div class="no-data-icon">📭</div>
-        <h4>Không có thư góp ý nào</h4>
-        <p>Hệ thống chưa ghi nhận ý kiến phù hợp với bộ lọc hoặc hòm thư đang trống.</p>
+        <h4>Không tìm thấy thư góp ý nào</h4>
+        <p>Hệ thống chưa ghi nhận ý kiến phù hợp với từ khóa tìm kiếm hoặc hòm thư đang trống.</p>
       </div>
     </div>
 
-    <!-- 🌟 MODAL XEM CHI TIẾT NỘI DUNG SIÊU XỊN & HIỆN ĐẠI -->
+    <!-- 🌟 MODAL XEM CHI TIẾT NỘI DUNG -->
     <transition name="modal-modern">
       <div v-if="showDetailModal" class="modal-overlay" @click.self="showDetailModal = false">
         <div class="modal-container detail-container">
@@ -163,7 +163,7 @@
             </div>
             <div class="meta-row">
               <span class="meta-label">Đơn vị:</span>
-              <span class="meta-value">{{ activeDetail.unit || 'Chưa cập nhật đơn vị' }}</span>
+              <span class="meta-value">📍 {{ activeDetail.unit || 'Chưa cập nhật đơn vị' }}</span>
             </div>
             <div class="meta-row">
               <span class="meta-label">Lĩnh vực:</span>
@@ -171,7 +171,7 @@
             </div>
             <div class="meta-row">
               <span class="meta-label">Thời gian gửi:</span>
-              <span class="meta-value text-time">{{ formatDate(activeDetail.created_at || activeDetail.createdAt) }}</span>
+              <span class="meta-value text-time">🕒 {{ formatDate(activeDetail.created_at || activeDetail.createdAt) }}</span>
             </div>
           </div>
 
@@ -198,7 +198,7 @@
           </div>
           <h3 class="alert-title">Xác Nhận Xóa Thư</h3>
           <p class="alert-message">
-            Đồng chí có chắc chắn muốn xóa thư góp ý của quân nhân <strong>{{ itemToDelete?.sender_name || itemToDelete?.name }}</strong> không? Thao tác này không thể hoàn tác.
+            Đồng chí có chắc chắn muốn xóa thư góp ý của quân nhân <strong class="text-gold">{{ itemToDelete?.sender_name || itemToDelete?.name }}</strong> không? Thao tác này không thể hoàn tác trên hệ thống.
           </p>
           <div class="modal-action-buttons">
             <button class="btn-alert-confirm btn-danger-action" @click="executeDelete">Xác nhận xóa</button>
@@ -281,7 +281,7 @@ export default {
             sender_name: 'Nguyễn Văn A',
             unit: 'Đại đội 1 - Tiểu đoàn PK 16',
             category: 'ThuVien',
-            message: 'Trước đó, sông Bùi đã được đặt ở mức báo động III. Báo điện tử Tiền Phong báo điện tử Tiền Phong 1 Báo điện tử Tiền Phong 1 © Báo điện tử Tiền Phong Đến chiều 17/9, nước chưa vẫn rút bớt tại thôn Đồng Dàu. Người dân tiếp tục theo dõi sát mực nước sông Bùi. Báo điện tử Tiền Phong Đến chiều 17/9, nước chưa vẫn rút bớt tại thôn Đồng Dàu. Người dân tiếp tục theo dõi sát mực nước sông Bùi. © Báo điện tử Tiền Phong Báo điện tử Tiền Phong 1 Báo điện tử Tiền Phong 1 © Báo điện tử Tiền Phong Báo điện tử Tiền Phong Đến chiều 17/9...',
+            message: 'Đề xuất nhà trường và ban quản lý bổ sung thêm nhiều đầu sách chuyên ngành kỹ thuật quân sự cũng như cải thiện tốc độ truy cập kho dữ liệu của thư viện số trong giờ tự học.',
             created_at: new Date()
           }
         ];
@@ -349,26 +349,28 @@ export default {
 
 <style scoped>
 .admin-feedback-page {
-  padding: 10px 0;
+  padding: 12px 0 30px 0;
+  color: #f1f5f9;
 }
 
 /* Hero Section */
 .hero-section {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
 .hero-badge {
   display: inline-block;
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(255, 215, 0, 0.12);
   color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 4px 14px;
-  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  padding: 6px 16px;
+  border-radius: 30px;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
 }
 
 .section-title {
@@ -376,12 +378,12 @@ export default {
   font-weight: 900;
   color: #ffd700;
   margin: 0 0 8px 0;
-  text-shadow: 0 2px 15px rgba(255, 215, 0, 0.3);
-  letter-spacing: 1px;
+  text-shadow: 0 2px 20px rgba(255, 215, 0, 0.35);
+  letter-spacing: 0.5px;
 }
 
 .section-desc {
-  color: #cbd5e1;
+  color: #94a3b8;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -390,31 +392,37 @@ export default {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 18px;
   margin-bottom: 24px;
 }
 
 .stat-card {
-  background: linear-gradient(145deg, rgba(35, 5, 5, 0.85), rgba(18, 2, 2, 0.9));
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 14px;
-  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(35, 8, 8, 0.9), rgba(18, 3, 3, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 16px;
+  padding: 18px 22px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  gap: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 215, 0, 0.5);
 }
 
 .stat-icon {
   font-size: 1.8rem;
   background: rgba(255, 215, 0, 0.1);
-  width: 45px;
-  height: 45px;
-  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.25);
 }
 
 .stat-info {
@@ -424,26 +432,32 @@ export default {
 
 .stat-value {
   color: #ffd700;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
+}
+
+.status-active {
+  font-size: 1.05rem;
+  color: #34d399;
 }
 
 .stat-label {
   color: #94a3b8;
   font-size: 0.8rem;
+  margin-top: 2px;
 }
 
 /* Lọc & Tìm kiếm */
 .filter-card {
-  background: linear-gradient(145deg, rgba(30, 4, 4, 0.8), rgba(15, 1, 1, 0.9));
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 14px;
-  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(30, 6, 6, 0.85), rgba(15, 2, 2, 0.9));
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 16px;
+  padding: 18px 22px;
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
   align-items: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .search-box {
@@ -455,18 +469,18 @@ export default {
 
 .search-icon {
   position: absolute;
-  left: 14px;
-  font-size: 0.9rem;
+  left: 16px;
+  font-size: 0.95rem;
 }
 
 .search-input {
   width: 100%;
-  background: rgba(15, 2, 2, 0.9);
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  border-radius: 8px;
-  padding: 11px 14px 11px 40px;
+  background: rgba(12, 2, 2, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 10px;
+  padding: 12px 16px 12px 42px;
   color: #f8fafc;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-family: inherit;
   outline: none;
   transition: all 0.3s ease;
@@ -474,51 +488,59 @@ export default {
 
 .search-input:focus {
   border-color: #ffd700;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
 }
 
 .filter-options select {
-  background: rgba(15, 2, 2, 0.9);
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  border-radius: 8px;
-  padding: 11px 16px;
-  color: #f8fafc;
-  font-size: 0.9rem;
+  background: rgba(12, 2, 2, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 10px;
+  padding: 12px 18px;
+  color: #ffd700;
+  font-size: 0.92rem;
+  font-weight: 600;
   font-family: inherit;
   outline: none;
   cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filter-options select:focus {
+  border-color: #ffd700;
 }
 
 .filter-options option {
-  background: #1b0202;
+  background: #180303;
   color: #f8fafc;
 }
 
 /* Thẻ Bảng Dữ Liệu */
 .table-wrapper-card {
-  background: linear-gradient(145deg, rgba(35, 5, 5, 0.85), rgba(18, 2, 2, 0.9));
-  border-radius: 16px;
-  padding: 24px;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, rgba(32, 7, 7, 0.9), rgba(16, 2, 2, 0.95));
+  border-radius: 18px;
+  padding: 26px;
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .card-header-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.12);
 }
 
 .card-title {
   color: #ffd700;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 800;
   margin: 0 0 4px 0;
 }
 
 .card-text {
-  color: #cbd5e1;
+  color: #94a3b8;
   font-size: 0.85rem;
   margin: 0;
 }
@@ -527,16 +549,17 @@ export default {
   background: rgba(255, 215, 0, 0.1);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-refresh:hover {
-  background: rgba(255, 215, 0, 0.2);
+  background: rgba(255, 215, 0, 0.22);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
 }
 
 /* Bảng Desktop */
@@ -553,7 +576,7 @@ export default {
 }
 
 .modern-table th, .modern-table td {
-  padding: 14px 16px;
+  padding: 15px 16px;
   border-bottom: 1px solid rgba(255, 215, 0, 0.1);
   color: #e2e8f0;
 }
@@ -561,33 +584,43 @@ export default {
 .modern-table th {
   color: #ffd700;
   font-weight: 700;
-  background: rgba(15, 2, 2, 0.6);
-  font-size: 0.85rem;
+  background: rgba(14, 2, 2, 0.75);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modern-table tbody tr {
+  transition: background 0.2s;
+}
+
+.modern-table tbody tr:hover {
+  background: rgba(255, 215, 0, 0.04);
 }
 
 .sender-name {
   font-weight: 700;
   color: #f8fafc;
+  font-size: 0.95rem;
 }
 
 .sender-unit {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: #94a3b8;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .content-cell {
-  max-width: 320px;
+  max-width: 340px;
 }
 
 .message-snippet {
   margin: 0 0 6px 0;
-  line-height: 1.4;
+  line-height: 1.45;
   color: #cbd5e1;
   word-break: break-word;
 }
 
-/* Nút xem chi tiết dạng link nhỏ gọn trong bảng */
 .btn-link-detail {
   background: none;
   border: none;
@@ -612,7 +645,10 @@ export default {
 
 .text-muted {
   color: #64748b;
-  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .text-center {
@@ -621,14 +657,14 @@ export default {
 
 .action-btn-group {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   justify-content: center;
 }
 
 .badge-category {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 600;
   background: rgba(255, 215, 0, 0.1);
@@ -638,8 +674,8 @@ export default {
 }
 
 .btn-detail-icon, .btn-delete-icon {
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
@@ -650,7 +686,7 @@ export default {
 .btn-detail-icon {
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.35);
 }
 
 .btn-detail-icon:hover {
@@ -660,7 +696,7 @@ export default {
 .btn-delete-icon {
   background: rgba(239, 68, 68, 0.15);
   color: #f87171;
-  border-color: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
 .btn-delete-icon:hover {
@@ -675,13 +711,13 @@ export default {
 }
 
 .feedback-item-card {
-  background: rgba(15, 2, 2, 0.7);
+  background: rgba(14, 2, 2, 0.8);
   border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .item-card-header {
@@ -691,7 +727,7 @@ export default {
 }
 
 .item-index {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #64748b;
   font-weight: 700;
 }
@@ -699,37 +735,37 @@ export default {
 .item-card-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .m-sender {
   color: #ffd700;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   margin: 0;
 }
 
 .m-unit {
-  color: #cbd5e1;
+  color: #94a3b8;
   font-size: 0.85rem;
   margin: 0;
 }
 
 .m-content-box {
-  background: rgba(30, 4, 4, 0.6);
-  border: 1px solid rgba(255, 215, 0, 0.1);
-  padding: 10px 12px;
-  border-radius: 8px;
+  background: rgba(24, 4, 4, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  padding: 12px 14px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .m-content-box p {
   margin: 0;
   color: #e2e8f0;
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 1.5;
   word-break: break-word;
 }
 
@@ -737,8 +773,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 4px;
-  padding-top: 8px;
+  margin-top: 6px;
+  padding-top: 10px;
   border-top: 1px solid rgba(255, 215, 0, 0.1);
 }
 
@@ -749,12 +785,12 @@ export default {
 
 .mobile-actions-group {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .btn-detail-mobile, .btn-delete-mobile {
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
@@ -776,38 +812,38 @@ export default {
 /* Trạng thái trống */
 .no-data-state {
   text-align: center;
-  padding: 40px 20px;
+  padding: 50px 20px;
 }
 
 .no-data-icon {
-  font-size: 3rem;
-  margin-bottom: 12px;
+  font-size: 3.5rem;
+  margin-bottom: 14px;
 }
 
 .no-data-state h4 {
   color: #ffd700;
   margin: 0 0 6px 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .no-data-state p {
   color: #94a3b8;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   margin: 0;
 }
 
-/* 🌟 MODAL XEM CHI TIẾT SIÊU XỊN & HIỆN ĐẠI */
+/* 🌟 MODAL XEM CHI TIẾT */
 .detail-container {
-  background: linear-gradient(145deg, #250404, #0d0101);
-  border: 2px solid rgba(255, 215, 0, 0.6);
-  border-radius: 20px;
+  background: linear-gradient(145deg, #220505, #0b0101);
+  border: 2px solid rgba(255, 215, 0, 0.55);
+  border-radius: 22px;
   width: 100%;
-  max-width: 650px;
-  padding: 28px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  max-width: 680px;
+  padding: 30px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   max-height: 85vh;
 }
 
@@ -816,13 +852,13 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-  padding-bottom: 12px;
+  padding-bottom: 14px;
 }
 
 .detail-badge-top {
   color: #ffd700;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   letter-spacing: 0.5px;
 }
 
@@ -830,8 +866,8 @@ export default {
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   font-weight: 700;
   cursor: pointer;
@@ -842,23 +878,23 @@ export default {
 }
 
 .btn-close-modal:hover {
-  background: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.6);
 }
 
 .detail-meta-box {
-  background: rgba(15, 2, 2, 0.7);
-  border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 12px;
-  padding: 16px;
+  background: rgba(14, 2, 2, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 14px;
+  padding: 18px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .meta-row {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .meta-label {
@@ -886,34 +922,33 @@ export default {
 .detail-content-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex: 1;
   overflow: hidden;
 }
 
 .content-heading {
   color: #ffd700;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   margin: 0;
   font-weight: 700;
 }
 
 .scrollable-content-box {
-  background: rgba(10, 1, 1, 0.9);
+  background: rgba(8, 1, 1, 0.95);
   border: 1px solid rgba(255, 215, 0, 0.25);
   border-radius: 12px;
-  padding: 18px;
+  padding: 20px;
   max-height: 280px;
   overflow-y: auto;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.7);
 }
 
-/* Tối ưu typography cho văn bản dài cực đẹp */
 .full-message-text {
   margin: 0;
   color: #f8fafc;
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 1.02rem;
+  line-height: 1.8;
   white-space: pre-wrap;
   word-break: break-word;
   font-family: inherit;
@@ -924,27 +959,27 @@ export default {
 }
 
 .scrollable-content-box::-webkit-scrollbar-thumb {
-  background: rgba(255, 215, 0, 0.3);
+  background: rgba(255, 215, 0, 0.35);
   border-radius: 4px;
 }
 
 .scrollable-content-box::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 215, 0, 0.6);
+  background: rgba(255, 215, 0, 0.7);
 }
 
 .detail-modal-footer {
   display: flex;
   justify-content: flex-end;
   border-top: 1px solid rgba(255, 215, 0, 0.2);
-  padding-top: 14px;
+  padding-top: 16px;
 }
 
-/* Modal Xóa chung */
+/* Modal Xóa chung & Thông báo */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -953,61 +988,65 @@ export default {
 }
 
 .alert-container {
-  background: linear-gradient(145deg, #2b0404, #100101);
-  border: 2px solid rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, #280404, #0d0101);
+  border: 2px solid rgba(255, 215, 0, 0.45);
   border-radius: 24px;
   width: 100%;
-  max-width: 400px;
-  padding: 35px 25px;
+  max-width: 420px;
+  padding: 38px 26px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95);
 }
 
 .alert-icon-wrapper {
-  width: 65px;
-  height: 65px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 215, 0, 0.05));
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  margin-bottom: 22px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
 }
 
 .delete-warn-icon {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.05));
   border-color: rgba(239, 68, 68, 0.6);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
 }
 
 .alert-star {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: #ffd700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
 }
 
 .alert-title {
   color: #ffd700;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
 }
 
 .alert-message {
-  color: #e2e8f0;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  color: #cbd5e1;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin-bottom: 26px;
+}
+
+.text-gold {
+  color: #ffd700;
 }
 
 .modal-action-buttons {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
@@ -1015,12 +1054,16 @@ export default {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 12px 24px;
+  padding: 12px 26px;
   border-radius: 30px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+}
+
+.btn-alert-confirm:hover {
+  filter: brightness(1.15);
 }
 
 .btn-danger-action {
@@ -1029,7 +1072,7 @@ export default {
 }
 
 .btn-alert-cancel {
-  background: rgba(100, 116, 139, 0.3);
+  background: rgba(100, 116, 139, 0.25);
   color: #f8fafc;
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 12px 0;
@@ -1037,6 +1080,11 @@ export default {
   font-weight: 700;
   cursor: pointer;
   flex: 1;
+  transition: background 0.2s;
+}
+
+.btn-alert-cancel:hover {
+  background: rgba(100, 116, 139, 0.4);
 }
 
 /* Modal Transition */
@@ -1057,7 +1105,7 @@ export default {
 
 .modal-modern-enter-from .modal-container,
 .modal-modern-leave-to .modal-container {
-  transform: scale(0.9) translateY(20px);
+  transform: scale(0.92) translateY(20px);
   opacity: 0;
 }
 
