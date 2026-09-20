@@ -9,16 +9,10 @@
         Không gian văn hóa, tư tưởng &amp; nền tảng chuyển đổi số chính trị Tiểu đoàn Phòng không 16
       </p>
       
-      <!-- Nút tương tác dâng hoa thông minh -->
-      <div class="hero-action-container animate-fade-up">
-        <button class="btn-hero-offer" @click="handleOfferFlower">
-          <span class="offer-icon">🌸</span>
-          <span>Kính Cẩn Dâng Hoa Tưởng Niệm</span>
-        </button>
-      </div>
+      
     </div>
 
-    <!-- NỘI DUNG CHÍNH: Lưới 4 Thẻ Giới Thiệu (Được cân đối lại) -->
+    <!-- NỘI DUNG CHÍNH: Lưới 4 Thẻ (Tự động co giãn 4 -> 3 -> 2 -> 1 cột) -->
     <div class="intro-grid">
       <!-- Thẻ 1: Mục đích & Ý nghĩa -->
       <div class="intro-card">
@@ -79,7 +73,7 @@
       </div>
     </div>
 
-    <!-- KHU VỰC MỚI: 6 MẢNG ẢNH TRƯNG BÀY PHÒNG HỒ CHÍ MINH SỐ -->
+    <!-- KHU VỰC 6 MẢNG ẢNH TRƯNG BÀY PHÒNG HỒ CHÍ MINH SỐ -->
     <div class="exhibition-section">
       <div class="section-header-center">
         <span class="sub-badge">KHÔNG GIAN TRƯNG BÀY SỐ</span>
@@ -107,7 +101,7 @@
       </div>
     </div>
 
-    <!-- HỆ THỐNG MODAL HIỆN ĐẠI (Dùng chung cho Dâng hoa & Chi tiết Mảng ảnh) -->
+    <!-- HỆ THỐNG MODAL HIỆN ĐẠI -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="closeAlert">
         <div class="modal-container alert-container">
@@ -148,7 +142,7 @@ export default {
   data() {
     return {
       showAlert: false,
-      modalType: 'flower', // 'flower' hoặc 'panel'
+      modalType: 'flower',
       alertTitle: 'Kính cẩn dâng hoa',
       alertMessage: 'Đã dâng hoa thành kính lên Chủ tịch Hồ Chí Minh vĩ đại!',
       currentPanelTitle: '',
@@ -214,7 +208,7 @@ export default {
 <style scoped>
 .intro-page {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px; /* Mở rộng tối đa khung chứa để đủ chỗ cho 4 thẻ */
   margin: 0 auto;
   padding: 24px 16px;
   color: #f1f5f9;
@@ -232,8 +226,8 @@ export default {
 .hero-section {
   position: relative;
   text-align: center;
-  margin-bottom: 40px;
-  padding: 40px 20px;
+  margin-bottom: 30px;
+  padding: 36px 20px;
   border-radius: 20px;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(139, 0, 0, 0.25) 100%);
   border: 1px solid rgba(255, 215, 0, 0.25);
@@ -259,49 +253,49 @@ export default {
   background: rgba(255, 215, 0, 0.12);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.35);
-  padding: 6px 18px;
+  padding: 5px 16px;
   border-radius: 20px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .section-title {
-  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
   font-weight: 900;
   background: linear-gradient(135deg, #fff 30%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
 }
 
 .section-desc {
   color: #cbd5e1;
-  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
   max-width: 650px;
-  margin: 0 auto 24px auto;
+  margin: 0 auto 20px auto;
 }
 
 /* Hero Action Button */
 .hero-action-container {
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 .btn-hero-offer {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 12px 28px;
+  padding: 10px 24px;
   border-radius: 30px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 20px rgba(225, 29, 72, 0.4);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .btn-hero-offer:hover {
@@ -312,22 +306,26 @@ export default {
 }
 
 .offer-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
-/* Grid Layout (4 Cards) */
+/* ==========================================================
+   LƯỚI 4 THẺ THÔNG MINH (Tự động co giãn 4 -> 3 -> 2 -> 1 cột)
+   ========================================================== */
 .intro-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 50px;
+  /* minmax(240px, 1fr) giúp các thẻ tự động xếp 4 cột trên desktop, 
+     và tự trôi xuống 3, 2, 1 cột một cách mượt mà khi thu nhỏ màn hình */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
 }
 
 .intro-card {
   background: rgba(22, 10, 10, 0.85);
   backdrop-filter: blur(14px);
-  border-radius: 18px;
-  padding: 28px;
+  border-radius: 16px;
+  padding: 20px; /* Thu nhỏ padding cho vừa vặn khi đứng 4 cột */
   border: 1px solid rgba(255, 215, 0, 0.2);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -336,7 +334,7 @@ export default {
 }
 
 .intro-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: rgba(255, 215, 0, 0.5);
   box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
 }
@@ -347,15 +345,15 @@ export default {
 }
 
 .card-icon-wrapper {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .card-icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   background: rgba(255, 215, 0, 0.1);
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,24 +363,24 @@ export default {
 
 .card-title {
   color: #ffd700;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
 }
 
 .card-text {
   color: #cbd5e1;
-  font-size: 0.93rem;
-  line-height: 1.6;
+  font-size: 0.86rem; /* Thu nhỏ chữ nhẹ cho thanh thoát */
+  line-height: 1.55;
   margin: 0;
 }
 
 .highlight-slogan {
   color: #ffd700;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   letter-spacing: 0.5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
@@ -392,26 +390,26 @@ export default {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .card-list li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-size: 0.91rem;
+  gap: 8px;
+  font-size: 0.85rem;
   color: #cbd5e1;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .bullet-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background-color: #ffd700;
   border-radius: 50%;
-  margin-top: 8px;
+  margin-top: 7px;
   flex-shrink: 0;
-  box-shadow: 0 0 8px #ffd700;
+  box-shadow: 0 0 6px #ffd700;
 }
 
 .card-list strong {
@@ -420,7 +418,7 @@ export default {
 
 /* Exhibition Section (6 Mảng Ảnh) */
 .exhibition-section {
-  margin-top: 40px;
+  margin-top: 30px;
   margin-bottom: 40px;
   padding: 30px 20px;
   background: linear-gradient(180deg, rgba(20, 6, 6, 0.6) 0%, rgba(10, 2, 2, 0.9) 100%);
@@ -430,46 +428,46 @@ export default {
 
 .section-header-center {
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .sub-badge {
   display: inline-block;
   color: #ffd700;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 2px;
   background: rgba(255, 215, 0, 0.08);
   padding: 4px 12px;
   border-radius: 12px;
   border: 1px solid rgba(255, 215, 0, 0.2);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .exhibition-main-title {
-  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
   font-weight: 800;
   color: #fff;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
 }
 
 .exhibition-sub-desc {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin: 0;
 }
 
 .exhibition-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
 }
 
 .exhibition-card {
   background: rgba(30, 12, 12, 0.7);
   border: 1px solid rgba(255, 215, 0, 0.2);
   border-radius: 16px;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -478,7 +476,7 @@ export default {
 }
 
 .exhibition-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: rgba(255, 215, 0, 0.5);
   background: rgba(45, 16, 16, 0.85);
   box-shadow: 0 12px 30px rgba(255, 215, 0, 0.12);
@@ -488,39 +486,39 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .panel-number {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #ffd700;
   opacity: 0.8;
 }
 
 .panel-tag {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #fca5a5;
   background: rgba(225, 29, 72, 0.15);
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: 6px;
   border: 1px solid rgba(225, 29, 72, 0.3);
 }
 
 .panel-title {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #f8fafc;
-  line-height: 1.5;
-  margin: 0 0 10px 0;
+  line-height: 1.45;
+  margin: 0 0 8px 0;
 }
 
 .panel-desc {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: #cbd5e1;
-  line-height: 1.5;
-  margin: 0 0 20px 0;
+  line-height: 1.45;
+  margin: 0 0 16px 0;
   flex-grow: 1;
 }
 
@@ -528,9 +526,9 @@ export default {
   background: rgba(255, 215, 0, 0.08);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -547,12 +545,12 @@ export default {
 }
 
 .arrow-icon {
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: transform 0.2s ease;
 }
 
 .btn-view-detail:hover .arrow-icon {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 /* Modal Styles */
@@ -574,8 +572,8 @@ export default {
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 24px;
   width: 100%;
-  max-width: 480px;
-  padding: 35px 25px;
+  max-width: 460px;
+  padding: 32px 24px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -598,46 +596,46 @@ export default {
 }
 
 .alert-icon-wrapper {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
 }
 
 .alert-star {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #ffd700;
   text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
 }
 
 .alert-title {
   color: #ffd700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   line-height: 1.4;
 }
 
 .alert-message {
   color: #e2e8f0;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 .panel-content-box {
   background: rgba(0, 0, 0, 0.4);
   border: 1px dashed rgba(255, 215, 0, 0.3);
   border-radius: 12px;
-  padding: 20px;
+  padding: 16px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .placeholder-text {
@@ -654,7 +652,7 @@ export default {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 12px 0;
+  padding: 11px 0;
   border-radius: 30px;
   font-weight: 700;
   cursor: pointer;
