@@ -1,7 +1,7 @@
 <template>
   <div class="admin-layout">
-    <!-- Overlay cho mobile menu -->
-    <div v-if="isMobileMenuOpen" class="sidebar-overlay" @click="isMobileMenuOpen = false"></div>
+    <!-- Overlay cho mobile menu với z-index chuẩn xác -->
+    <div v-if="isMobileMenuOpen" class="sidebar-overlay" @click="toggleSidebar"></div>
 
     <!-- Toast Thông Báo Hiện Đại -->
     <transition name="toast-slide">
@@ -105,6 +105,7 @@ const getApiUrl = () => {
 };
 
 export default {
+  name: 'AdminLayout',
   components: {
     AdminAnalytics,
     AdminActivities,
@@ -159,7 +160,7 @@ export default {
   methods: {
     toggleSidebar() { 
       this.isMobileMenuOpen = !this.isMobileMenuOpen; 
-      document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : 'auto';
+      document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
     },
     showToast(message, type = 'success') {
       if (this.toastTimeout) clearTimeout(this.toastTimeout);
@@ -176,7 +177,7 @@ export default {
     switchTab(tabId) {
       this.currentTab = tabId;
       this.isMobileMenuOpen = false;
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
       this.fetchAllData();
     },
     async fetchAllData() {
@@ -200,6 +201,7 @@ export default {
     handleLogout() {
       localStorage.removeItem('token');
       localStorage.removeItem('adminUser');
+      document.body.style.overflow = '';
       this.$router.push('/admin/login');
     }
   }
@@ -210,24 +212,31 @@ export default {
 .admin-layout {
   display: flex;
   min-height: 100vh;
+  width: 100%;
   background: radial-gradient(circle at 50% 0%, #1a0f0f 0%, #0c0404 60%, #050101 100%);
   color: #f1f5f9;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   position: relative;
-  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 *, *:before, *:after { 
   box-sizing: border-box; 
 }
 
-/* Mobile Overlay */
+/* Mobile Overlay với z-index an toàn */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(6px);
-  z-index: 999;
+  z-index: 1050;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Toast Notification */
@@ -301,24 +310,24 @@ export default {
 
 /* Sidebar Styles */
 .admin-sidebar {
-  width: 290px;
-  background: rgba(14, 4, 4, 0.95);
+  width: 280px;
+  background: rgba(14, 4, 4, 0.96);
   backdrop-filter: blur(16px);
   border-right: 1px solid rgba(255, 215, 0, 0.15);
   display: flex;
   flex-direction: column;
-  z-index: 1000;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 1100;
   box-shadow: 10px 0 30px rgba(0,0,0,0.5);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sidebar-header {
   position: relative;
-  padding: 28px 20px;
+  padding: 24px 20px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 215, 0, 0.1);
   overflow: hidden;
@@ -338,22 +347,22 @@ export default {
 }
 
 .sidebar-brand-icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #ffd700;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
 }
 
 .sidebar-header h3 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: #ffd700;
-  margin: 0 0 4px 0;
+  margin: 0 0 2px 0;
   font-weight: 800;
   letter-spacing: 0.5px;
 }
 
 .sidebar-header p {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #94a3b8;
   margin: 0;
   letter-spacing: 0.3px;
@@ -362,10 +371,10 @@ export default {
 /* Sidebar Menu */
 .sidebar-menu {
   flex: 1;
-  padding: 20px 12px;
+  padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   overflow-y: auto;
 }
 
@@ -378,34 +387,34 @@ export default {
 }
 
 .menu-category-label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: #64748b;
   letter-spacing: 1px;
-  padding: 0 12px 8px 12px;
+  padding: 0 12px 6px 12px;
 }
 
 .sidebar-menu button {
   position: relative;
   width: 100%;
-  padding: 12px 16px;
+  padding: 11px 14px;
   background: transparent;
   border: none;
   color: #94a3b8;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-weight: 600;
   border-radius: 10px;
   transition: all 0.25s ease;
 }
 
 .sidebar-menu button .icon {
-  font-size: 1.15rem;
-  width: 24px;
+  font-size: 1.1rem;
+  width: 22px;
   display: flex;
   justify-content: center;
 }
@@ -434,7 +443,7 @@ export default {
 
 /* Sidebar Footer */
 .sidebar-footer {
-  padding: 18px;
+  padding: 16px;
   border-top: 1px solid rgba(255, 215, 0, 0.1);
   background: rgba(8, 2, 2, 0.5);
 }
@@ -443,8 +452,8 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
-  padding: 6px;
+  margin-bottom: 12px;
+  padding: 4px;
 }
 
 .avatar-wrapper {
@@ -452,10 +461,10 @@ export default {
 }
 
 .admin-profile .avatar {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   background: rgba(255, 215, 0, 0.1);
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -467,8 +476,8 @@ export default {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background-color: #22c55e;
   border: 2px solid #0e0404;
   border-radius: 50%;
@@ -476,12 +485,12 @@ export default {
 
 .admin-profile .info strong { 
   display: block; 
-  font-size: 0.88rem; 
+  font-size: 0.85rem; 
   color: #fff; 
 }
 
 .admin-profile .info span { 
-  font-size: 0.72rem; 
+  font-size: 0.7rem; 
   color: #38bdf8; 
 }
 
@@ -493,7 +502,7 @@ export default {
   border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 9px;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -510,34 +519,35 @@ export default {
   border-color: #ffd700;
 }
 
-/* Main Area */
+/* Main Area Layout Fixes */
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  width: 100%;
-  margin-left: 290px;
+  min-width: 0;
+  margin-left: 280px;
+  transition: margin 0.35s ease;
 }
 
 .main-header {
-  height: 75px;
-  background: rgba(14, 4, 4, 0.85);
+  height: 70px;
+  background: rgba(14, 4, 4, 0.9);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255, 215, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 35px;
+  padding: 0 30px;
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
 }
 
 .header-title-box { 
   display: flex; 
   align-items: center; 
-  gap: 16px; 
+  gap: 14px; 
+  min-width: 0;
 }
 
 .mobile-toggle-btn { 
@@ -545,47 +555,55 @@ export default {
   background: rgba(255, 215, 0, 0.1); 
   border: 1px solid rgba(255, 215, 0, 0.3); 
   color: #ffd700; 
-  font-size: 1.3rem; 
+  font-size: 1.2rem; 
   padding: 6px 10px; 
   border-radius: 8px; 
-  cursor: pointer; 
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .main-header h2 { 
-  font-size: 1.3rem; 
+  font-size: 1.2rem; 
   color: #ffd700; 
   margin: 0; 
   font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .date-time { 
-  font-size: 0.74rem; 
+  font-size: 0.72rem; 
   color: #94a3b8; 
   margin: 2px 0 0 0; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-right-actions {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .system-badge {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: rgba(34, 197, 94, 0.1);
   border: 1px solid rgba(34, 197, 94, 0.3);
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 20px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #4ade80;
 }
 
 .pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background-color: #22c55e;
   border-radius: 50%;
   box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
@@ -599,9 +617,9 @@ export default {
 }
 
 .main-content-wrapper { 
-  padding: 30px; 
+  padding: 24px; 
   width: 100%; 
-  max-width: 1440px; 
+  max-width: 1400px; 
   margin: 0 auto; 
 }
 
@@ -618,8 +636,8 @@ export default {
   transform: translateY(-10px);
 }
 
-/* Responsive design */
-@media (max-width: 992px) {
+/* Responsive design chuẩn chỉnh cho mobile & tablet */
+@media (max-width: 1024px) {
   .admin-sidebar { 
     transform: translateX(-100%); 
   }
@@ -633,10 +651,10 @@ export default {
     display: block; 
   }
   .main-header {
-    padding: 0 20px;
+    padding: 0 16px;
   }
   .main-content-wrapper {
-    padding: 20px 16px;
+    padding: 16px 12px;
   }
 }
 </style>
