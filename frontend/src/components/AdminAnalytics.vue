@@ -7,11 +7,7 @@
         <h3 class="section-title">Tổng Quan Hoạt Động Hệ Thống</h3>
         <p class="subtitle">Theo dõi số liệu thời gian thực, quản lý kho dữ liệu, mượn trả sách và ý kiến đóng góp</p>
       </div>
-      <div class="header-actions">
-        <button @click="$emit('refresh')" class="btn-refresh-glow" title="Làm mới dữ liệu">
-          🔄 Cập Nhật Dữ Liệu
-        </button>
-      </div>
+  
     </div>
 
     <!-- Lưới Thẻ Thống Kê Tổng Quan (6 Thẻ) -->

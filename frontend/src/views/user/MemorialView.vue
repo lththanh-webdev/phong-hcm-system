@@ -37,11 +37,18 @@
       </div>
     </div>
 
-    <!-- Hộp trưng bày lời dạy / tư tưởng (Phong cách kính mờ hiện đại) -->
+    <!-- HỘP TRƯNG BÀY LỜI DẠY (Thiết kế mới hiện đại, xịn xò trên mobile) -->
     <div class="quote-glass-card">
-      <div class="quote-icon-mark">“</div>
-      <p class="quote-text">Không có gì quý hơn độc lập, tự do.</p>
-      <span class="quote-source">— Lời kêu gọi chống Mỹ cứu nước (17/07/1966)</span>
+      <div class="quote-glow-accent"></div>
+      <div class="quote-content-wrapper">
+        <span class="quote-icon-left">“</span>
+        <p class="quote-text">Không có gì quý hơn độc lập, tự do.</p>
+        <span class="quote-icon-right">”</span>
+      </div>
+      <div class="quote-source-badge">
+        <span class="source-icon">📜</span>
+        <span>Lời kêu gọi chống Mỹ cứu nước (17/07/1966)</span>
+      </div>
     </div>
 
     <!-- Khu vực tương tác (Dâng hoa & Thắp hương) -->
@@ -363,7 +370,6 @@ const closeTour360 = () => {
   justify-content: center;
 }
 
-/* ĐÃ TĂNG PHẦN TRÊN (PADDING-TOP) CAO HƠN VÀ THOÁNG HƠN */
 .red-backdrop-banner {
   position: relative;
   width: 100%;
@@ -464,45 +470,85 @@ const closeTour360 = () => {
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
-/* HIỆU CHỈNH HỘP QUOTE XỊN XÒ HƠN */
+/* ========================================================== */
+/* THIẾT KẾ MỚI CHO HỘP QUOTE TRÊN MOBILE & DESKTOP (XỊN XÒ)   */
+/* ========================================================== */
 .quote-glass-card {
   position: relative;
-  background: rgba(35, 10, 10, 0.8);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 18px;
-  padding: 24px 36px;
+  background: linear-gradient(135deg, rgba(45, 12, 12, 0.9), rgba(20, 5, 5, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  padding: 22px 20px;
   text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 215, 0, 0.3);
   width: 100%;
   max-width: 720px;
+  overflow: hidden;
 }
 
-.quote-icon-mark {
+/* Thanh điểm nhấn ánh kim ở cạnh trên */
+.quote-glow-accent {
   position: absolute;
-  top: -12px;
-  left: 28px;
-  font-size: 2.5rem;
-  color: rgba(255, 215, 0, 0.4);
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
+.quote-content-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.quote-icon-left, .quote-icon-right {
   font-family: serif;
-  line-height: 1;
-  pointer-events: none;
+  font-size: 1.8rem;
+  color: rgba(255, 215, 0, 0.4);
+  line-height: 0.8;
 }
 
 .quote-text {
-  color: #ffd700;
-  font-size: 1.3rem;
+  color: #ffea75;
+  font-size: clamp(1.1rem, 4.5vw, 1.35rem);
   font-style: italic;
-  font-weight: 500;
-  margin: 0 0 8px 0;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-.quote-source {
-  color: #cbd5e1;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
+.quote-source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #e2e8f0;
+  font-size: 0.83rem;
+  letter-spacing: 0.3px;
+  box-shadow: inset 0 1px 1px rgba(255, 215, 0, 0.1);
 }
+
+.source-icon {
+  font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .quote-glass-card {
+    padding: 28px 40px;
+  }
+}
+/* ========================================================== */
 
 .action-panel {
   display: flex;

@@ -1,18 +1,25 @@
 <template>
   <div class="intro-page">
-    <!-- Tiêu đề trang kết hợp Nút tương tác dâng hoa thông minh -->
+    <!-- HERO SECTION: Tiêu đề & Nút tương tác dâng hoa thông minh -->
     <div class="hero-section">
       <div class="hero-glow"></div>
       <div class="hero-badge animate-fade-down">CỔNG THÔNG TIN ĐƠN VỊ</div>
       <h2 class="section-title animate-fade-in">GIỚI THIỆU PHÒNG HỒ CHÍ MINH SỐ</h2>
-      <p class="section-desc animate-fade-up">Không gian văn hóa, tư tưởng & nền tảng chuyển đổi số chính trị Tiểu đoàn Phòng không 16</p>
+      <p class="section-desc animate-fade-up">
+        Không gian văn hóa, tư tưởng &amp; nền tảng chuyển đổi số chính trị Tiểu đoàn Phòng không 16
+      </p>
       
-
+      <!-- Nút tương tác dâng hoa thông minh -->
+      <div class="hero-action-container animate-fade-up">
+        <button class="btn-hero-offer" @click="handleOfferFlower">
+          <span class="offer-icon">🌸</span>
+          <span>Kính Cẩn Dâng Hoa Tưởng Niệm</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Nội dung chính dạng lưới thông tin -->
+    <!-- NỘI DUNG CHÍNH: Lưới 4 Thẻ Giới Thiệu (Được cân đối lại) -->
     <div class="intro-grid">
-      
       <!-- Thẻ 1: Mục đích & Ý nghĩa -->
       <div class="intro-card">
         <div class="card-icon-wrapper">
@@ -70,19 +77,62 @@
           Đẩy mạnh ứng dụng công nghệ số trong công tác Đảng, công tác chính trị; xây dựng môi trường văn hóa quân sự phong phú, lành mạnh, đáp ứng yêu cầu xây dựng đơn vị vững mạnh toàn diện "Mẫu mực, tiêu biểu" trong tình hình mới.
         </p>
       </div>
-
     </div>
 
-    <!-- 🌟 HỆ THỐNG THÔNG BÁO HIỆN ĐẠI (MODAL) -->
+    <!-- KHU VỰC MỚI: 6 MẢNG ẢNH TRƯNG BÀY PHÒNG HỒ CHÍ MINH SỐ -->
+    <div class="exhibition-section">
+      <div class="section-header-center">
+        <span class="sub-badge">KHÔNG GIAN TRƯNG BÀY SỐ</span>
+        <h3 class="exhibition-main-title">6 Mảng Ảnh Phòng Hồ Chí Minh</h3>
+        <p class="exhibition-sub-desc">Hệ thống tư liệu trực quan giáo dục truyền thống, tư tưởng và đạo đức cách mạng</p>
+      </div>
+
+      <div class="exhibition-grid">
+        <div 
+          v-for="(panel, index) in exhibitionPanels" 
+          :key="index" 
+          class="exhibition-card"
+        >
+          <div class="exhibition-card-top">
+            <span class="panel-number">0{{ index + 1 }}</span>
+            <span class="panel-tag">Tư liệu số</span>
+          </div>
+          <h4 class="panel-title">{{ panel.title }}</h4>
+          <p class="panel-desc">{{ panel.shortDesc }}</p>
+          <button class="btn-view-detail" @click="handleViewPanel(panel)">
+            <span>Xem nội dung chi tiết</span>
+            <span class="arrow-icon">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HỆ THỐNG MODAL HIỆN ĐẠI (Dùng chung cho Dâng hoa & Chi tiết Mảng ảnh) -->
     <transition name="modal-modern">
       <div v-if="showAlert" class="modal-overlay" @click.self="closeAlert">
         <div class="modal-container alert-container">
           <div class="alert-glow"></div>
-          <div class="alert-icon-wrapper">
-            <span class="alert-star">★</span>
-          </div>
-          <h3 class="alert-title">{{ alertTitle }}</h3>
-          <p class="alert-message">{{ alertMessage }}</p>
+          
+          <!-- Modal Dâng Hoa -->
+          <template v-if="modalType === 'flower'">
+            <div class="alert-icon-wrapper">
+              <span class="alert-star">★</span>
+            </div>
+            <h3 class="alert-title">{{ alertTitle }}</h3>
+            <p class="alert-message">{{ alertMessage }}</p>
+          </template>
+
+          <!-- Modal Chi Tiết Mảng Ảnh -->
+          <template v-else-if="modalType === 'panel'">
+            <div class="alert-icon-wrapper panel-modal-icon">
+              <span class="alert-star">📖</span>
+            </div>
+            <h3 class="alert-title">{{ currentPanelTitle }}</h3>
+            <div class="panel-content-box">
+              <p class="alert-message placeholder-text">thêm nội dung của bản ảnh ở đây</p>
+            </div>
+          </template>
+
           <div class="alert-actions">
             <button class="btn-alert-confirm" @click="closeAlert">Xác nhận</button>
           </div>
@@ -98,16 +148,52 @@ export default {
   data() {
     return {
       showAlert: false,
+      modalType: 'flower', // 'flower' hoặc 'panel'
       alertTitle: 'Kính cẩn dâng hoa',
-      alertMessage: 'Đã dâng hoa thành kính lên Chủ tịch Hồ Chí Minh vĩ đại!'
+      alertMessage: 'Đã dâng hoa thành kính lên Chủ tịch Hồ Chí Minh vĩ đại!',
+      currentPanelTitle: '',
+      exhibitionPanels: [
+        {
+          title: 'Đảng cộng sản Việt Nam, người tổ chức và lãnh đạo mọi thắng lợi của cách mạng Việt Nam.',
+          shortDesc: 'Khẳng định vai trò lãnh đạo tuyệt đối, toàn diện của Đảng trong suốt chiều dài lịch sử đấu tranh và xây dựng đất nước.'
+        },
+        {
+          title: 'Việt Nam, đất nước, con người.',
+          shortDesc: 'Giới thiệu truyền thống văn hóa tốt đẹp, cảnh quan thiên nhiên và vẻ đẹp con người Việt Nam qua các thời kỳ.'
+        },
+        {
+          title: 'Chủ tịch Hồ Chí Minh cuộc đời và sự nghiệp.',
+          shortDesc: 'Tóm tắt tiểu sử, quá trình hoạt động cách mạng và di sản tư tưởng vô giá của Người để lại cho dân tộc.'
+        },
+        {
+          title: 'Truyền thống Quân đội nhân dân Việt Nam.',
+          shortDesc: 'Tôn vinh lịch sử vẻ vang, tinh thần quyết chiến quyết thắng và những chiến công oanh liệt của QĐND Việt Nam.'
+        },
+        {
+          title: 'Tuổi trẻ Quân đội phấn đấu xứng danh “Bộ đội Cụ Hồ” thời kỳ mới.',
+          shortDesc: 'Khơi dậy khát vọng cống hiến, xung kích, sáng tạo rèn luyện bản lĩnh của đoàn viên thanh niên trong đơn vị.'
+        },
+        {
+          title: 'Đơn vị của chúng tôi.',
+          shortDesc: 'Giới thiệu thành tích, kết quả huấn luyện, sẵn sàng chiến đấu và xây dựng chính quy của Tiểu đoàn Phòng không 16.'
+        }
+      ]
     }
   },
   methods: {
     handleOfferFlower() {
+      this.modalType = 'flower';
       this.triggerNotification(
         'Kính Cẩn Dâng Hoa', 
         'Đồng chí đã thành kính dâng hoa tưởng niệm Chủ tịch Hồ Chí Minh. Toàn đơn vị nguyện học tập và làm theo tấm gương đạo đức của Người!'
       );
+    },
+
+    handleViewPanel(panel) {
+      this.modalType = 'panel';
+      this.currentPanelTitle = panel.title;
+      this.showAlert = true;
+      document.body.style.overflow = 'hidden';
     },
     
     triggerNotification(title, message) {
@@ -147,10 +233,10 @@ export default {
   position: relative;
   text-align: center;
   margin-bottom: 40px;
-  padding: 36px 20px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.06) 0%, rgba(139, 0, 0, 0.2) 100%);
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(139, 0, 0, 0.25) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.25);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
@@ -160,11 +246,11 @@ export default {
   top: -40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 250px;
-  height: 80px;
+  width: 300px;
+  height: 90px;
   background: #ffd700;
-  filter: blur(70px);
-  opacity: 0.15;
+  filter: blur(80px);
+  opacity: 0.18;
   pointer-events: none;
 }
 
@@ -173,12 +259,12 @@ export default {
   background: rgba(255, 215, 0, 0.12);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.35);
-  padding: 5px 16px;
+  padding: 6px 18px;
   border-radius: 20px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .section-title {
@@ -187,14 +273,14 @@ export default {
   background: linear-gradient(135deg, #fff 30%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
 }
 
 .section-desc {
   color: #cbd5e1;
   font-size: clamp(0.88rem, 1.4vw, 1.05rem);
   max-width: 650px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 24px auto;
 }
 
 /* Hero Action Button */
@@ -206,35 +292,35 @@ export default {
   background: linear-gradient(135deg, #e11d48, #991b1b);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.5);
-  padding: 11px 24px;
+  padding: 12px 28px;
   border-radius: 30px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 20px rgba(225, 29, 72, 0.4);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .btn-hero-offer:hover {
   background: linear-gradient(135deg, #f43f5e, #b91c1c);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
   border-color: #fff;
 }
 
 .offer-icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
-/* Grid Layout */
+/* Grid Layout (4 Cards) */
 .intro-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .intro-card {
@@ -332,6 +418,143 @@ export default {
   color: #f8fafc;
 }
 
+/* Exhibition Section (6 Mảng Ảnh) */
+.exhibition-section {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+  background: linear-gradient(180deg, rgba(20, 6, 6, 0.6) 0%, rgba(10, 2, 2, 0.9) 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.section-header-center {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.sub-badge {
+  display: inline-block;
+  color: #ffd700;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: rgba(255, 215, 0, 0.08);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.exhibition-main-title {
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.exhibition-sub-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.exhibition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.exhibition-card {
+  background: rgba(30, 12, 12, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.exhibition-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(45, 16, 16, 0.85);
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.12);
+}
+
+.exhibition-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.panel-number {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #ffd700;
+  opacity: 0.8;
+}
+
+.panel-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fca5a5;
+  background: rgba(225, 29, 72, 0.15);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(225, 29, 72, 0.3);
+}
+
+.panel-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.panel-desc {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+
+.btn-view-detail {
+  background: rgba(255, 215, 0, 0.08);
+  color: #ffd700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.btn-view-detail:hover {
+  background: rgba(255, 215, 0, 0.18);
+  border-color: #ffd700;
+  transform: translateX(2px);
+}
+
+.arrow-icon {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-view-detail:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
@@ -351,7 +574,7 @@ export default {
   border: 2px solid rgba(255, 215, 0, 0.5);
   border-radius: 24px;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
   padding: 35px 25px;
   text-align: center;
   display: flex;
@@ -395,9 +618,10 @@ export default {
 
 .alert-title {
   color: #ffd700;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
 }
 
 .alert-message {
@@ -405,6 +629,21 @@ export default {
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 25px;
+}
+
+.panel-content-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.placeholder-text {
+  color: #94a3b8;
+  font-style: italic;
+  margin: 0;
 }
 
 .alert-actions {
