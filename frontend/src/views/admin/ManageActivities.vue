@@ -1,6 +1,14 @@
 <template>
   <div class="admin-layout">
-    <!-- Overlay cho mobile menu với z-index chuẩn xác -->
+    <!-- 🌌 Hiệu ứng ánh sáng nền động siêu xịn -->
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-red-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse"></div>
+    <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-indigo-900/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <!-- Họa tiết lưới công nghệ chìm -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b0a_1px,transparent_1px),linear-gradient(to_bottom,#1e293b0a_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none z-0"></div>
+
+    <!-- Overlay cho mobile menu -->
     <div v-if="isMobileMenuOpen" class="sidebar-overlay" @click="toggleSidebar"></div>
 
     <!-- Toast Thông Báo Hiện Đại -->
@@ -16,12 +24,15 @@
       </div>
     </transition>
 
-    <!-- Sidebar Quản Trị -->
+    <!-- Sidebar Quản Trị (Glassmorphism Cao Cấp) -->
     <aside class="admin-sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
       <div class="sidebar-header">
         <div class="sidebar-brand-glow"></div>
-        <div class="sidebar-brand-icon">★</div>
-        <h3>QUẢN TRỊ VTHC</h3>
+        <div class="sidebar-brand-icon-box">
+          <div class="absolute inset-0 bg-white/10 rounded-2xl animate-ping opacity-25"></div>
+          <span class="sidebar-brand-icon">⭐</span>
+        </div>
+        <h3 class="animate-text-shine">QUẢN TRỊ VTHC</h3>
         <p>Phòng Hồ Chí Minh Số</p>
       </div>
       
@@ -51,7 +62,7 @@
           </div>
         </div>
         <button @click="handleLogout" class="btn-logout">
-          <span>🚪</span> Đăng Xuất
+          <span>🚪</span> <span>Đăng Xuất</span>
         </button>
       </div>
     </aside>
@@ -62,11 +73,17 @@
         <div class="header-title-box">
           <button class="mobile-toggle-btn" @click="toggleSidebar" aria-label="Toggle Menu">☰</button>
           <div>
-            <h2>{{ currentTitle }}</h2>
+            <h2 class="animate-text-shine">{{ currentTitle }}</h2>
             <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Tiểu đoàn Phòng không 16</p>
           </div>
         </div>
-       
+        
+        <div class="header-right-actions">
+          <div class="system-badge">
+            <span class="pulse-dot"></span>
+            <span>Bảo mật 256-bit</span>
+          </div>
+        </div>
       </header>
 
       <div class="main-content-wrapper">
@@ -187,7 +204,6 @@ export default {
         const baseUrl = getApiUrl();
         const headers = this.getAuthHeaders();
         
-        // Gọi đồng thời tất cả các API cần thiết, dùng catch phòng hờ lỗi từng request riêng lẻ
         const [actRes, libRes, medRes, quizRes, bookRes, feedbackRes, borrowRes] = await Promise.all([
           fetch(`${baseUrl}/api/activities`, { headers }).catch(() => ({ ok: false })),
           fetch(`${baseUrl}/api/library`, { headers }).catch(() => ({ ok: false })),
@@ -230,27 +246,52 @@ export default {
 </script>
 
 <style scoped>
+/* Hiệu ứng chữ sáng chạy từ trái qua phải (Text Shimmer / Ánh nắng lướt) */
+@keyframes textShine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-text-shine {
+  background: linear-gradient(
+    90deg, 
+    #fcd34d 0%, 
+    #ffffff 40%, 
+    #f59e0b 60%, 
+    #fcd34d 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  animation: textShine 5s linear infinite;
+}
+
 .admin-layout {
   display: flex;
   min-height: 100vh;
   width: 100%;
-  background: radial-gradient(circle at 50% 0%, #1a0f0f 0%, #0c0404 60%, #050101 100%);
+  background: #030712;
   color: #f1f5f9;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   position: relative;
   overflow-x: hidden;
+  user-select: none;
 }
 
 *, *:before, *:after { 
   box-sizing: border-box; 
 }
 
-/* Mobile Overlay với z-index an toàn */
+/* Mobile Overlay */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(8px);
   z-index: 1050;
   animation: fadeIn 0.25s ease;
 }
@@ -260,7 +301,7 @@ export default {
   to { opacity: 1; }
 }
 
-/* Toast Notification */
+/* Toast Notification (Glassmorphism) */
 .toast-notification {
   position: fixed;
   top: 25px;
@@ -269,32 +310,32 @@ export default {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 20px;
-  border-radius: 14px;
+  padding: 14px 22px;
+  border-radius: 1.25rem;
   font-weight: 500;
   font-size: 0.92rem;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.15);
   max-width: 400px;
 }
 
 .toast-notification.success { 
-  background: linear-gradient(135deg, rgba(22, 163, 74, 0.95), rgba(15, 118, 45, 0.95)); 
-  color: #fff; 
-  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(6, 78, 59, 0.85); 
+  color: #a7f3d0; 
+  border-color: rgba(52, 211, 153, 0.4);
 }
 
 .toast-notification.error { 
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.95), rgba(153, 27, 27, 0.95)); 
-  color: #fff; 
-  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(127, 29, 29, 0.85); 
+  color: #fecaca; 
+  border-color: rgba(248, 113, 113, 0.4);
 }
 
 .toast-icon-wrapper {
-  width: 28px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.2);
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -314,11 +355,11 @@ export default {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  opacity: 0.9;
 }
 
 .toast-message {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  color: #e2e8f0;
 }
 
 .toast-slide-enter-active, .toast-slide-leave-active {
@@ -329,12 +370,12 @@ export default {
   transform: translateY(-20px) scale(0.95);
 }
 
-/* Sidebar Styles */
+/* Sidebar Styles (Glassmorphism Cao Cấp) */
 .admin-sidebar {
-  width: 280px;
-  background: rgba(14, 4, 4, 0.96);
-  backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(255, 215, 0, 0.15);
+  width: 290px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -342,7 +383,7 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1100;
-  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+  box-shadow: 10px 0 40px rgba(0,0,0,0.8);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -350,7 +391,7 @@ export default {
   position: relative;
   padding: 24px 20px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.6);
   overflow: hidden;
 }
 
@@ -359,34 +400,47 @@ export default {
   top: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
-  height: 40px;
-  background: #ffd700;
-  filter: blur(35px);
-  opacity: 0.2;
+  width: 150px;
+  height: 50px;
+  background: #f59e0b;
+  filter: blur(40px);
+  opacity: 0.25;
   pointer-events: none;
 }
 
+.sidebar-brand-icon-box {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #dc2626, #7f1d1d);
+  border-radius: 14px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.4);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  position: relative;
+}
+
 .sidebar-brand-icon {
-  font-size: 1.8rem;
-  color: #ffd700;
-  margin-bottom: 4px;
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
 .sidebar-header h3 {
-  font-size: 1.1rem;
-  color: #ffd700;
-  margin: 0 0 2px 0;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-size: 1.15rem;
+  margin: 0 0 4px 0;
+  font-weight: 900;
+  letter-spacing: 0.8px;
 }
 
 .sidebar-header p {
   font-size: 0.72rem;
   color: #94a3b8;
   margin: 0;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* Sidebar Menu */
@@ -395,7 +449,7 @@ export default {
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   overflow-y: auto;
 }
 
@@ -403,7 +457,7 @@ export default {
   width: 4px;
 }
 .sidebar-menu::-webkit-scrollbar-thumb {
-  background: rgba(255, 215, 0, 0.2);
+  background: rgba(245, 158, 11, 0.2);
   border-radius: 4px;
 }
 
@@ -411,62 +465,63 @@ export default {
   font-size: 0.68rem;
   font-weight: 700;
   color: #64748b;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   padding: 0 12px 6px 12px;
 }
 
 .sidebar-menu button {
   position: relative;
   width: 100%;
-  padding: 11px 14px;
+  padding: 12px 14px;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: #94a3b8;
   text-align: left;
   font-size: 0.88rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 14px;
   transition: all 0.25s ease;
 }
 
 .sidebar-menu button .icon {
   font-size: 1.1rem;
-  width: 22px;
+  width: 24px;
   display: flex;
   justify-content: center;
 }
 
 .sidebar-menu button:hover {
-  background-color: rgba(255, 215, 0, 0.06);
+  background-color: rgba(255, 255, 255, 0.04);
   color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-menu button.active {
-  background: linear-gradient(135deg, rgba(225, 29, 72, 0.25), rgba(153, 27, 27, 0.35));
-  color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(245, 158, 11, 0.15));
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
 .active-indicator {
   position: absolute;
-  right: 12px;
+  right: 14px;
   width: 6px;
   height: 6px;
-  background-color: #ffd700;
+  background-color: #fcd34d;
   border-radius: 50%;
-  box-shadow: 0 0 8px #ffd700;
+  box-shadow: 0 0 10px #fcd34d;
 }
 
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 16px;
-  border-top: 1px solid rgba(255, 215, 0, 0.1);
-  background: rgba(8, 2, 2, 0.5);
+  border-top: 1px solid rgba(51, 65, 85, 0.6);
+  background: rgba(3, 7, 18, 0.5);
 }
 
 .admin-profile {
@@ -474,7 +529,10 @@ export default {
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
-  padding: 4px;
+  padding: 6px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(51, 65, 85, 0.4);
 }
 
 .avatar-wrapper {
@@ -482,15 +540,15 @@ export default {
 }
 
 .admin-profile .avatar {
-  font-size: 1.4rem;
-  background: rgba(255, 215, 0, 0.1);
+  font-size: 1.3rem;
+  background: rgba(245, 158, 11, 0.1);
   width: 38px;
   height: 38px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
 .online-status-dot {
@@ -499,29 +557,30 @@ export default {
   right: 0;
   width: 9px;
   height: 9px;
-  background-color: #22c55e;
-  border: 2px solid #0e0404;
+  background-color: #10b981;
+  border: 2px solid #030712;
   border-radius: 50%;
 }
 
 .admin-profile .info strong { 
   display: block; 
-  font-size: 0.85rem; 
+  font-size: 0.84rem; 
   color: #fff; 
 }
 
 .admin-profile .info span { 
   font-size: 0.7rem; 
   color: #38bdf8; 
+  font-weight: 500;
 }
 
 .btn-logout {
   width: 100%;
-  padding: 10px;
-  background: linear-gradient(135deg, #e11d48, #991b1b);
+  padding: 11px;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
   color: white;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 9px;
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  border-radius: 12px;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
@@ -530,35 +589,37 @@ export default {
   justify-content: center;
   gap: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
 }
 
 .btn-logout:hover {
-  background: linear-gradient(135deg, #f43f5e, #b91c1c);
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.4);
-  border-color: #ffd700;
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+  border-color: #fcd34d;
 }
 
-/* Main Area Layout Fixes */
+/* Main Area Layout */
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  margin-left: 280px;
+  margin-left: 290px;
   transition: margin 0.35s ease;
+  position: relative;
+  z-index: 10;
 }
 
 .main-header {
-  height: 70px;
-  background: rgba(14, 4, 4, 0.9);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+  height: 75px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 35px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -567,39 +628,40 @@ export default {
 .header-title-box { 
   display: flex; 
   align-items: center; 
-  gap: 14px; 
+  gap: 16px; 
   min-width: 0;
 }
 
 .mobile-toggle-btn { 
   display: none; 
-  background: rgba(255, 215, 0, 0.1); 
-  border: 1px solid rgba(255, 215, 0, 0.3); 
-  color: #ffd700; 
+  background: rgba(245, 158, 11, 0.1); 
+  border: 1px solid rgba(245, 158, 11, 0.3); 
+  color: #fcd34d; 
   font-size: 1.2rem; 
-  padding: 6px 10px; 
-  border-radius: 8px; 
+  padding: 8px 12px; 
+  border-radius: 10px; 
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .main-header h2 { 
-  font-size: 1.2rem; 
-  color: #ffd700; 
+  font-size: 1.25rem; 
   margin: 0; 
-  font-weight: 800;
+  font-weight: 900;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 0.5px;
 }
 
 .date-time { 
-  font-size: 0.72rem; 
+  font-size: 0.73rem; 
   color: #94a3b8; 
-  margin: 2px 0 0 0; 
+  margin: 3px 0 0 0; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 .header-right-actions {
@@ -612,41 +674,42 @@ export default {
 .system-badge {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  padding: 5px 12px;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  color: #4ade80;
+  color: #34d399;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
 }
 
 .pulse-dot {
   width: 7px;
   height: 7px;
-  background-color: #22c55e;
+  background-color: #10b981;
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
   animation: pulse-animation 1.5s infinite;
 }
 
 @keyframes pulse-animation {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 .main-content-wrapper { 
-  padding: 24px; 
+  padding: 28px; 
   width: 100%; 
-  max-width: 1400px; 
+  max-width: 1450px; 
   margin: 0 auto; 
 }
 
 /* Component transitions */
 .fade-slide-enter-active, .fade-slide-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 .fade-slide-enter-from {
   opacity: 0;
@@ -657,7 +720,7 @@ export default {
   transform: translateY(-10px);
 }
 
-/* Responsive design chuẩn chỉnh cho mobile & tablet */
+/* Responsive design chuẩn chỉnh */
 @media (max-width: 1024px) {
   .admin-sidebar { 
     transform: translateX(-100%); 
@@ -672,10 +735,10 @@ export default {
     display: block; 
   }
   .main-header {
-    padding: 0 16px;
+    padding: 0 20px;
   }
   .main-content-wrapper {
-    padding: 16px 12px;
+    padding: 20px 14px;
   }
 }
 </style>
