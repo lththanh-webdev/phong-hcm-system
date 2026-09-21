@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 
-// 🌐 Cấu hình trust proxy (Giúp server nhận đúng IP người dùng thực tế khi chạy trên Render/Vercel)
+// 🌐 Cấu hình trust proxy
 app.set('trust proxy', true);
 
 // 🛠️ Middlewares cơ bản
@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // 📊 Middleware tự động ghi nhận lượt truy cập website vào Database
 app.use(async (req, res, next) => {
-    // Chỉ ghi log cho các request gọi vào đường dẫn /api
     if (req.path.startsWith('/api')) {
         try {
             const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -34,27 +33,25 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// 🚀 Khai báo các Routes chính của hệ thống (Đã đồng bộ chuẩn tên với Frontend)
+// 🚀 Khai báo các Routes chính của hệ thống
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/activities', require('./routes/activityRoutes'));
 app.use('/api/tributes', require('./routes/tributeRoutes'));
 app.use('/api/quizzes', require('./routes/quizRoutes'));
 app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
-app.use('/api/stats', require('./routes/statsRoutes'));         // Thống kê truy cập
-app.use('/api/visitors', require('./routes/visitorRoutes')); // Quản lý visitor
-app.use('/api/borrowings', require('./routes/bookBorrowRoutes'));
-// 👉 Các route đã được sửa lỗi lệch tên và bổ sung đầy đủ:
-app.use('/api/books', require('./routes/bookRoutes'));         // 1. Quản lý sách (bổ sung route mới)
-app.use('/api/feedbacks', require('./routes/feedbackRoutes')); // 2. Thêm chữ 's' khớp với /api/feedbacks
-app.use('/api/borrowings', require('./routes/bookBorrowRoutes'));// 3. Đổi từ /api/borrows thành /api/borrowings
+app.use('/api/stats', require('./routes/statsRoutes'));
+app.use('/api/visitors', require('./routes/visitorRoutes'));
+app.use('/api/books', require('./routes/bookRoutes'));
+app.use('/api/feedbacks', require('./routes/feedbackRoutes'));
+app.use('/api/borrowings', require('./routes/bookBorrowRoutes')); // Giữ lại 1 dòng duy nhất ở đây
 
 // 🏠 Trang chủ API kiểm tra trạng thái server
 app.get('/', (req, res) => {
     res.json({ message: '[Phòng Hồ Chí Minh Server] API đang hoạt động bình thường trên Cloud Storage!' });
 });
 
-// 🛡️ Middleware xử lý lỗi tập trung toàn cục (Global Error Handler)
+// 🛡️ Middleware xử lý lỗi tập trung toàn cục
 app.use((err, req, res, next) => {
     console.error('Lỗi Server không bắt được:', err.stack);
     res.status(500).json({ 
