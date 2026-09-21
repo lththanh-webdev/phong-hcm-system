@@ -472,7 +472,11 @@ export default {
       this.showBorrowModal = true;
     },
     findAndOpenReturnModal() {
-      const record = this.borrowList.find(b => b.library_id === this.selectedBook.id && b.status === 'borrowed');
+      // Kiểm tra linh hoạt: hỗ trợ cả book_id hoặc library_id tùy thuộc vào cấu trúc trả về của API /api/borrows
+const record = this.borrowList.find(b => 
+  (b.book_id === this.selectedBook.id || b.library_id === this.selectedBook.id) && 
+  b.status === 'borrowed'
+);
       if (record) {
         this.openReturnModal(record);
         this.showDetailModal = false;

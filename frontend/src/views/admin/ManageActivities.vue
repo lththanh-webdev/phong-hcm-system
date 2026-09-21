@@ -66,11 +66,7 @@
             <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Tiểu đoàn Phòng không 16</p>
           </div>
         </div>
-        <div class="header-right-actions">
-          <div class="system-badge">
-            <span class="pulse-dot"></span> Đang hoạt động
-          </div>
-        </div>
+       
       </header>
 
       <div class="main-content-wrapper">

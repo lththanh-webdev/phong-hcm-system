@@ -43,7 +43,7 @@ app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/stats', require('./routes/statsRoutes'));         // Thống kê truy cập
 app.use('/api/visitors', require('./routes/visitorRoutes')); // Quản lý visitor
-
+app.use('/api/borrowings', require('./routes/bookBorrowRoutes'));
 // 👉 Các route đã được sửa lỗi lệch tên và bổ sung đầy đủ:
 app.use('/api/books', require('./routes/bookRoutes'));         // 1. Quản lý sách (bổ sung route mới)
 app.use('/api/feedbacks', require('./routes/feedbackRoutes')); // 2. Thêm chữ 's' khớp với /api/feedbacks
