@@ -72,17 +72,9 @@
       <header class="main-header">
         <div class="header-title-box">
           <button class="mobile-toggle-btn" @click="toggleSidebar" aria-label="Toggle Menu">☰</button>
-          <div>
+          <div class="header-text-center">
             <h2 class="animate-text-shine">{{ currentTitle }}</h2>
             <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Tiểu đoàn Phòng không 16</p>
-          </div>
-        </div>
-        
-        <!-- Phần Header bên phải đã thiết kế lại cực ngầu, bỏ 256-bit -->
-        <div class="header-right-actions">
-          <div class="unit-status-pill">
-            <span class="status-glow-dot"></span>
-            <span class="status-text">Đơn vị: Trực chiến 24/7</span>
           </div>
         </div>
       </header>
@@ -271,15 +263,18 @@ export default {
   animation: textShine 5s linear infinite;
 }
 
+/* 🌟 Khắc phục triệt để lỗi đè giao diện web: Cố định toàn màn hình với lớp z-index cực cao */
 .admin-layout {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
   display: flex;
-  min-height: 100vh;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   background: #030712;
   color: #f1f5f9;
   font-family: 'Inter', 'Segoe UI', sans-serif;
-  position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   user-select: none;
 }
 
@@ -374,7 +369,7 @@ export default {
 /* Sidebar Styles */
 .admin-sidebar {
   width: 290px;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(24px);
   border-right: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
@@ -607,6 +602,8 @@ export default {
   flex-direction: column;
   min-width: 0;
   margin-left: 290px;
+  height: 100vh;
+  overflow-y: auto;
   transition: margin 0.35s ease;
   position: relative;
   z-index: 10;
@@ -614,12 +611,12 @@ export default {
 
 .main-header {
   height: 75px;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Căn giữa toàn bộ header */
   padding: 0 35px;
   position: sticky;
   top: 0;
@@ -629,12 +626,22 @@ export default {
 .header-title-box { 
   display: flex; 
   align-items: center; 
+  justify-content: center;
   gap: 16px; 
-  min-width: 0;
+  width: 100%;
+  position: relative;
+}
+
+/* 🎯 Căn giữa toàn bộ text trong admin-main theo yêu cầu */
+.header-text-center {
+  text-align: center;
+  flex: 1;
 }
 
 .mobile-toggle-btn { 
   display: none; 
+  position: absolute;
+  left: 0;
   background: rgba(245, 158, 11, 0.1); 
   border: 1px solid rgba(245, 158, 11, 0.3); 
   color: #fcd34d; 
@@ -642,64 +649,22 @@ export default {
   padding: 8px 12px; 
   border-radius: 10px; 
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 .main-header h2 { 
   font-size: 1.25rem; 
   margin: 0; 
   font-weight: 900;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .date-time { 
   font-size: 0.73rem; 
   color: #94a3b8; 
   margin: 3px 0 0 0; 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-weight: 500;
-}
-
-.header-right-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-/* Thiết kế mới cực xịn cho huy hiệu trạng thái đơn vị trực chiến ở Header */
-.unit-status-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #fcd34d;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-}
-
-.status-glow-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #f59e0b;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b;
-  animation: pulse-glow 2s infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
+  text-align: center;
 }
 
 .main-content-wrapper { 
@@ -707,6 +672,7 @@ export default {
   width: 100%; 
   max-width: 1450px; 
   margin: 0 auto; 
+  text-align: center; /* Đảm bảo nội dung chữ bên trong cũng được căn giữa */
 }
 
 /* Component transitions */
