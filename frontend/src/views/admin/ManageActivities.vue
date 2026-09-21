@@ -80,7 +80,7 @@
           <button class="mobile-toggle-btn" @click="toggleSidebar" aria-label="Toggle Menu">☰</button>
           <div class="header-text-center">
             <h2 class="animate-text-shine">{{ currentTitle }}</h2>
-            <p class="date-time">Hệ thống quản lý dữ liệu tập trung - Tiểu đoàn Phòng không 16</p>
+            <p class="date-time">Quản Lý dữ liệu - Tiểu đoàn Phòng không 16</p>
           </div>
         </div>
       </header>
