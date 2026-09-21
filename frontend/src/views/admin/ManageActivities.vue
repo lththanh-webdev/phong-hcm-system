@@ -48,6 +48,12 @@
           <span class="label">{{ tab.name }}</span>
           <span v-if="currentTab === tab.id" class="active-indicator"></span>
         </button>
+
+        <div class="menu-category-label mt-3">ĐIỀU HƯỚNG NHANH</div>
+        <button @click="goToHome" class="btn-home-nav">
+          <span class="icon">🏠</span>
+          <span class="label">Trở Lại Trang Chủ</span>
+        </button>
       </nav>
 
       <div class="sidebar-footer">
@@ -191,6 +197,10 @@ export default {
       this.isMobileMenuOpen = false;
       document.body.style.overflow = '';
       this.fetchAllData();
+    },
+    goToHome() {
+      document.body.style.overflow = '';
+      this.$router.push('/');
     },
     async fetchAllData() {
       try {
@@ -503,6 +513,19 @@ export default {
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
+/* Nút trở lại trang chủ phong cách nổi bật */
+.btn-home-nav {
+  background: rgba(14, 165, 233, 0.1) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+.btn-home-nav:hover {
+  background: rgba(14, 165, 233, 0.2) !important;
+  color: #bae6fd !important;
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2) !important;
+}
+
 .active-indicator {
   position: absolute;
   right: 14px;
@@ -595,7 +618,7 @@ export default {
   border-color: #fcd34d;
 }
 
-/* Main Area Layout */
+/* Main Area Layout - Thiết kế admin-main bề thế, cao và thoáng hơn */
 .admin-main {
   flex: 1;
   display: flex;
@@ -609,18 +632,20 @@ export default {
   z-index: 10;
 }
 
+/* Tăng chiều cao header (lên 95px) để tạo cảm giác không gian to lớn, bề thế hơn */
 .main-header {
-  height: 75px;
-  background: rgba(15, 23, 42, 0.85);
+  height: 95px;
+  background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
   align-items: center;
-  justify-content: center; /* Căn giữa toàn bộ header */
-  padding: 0 35px;
+  justify-content: center;
+  padding: 0 40px;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .header-title-box { 
@@ -632,7 +657,6 @@ export default {
   position: relative;
 }
 
-/* 🎯 Căn giữa toàn bộ text trong admin-main theo yêu cầu */
 .header-text-center {
   text-align: center;
   flex: 1;
@@ -652,27 +676,27 @@ export default {
 }
 
 .main-header h2 { 
-  font-size: 1.25rem; 
+  font-size: 1.4rem; /* Phóng to tiêu đề chính */
   margin: 0; 
   font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   text-align: center;
 }
 
 .date-time { 
-  font-size: 0.73rem; 
+  font-size: 0.8rem; /* Phóng to phần mô tả phụ */
   color: #94a3b8; 
-  margin: 3px 0 0 0; 
+  margin: 5px 0 0 0; 
   font-weight: 500;
   text-align: center;
 }
 
 .main-content-wrapper { 
-  padding: 28px; 
+  padding: 35px; /* Tăng khoảng trống đệm cho các component bên trong */
   width: 100%; 
-  max-width: 1450px; 
+  max-width: 1500px; 
   margin: 0 auto; 
-  text-align: center; /* Đảm bảo nội dung chữ bên trong cũng được căn giữa */
+  text-align: center; 
 }
 
 /* Component transitions */
@@ -703,10 +727,11 @@ export default {
     display: block; 
   }
   .main-header {
+    height: 85px;
     padding: 0 20px;
   }
   .main-content-wrapper {
-    padding: 20px 14px;
+    padding: 24px 16px;
   }
 }
 </style>
