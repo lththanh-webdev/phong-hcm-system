@@ -1,14 +1,6 @@
 <template>
   <div class="tab-pane admin-library-container">
-    <!-- Tiêu đề và Tổng quan -->
-    <div class="section-top">
-      <div class="title-wrapper">
-        <div class="hero-badge">📚 QUẢN TRỊ KHO TÀNG TRI THỨC</div>
-        <h3 class="section-title">Quản Lý Danh Mục Sách Thư Viện</h3>
-        <p class="subtitle">{{ isEditingLibrary ? '✏️ Đang chỉnh sửa thông tin sách' : '➕ Thêm mới đầu sách vào hệ thống dữ liệu' }}</p>
-      </div>
-      <button v-if="isEditingLibrary" @click="resetLibraryForm" class="btn-cancel">✕ Hủy Chỉnh Sửa</button>
-    </div>
+   
 
     <!-- Thẻ Thống kê Nhanh -->
     <div class="stats-overview-grid">

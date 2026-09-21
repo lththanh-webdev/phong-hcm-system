@@ -1,24 +1,6 @@
 <template>
   <div class="tab-pane-enhanced">
-    <!-- Phần Tiêu đề & Trạng thái -->
-    <div class="section-top">
-      <div class="title-wrapper">
-        <div class="section-icon">🎯</div>
-        <div>
-          <h3>Quản Lý Hoạt Động & Thi Đua</h3>
-          <p class="subtitle">
-            <span class="status-badge" :class="{ editing: isEditingActivity }">
-              {{ isEditingActivity ? '✏️ Đang ở chế độ chỉnh sửa bài viết' : '➕ Thêm mới bài viết bản tin hoạt động' }}
-            </span>
-          </p>
-        </div>
-      </div>
-      <button v-if="isEditingActivity" @click="resetActivityForm" class="btn-cancel">
-        <span>✕</span> Hủy sửa
-      </button>
-    </div>
-
-    <!-- Form Nhập Liệu -->
+       <!-- Form Nhập Liệu -->
     <form @submit.prevent="submitActivity" class="form-grid-card">
       <div class="form-group">
         <label><span class="label-icon">📝</span> Tên bài viết / Hoạt động <span class="required">*</span></label>

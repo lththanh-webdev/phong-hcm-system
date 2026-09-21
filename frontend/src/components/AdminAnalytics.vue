@@ -1,14 +1,6 @@
 <template>
   <div class="tab-pane dashboard-stats-container">
-    <!-- Tiêu Đề Khu Vực -->
-    <div class="section-top-banner">
-      <div class="title-wrapper">
-        <div class="hero-badge">📊 HỆ THỐNG PHÂN TÍCH & THỐNG KÊ</div>
-        <h3 class="section-title">Tổng Quan Hoạt Động Hệ Thống</h3>
-        <p class="subtitle">Theo dõi số liệu thời gian thực, quản lý kho dữ liệu, mượn trả sách và ý kiến đóng góp</p>
-      </div>
-  
-    </div>
+   
 
     <!-- Lưới Thẻ Thống Kê Tổng Quan (6 Thẻ) -->
     <div class="stats-cards-grid-modern">

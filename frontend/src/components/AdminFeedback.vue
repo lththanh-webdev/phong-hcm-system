@@ -1,11 +1,5 @@
 <template>
   <div class="feedback-page admin-feedback-page">
-    <!-- Tiêu đề trang -->
-    <div class="hero-section">
-      <div class="hero-badge">QUẢN TRỊ HỆ THỐNG QUÂN SỰ</div>
-      <h2 class="section-title">QUẢN LÝ HÒM THƯ GÓP Ý</h2>
-      <p class="section-desc">Theo dõi, kiểm duyệt và quản lý minh bạch các ý kiến đóng góp từ cán bộ, chiến sĩ các đơn vị</p>
-    </div>
 
     <!-- Thẻ Thống kê tổng quan -->
     <div class="stats-grid">

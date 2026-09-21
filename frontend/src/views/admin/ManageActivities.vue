@@ -24,7 +24,7 @@
       </div>
     </transition>
 
-    <!-- Sidebar Quản Trị (Glassmorphism Cao Cấp) -->
+    <!-- Sidebar Quản Trị -->
     <aside class="admin-sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
       <div class="sidebar-header">
         <div class="sidebar-brand-glow"></div>
@@ -78,10 +78,11 @@
           </div>
         </div>
         
+        <!-- Phần Header bên phải đã thiết kế lại cực ngầu, bỏ 256-bit -->
         <div class="header-right-actions">
-          <div class="system-badge">
-            <span class="pulse-dot"></span>
-            <span>Bảo mật 256-bit</span>
+          <div class="unit-status-pill">
+            <span class="status-glow-dot"></span>
+            <span class="status-text">Đơn vị: Trực chiến 24/7</span>
           </div>
         </div>
       </header>
@@ -246,7 +247,7 @@ export default {
 </script>
 
 <style scoped>
-/* Hiệu ứng chữ sáng chạy từ trái qua phải (Text Shimmer / Ánh nắng lướt) */
+/* Hiệu ứng chữ sáng chạy từ trái qua phải (Text Shimmer) */
 @keyframes textShine {
   0% {
     background-position: 200% 0;
@@ -370,7 +371,7 @@ export default {
   transform: translateY(-20px) scale(0.95);
 }
 
-/* Sidebar Styles (Glassmorphism Cao Cấp) */
+/* Sidebar Styles */
 .admin-sidebar {
   width: 290px;
   background: rgba(15, 23, 42, 0.75);
@@ -671,33 +672,34 @@ export default {
   flex-shrink: 0;
 }
 
-.system-badge {
+/* Thiết kế mới cực xịn cho huy hiệu trạng thái đơn vị trực chiến ở Header */
+.unit-status-pill {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: #34d399;
-  box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fcd34d;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
 }
 
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  background-color: #10b981;
+.status-glow-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #f59e0b;
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  animation: pulse-animation 1.5s infinite;
+  box-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b;
+  animation: pulse-glow 2s infinite;
 }
 
-@keyframes pulse-animation {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
 .main-content-wrapper { 
