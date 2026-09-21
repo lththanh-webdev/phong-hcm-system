@@ -423,7 +423,7 @@ export default {
 
     async fetchBorrows() {
       try {
-        const res = await fetch(`${getApiUrl()}/api/borrows`, { headers: this.getAuthHeaders() });
+        const res = await fetch(`${getApiUrl()}/api/books`, { headers: this.getAuthHeaders() });
         if (res.ok) {
           const data = await res.json();
           this.borrowList = Array.isArray(data) ? data : (data.data || []);
@@ -507,7 +507,7 @@ const record = this.borrowList.find(b =>
           borrow_date: this.borrowForm.borrow_date || this.getTodayDateString()
         };
 
-        const res = await fetch(`${getApiUrl()}/api/borrows`, {
+        const res = await fetch(`${getApiUrl()}/api/books`, {
           method: 'POST',
           headers: this.getAuthHeaders(),
           body: JSON.stringify(payload)
@@ -533,7 +533,7 @@ const record = this.borrowList.find(b =>
           return_date: this.returnForm.return_date || this.getTodayDateString()
         };
 
-        const res = await fetch(`${getApiUrl()}/api/borrows/${this.selectedBorrowRecord.id}/return`, {
+        const res = await fetch(`${getApiUrl()}/api/books/${this.selectedBorrowRecord.id}/return`, {
           method: 'PUT',
           headers: this.getAuthHeaders(),
           body: JSON.stringify(payload)
@@ -556,7 +556,7 @@ const record = this.borrowList.find(b =>
     async deleteBorrow(id) {
       if (!confirm('Bạn có chắc chắn muốn xóa bản ghi phiếu mượn này?')) return;
       try {
-        const res = await fetch(`${getApiUrl()}/api/borrows/${id}`, {
+        const res = await fetch(`${getApiUrl()}/api/books/${id}`, {
           method: 'DELETE',
           headers: this.getAuthHeaders()
         });

@@ -269,7 +269,7 @@ export default {
 
     async fetchFeedback() {
       try {
-        const res = await fetch(`${this.getApiUrl()}/api/feedback`);
+        const res = await fetch(`${this.getApiUrl()}/api/feedbacks`);
         if (!res.ok) throw new Error('Lỗi kết nối từ server');
         const data = await res.json();
         this.feedbackList = Array.isArray(data) ? data : (data.data || []);
@@ -324,7 +324,7 @@ export default {
       const id = this.itemToDelete.id || this.itemToDelete._id;
 
       try {
-        await fetch(`${this.getApiUrl()}/api/feedback/${id}`, {
+        await fetch(`${this.getApiUrl()}/api/feedbacks/${id}`, {
           method: 'DELETE'
         });
 
