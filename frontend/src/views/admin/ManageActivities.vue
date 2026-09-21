@@ -49,8 +49,8 @@
           <span v-if="currentTab === tab.id" class="active-indicator"></span>
         </button>
 
-        <div class="menu-category-label mt-3">ĐIỀU HƯỚNG NHANH</div>
-        <button @click="goToHome" class="btn-home-nav">
+        <!-- Đã bỏ nhãn điều hướng nhanh, chỉ để nút trở lại trang chủ phía dưới -->
+        <button @click="goToHome" class="btn-home-nav mt-3">
           <span class="icon">🏠</span>
           <span class="label">Trở Lại Trang Chủ</span>
         </button>
@@ -618,7 +618,7 @@ export default {
   border-color: #fcd34d;
 }
 
-/* Main Area Layout - Thiết kế admin-main bề thế, cao và thoáng hơn */
+/* Main Area Layout */
 .admin-main {
   flex: 1;
   display: flex;
@@ -632,16 +632,17 @@ export default {
   z-index: 10;
 }
 
-/* Tăng chiều cao header (lên 95px) để tạo cảm giác không gian to lớn, bề thế hơn */
+/* Sử dụng min-height và height: auto để tránh tuyệt đối việc text tràn/đè nội dung */
 .main-header {
-  height: 95px;
+  min-height: 95px;
+  height: auto;
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(51, 65, 85, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  padding: 18px 40px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -676,7 +677,7 @@ export default {
 }
 
 .main-header h2 { 
-  font-size: 1.4rem; /* Phóng to tiêu đề chính */
+  font-size: 1.35rem; 
   margin: 0; 
   font-weight: 900;
   letter-spacing: 0.8px;
@@ -684,15 +685,15 @@ export default {
 }
 
 .date-time { 
-  font-size: 0.8rem; /* Phóng to phần mô tả phụ */
+  font-size: 0.78rem; 
   color: #94a3b8; 
-  margin: 5px 0 0 0; 
+  margin: 4px 0 0 0; 
   font-weight: 500;
   text-align: center;
 }
 
 .main-content-wrapper { 
-  padding: 35px; /* Tăng khoảng trống đệm cho các component bên trong */
+  padding: 35px; 
   width: 100%; 
   max-width: 1500px; 
   margin: 0 auto; 
@@ -712,7 +713,7 @@ export default {
   transform: translateY(-10px);
 }
 
-/* Responsive design chuẩn chỉnh */
+/* Responsive design */
 @media (max-width: 1024px) {
   .admin-sidebar { 
     transform: translateX(-100%); 
@@ -727,8 +728,7 @@ export default {
     display: block; 
   }
   .main-header {
-    height: 85px;
-    padding: 0 20px;
+    padding: 16px 20px;
   }
   .main-content-wrapper {
     padding: 24px 16px;
