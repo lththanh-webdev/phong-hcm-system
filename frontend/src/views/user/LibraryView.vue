@@ -238,7 +238,7 @@ export default {
       searchQuery: '',
       selectedDoc: null,
       currentBookPage: 1,
-      charsPerPage: 600,
+      charsPerPage: 1000,
       
       selectedCategory: null,
       categorySort: 'date-desc',
@@ -304,28 +304,67 @@ export default {
   },
   // Thuật toán chia trang an toàn, không cắt ngang từ giữa chừng
   bookPagesList() {
-    if (!this.selectedDoc || !this.selectedDoc.description) {
-      return ['Chưa có bản mô tả chi tiết cho cuốn sách này.'];
-    }
-    const text = this.selectedDoc.description;
-    const pages = [];
-    let start = 0;
-    
-    while (start < text.length) {
-      let end = start + this.charsPerPage;
-      if (end < text.length) {
-        let lastSpace = text.lastIndexOf(' ', end);
-        let lastNewline = text.lastIndexOf('\n', end);
-        let breakPoint = Math.max(lastSpace, lastNewline);
-        if (breakPoint > start) {
-          end = breakPoint;
-        }
+  if (!this.selectedDoc || !this.selectedDoc.description) {
+    return ['Chưa có bản mô tả chi tiết cho cuốn sách này.'];
+  }
+  
+  const text = this.selectedDoc.description;
+  const paragraphs = text.split('\n');
+  const pages = [];
+  let currentPageText = '';
+  
+  // Đặt giới hạn ký tự tối ưu cho mỗi trang (mặc định lấy giá trị của bạn nhưng tối thiểu là 1100 để lấp đầy khoảng trống bên dưới)
+  const limit = (this.charsPerPage && this.charsPerPage > 800) ? this.charsPerPage : 1100;
+
+  for (let p of paragraphs) {
+    // Xử lý dòng trống để giữ khoảng cách giữa các đoạn nếu cần
+    if (!p.trim()) {
+      if (currentPageText && (currentPageText.length + 1) <= limit) {
+        currentPageText += '\n';
       }
-      pages.push(text.substring(start, end).trim());
-      start = end;
+      continue;
     }
-    return pages.filter(p => p.length > 0);
-  },
+
+    // Thử ghép đoạn hiện tại vào trang đang xét
+    let candidate = currentPageText ? currentPageText + '\n' + p : p;
+    
+    if (candidate.length <= limit) {
+      currentPageText = candidate;
+    } else {
+      // Nếu trang hiện tại đã đầy, đẩy vào danh sách trang và reset
+      if (currentPageText) {
+        pages.push(currentPageText.trim());
+        currentPageText = '';
+      }
+
+      // Nếu bản thân một đoạn văn quá dài vượt quá giới hạn trang, tiến hành tách nhỏ theo câu (. ! ?)
+      if (p.length > limit) {
+        let sentences = p.match(/[^.!?]+[.!?]+(\s|$)|.+$/g) || [p];
+        let subPage = '';
+        for (let s of sentences) {
+          if ((subPage + s).length <= limit) {
+            subPage = subPage ? subPage + s : s;
+          } else {
+            if (subPage) {
+              pages.push(subPage.trim());
+            }
+            subPage = s;
+          }
+        }
+        currentPageText = subPage;
+      } else {
+        currentPageText = p;
+      }
+    }
+  }
+
+  // Đẩy nốt phần nội dung còn lại vào trang cuối cùng
+  if (currentPageText.trim()) {
+    pages.push(currentPageText.trim());
+  }
+
+  return pages.length > 0 ? pages : ['Chưa có bản mô tả chi tiết cho cuốn sách này.'];
+},
   totalBookPages() {
     return this.bookPagesList.length;
   },
