@@ -147,7 +147,8 @@ export default {
   data() {
     return {
       showAlert: false,
-      
+      currentPanelPage: 1,  // Trang hiện tại của modal mảng ảnh
+      charsPerPage: 500,    // Số lượng ký tự tối ưu trên mỗi trang modal để tránh bị tràn/trống
       currentPanel: {
         title: '',
         shortDesc: '',
@@ -503,73 +504,49 @@ Xin cảm ơn các đồng chí đã chú ý theo dõi và lắng nghe bài thuy
       ]
     }
   },
-computed: {
-    // Thuật toán ngắt trang thông minh theo đoạn và câu cho modal mảng ảnh
-    panelPagesList() {
-      if (!this.currentPanel || !this.currentPanel.fullContent) {
-        return ['Chưa có nội dung chi tiết.'];
-      }
-      
-      const text = this.currentPanel.fullContent.trim();
-      const paragraphs = text.split('\n');
-      const pages = [];
-      let currentPageText = '';
-      const limit = this.charsPerPage || 500;
-
-      for (let p of paragraphs) {
-        if (!p.trim()) {
-          if (currentPageText && (currentPageText.length + 1) <= limit) {
-            currentPageText += '\n';
-          }
-          continue;
-        }
-
-        let candidate = currentPageText ? currentPageText + '\n' + p : p;
-        
-        if (candidate.length <= limit) {
-          currentPageText = candidate;
-        } else {
-          if (currentPageText) {
-            pages.push(currentPageText.trim());
-            currentPageText = '';
-          }
-
-          if (p.length > limit) {
-            let sentences = p.match(/[^.!?]+[.!?]+(\s|$)\vert{}.+$/g) || [p];
-            let subPage = '';
-            for (let s of sentences) {
-              if ((subPage + s).length <= limit) {
-                subPage = subPage ? subPage + s : s;
-              } else {
-                if (subPage) {
-                  pages.push(subPage.trim());
-                }
-                subPage = s;
-              }
-            }
-            currentPageText = subPage;
-          } else {
-            currentPageText = p;
-          }
-        }
-      }
-
-      if (currentPageText.trim()) {
-        pages.push(currentPageText.trim());
-      }
-
-      return pages.length > 0 ? pages : ['Chưa có nội dung chi tiết.'];
-    },
-    totalPanelPages() {
-      return this.panelPagesList.length;
-    },
-    currentPanelParagraphs() {
-      const pages = this.panelPagesList;
-      const pageText = pages[this.currentPanelPage - 1] || '';
-      return pageText.split('\n').filter(p => p.trim() !== '');
+ computed: {
+  // Thuật toán chia trang thành mảng các đoạn độc lập, đảm bảo luôn xuống dòng
+  panelPagesList() {
+    if (!this.currentPanel || !this.currentPanel.fullContent) {
+      return [['Chưa có nội dung chi tiết.']];
     }
+    
+    const text = this.currentPanel.fullContent.trim();
+    // Tách văn bản thành từng dòng/đoạn riêng biệt, loại bỏ dòng trống thừa
+    const rawLines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    
+    const pages = [];
+    let currentPageParagraphs = [];
+    let currentCharsCount = 0;
+    const limit = this.charsPerPage || 500; // Giới hạn ký tự mỗi trang
+
+    for (let line of rawLines) {
+      // Nếu thêm dòng này vào trang hiện tại mà vượt quá giới hạn và trang đã có nội dung -> sang trang mới
+      if (currentCharsCount + line.length > limit && currentPageParagraphs.length > 0) {
+        pages.push(currentPageParagraphs);
+        currentPageParagraphs = [line];
+        currentCharsCount = line.length;
+      } else {
+        currentPageParagraphs.push(line);
+        currentCharsCount += line.length;
+      }
+    }
+    
+    if (currentPageParagraphs.length > 0) {
+      pages.push(currentPageParagraphs);
+    }
+
+    return pages.length > 0 ? pages : [['Chưa có nội dung chi tiết.']];
   },
-  methods: {
+  totalPanelPages() {
+    return this.panelPagesList.length;
+  },
+  currentPanelParagraphs() {
+    const pages = this.panelPagesList;
+    return pages[this.currentPanelPage - 1] || [];
+  },
+},
+methods: {
     handleViewPanel(panel) {
       this.currentPanel = panel;
       this.currentPanelPage = 1; // Reset về trang 1 khi mở modal
@@ -1064,7 +1041,9 @@ computed: {
   color: #ffd700;
   font-size: 0.92rem;
   font-weight: 700;
-  margin: 12px 0 6px 0;
+  margin: 14px 0 6px 0;
+  display: block;
+  clear: both;
 }
 
 .content-prose h4:first-child {
@@ -1087,7 +1066,9 @@ computed: {
   color: #cbd5e1;
   font-size: 0.84rem;
   line-height: 1.5;
-  margin-bottom: 6px;
+  margin: 0 0 10px 0;
+ display: block;
+  text-align: justify;
 }
 
 .content-prose strong {
