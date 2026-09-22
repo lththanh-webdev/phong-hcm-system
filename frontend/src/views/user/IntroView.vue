@@ -147,8 +147,7 @@ export default {
   data() {
     return {
       showAlert: false,
-      currentPanelPage: 1,  // Trang hiện tại của modal mảng ảnh
-      charsPerPage: 500,    // Số lượng ký tự tối ưu trên mỗi trang modal để tránh bị tràn/trống
+      
       currentPanel: {
         title: '',
         shortDesc: '',
