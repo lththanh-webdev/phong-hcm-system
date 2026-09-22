@@ -702,7 +702,7 @@ export default {
 
 .modal-img-gradient {
   position: absolute;
-  inset: 0;
+  inset: 0; 
   background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(16,1,1,0.95));
 }
 
@@ -752,6 +752,9 @@ export default {
   font-size: 1rem;
   line-height: 1.75;
   margin-bottom: 28px;
+  text-align: justify; /* Căn đều 2 bên */
+  text-justify: inter-word;
+  word-break: break-word;
 }
 
 .modal-actions {
