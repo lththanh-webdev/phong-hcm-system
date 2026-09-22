@@ -259,62 +259,82 @@ export default {
     }
   },
   computed: {
-    totalLeftDocs() {
-      return this.docs.filter(d => d.category && d.category.trim().toLowerCase() !== 'sách pháp luật').length;
-    },
-    filteredCategoryDocs() {
-      if (!this.selectedCategory) return [];
-      let list = this.docs.filter(d => {
-        if (!d.category) return false;
-        return d.category.trim().toLowerCase() === this.selectedCategory.trim().toLowerCase();
-      });
-      if (this.searchQuery.trim()) {
-        const q = this.searchQuery.trim().toLowerCase();
-        list = list.filter(d => 
-          (d.title && d.title.toLowerCase().includes(q)) ||
-          (d.author && d.author.toLowerCase().includes(q)) ||
-          (d.description && d.description.toLowerCase().includes(q))
-        );
-      }
-      return list.sort((a, b) => {
-        if (this.categorySort === 'name-asc') {
-          return (a.title || '').localeCompare(b.title || '');
-        } else {
-          return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-        }
-      });
-    },
-    filteredRightDocs() {
-      let list = this.docs.filter(d => d.category && d.category.trim().toLowerCase() === 'sách pháp luật');
-      if (this.searchQuery.trim()) {
-        const q = this.searchQuery.trim().toLowerCase();
-        list = list.filter(d => 
-          (d.title && d.title.toLowerCase().includes(q)) ||
-          (d.author && d.author.toLowerCase().includes(q)) ||
-          (d.description && d.description.toLowerCase().includes(q))
-        );
-      }
-      return list.sort((a, b) => {
-        if (this.rightSort === 'name-asc') {
-          return (a.title || '').localeCompare(b.title || '');
-        } else {
-          return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-        }
-      });
-    },
-    totalBookPages() {
-      if (!this.selectedDoc || !this.selectedDoc.description) return 1;
-      return Math.max(1, Math.ceil(this.selectedDoc.description.length / this.charsPerPage));
-    },
-    currentParagraphs() {
-      if (!this.selectedDoc) return [];
-      const text = this.selectedDoc.description || 'Chưa có bản mô tả chi tiết cho cuốn sách này.';
-      const start = (this.currentBookPage - 1) * this.charsPerPage;
-      const end = start + this.charsPerPage;
-      const pageText = text.substring(start, end);
-      return pageText.split('\n').filter(p => p.trim() !== '');
-    }
+  totalLeftDocs() {
+    return this.docs.filter(d => d.category && d.category.trim().toLowerCase() !== 'sách pháp luật').length;
   },
+  filteredCategoryDocs() {
+    if (!this.selectedCategory) return [];
+    let list = this.docs.filter(d => {
+      if (!d.category) return false;
+      return d.category.trim().toLowerCase() === this.selectedCategory.trim().toLowerCase();
+    });
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.trim().toLowerCase();
+      list = list.filter(d => 
+        (d.title && d.title.toLowerCase().includes(q)) ||
+        (d.author && d.author.toLowerCase().includes(q)) ||
+        (d.description && d.description.toLowerCase().includes(q))
+      );
+    }
+    return list.sort((a, b) => {
+      if (this.categorySort === 'name-asc') {
+        return (a.title || '').localeCompare(b.title || '');
+      } else {
+        return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+      }
+    });
+  },
+  filteredRightDocs() {
+    let list = this.docs.filter(d => d.category && d.category.trim().toLowerCase() === 'sách pháp luật');
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.trim().toLowerCase();
+      list = list.filter(d => 
+        (d.title && d.title.toLowerCase().includes(q)) ||
+        (d.author && d.author.toLowerCase().includes(q)) ||
+        (d.description && d.description.toLowerCase().includes(q))
+      );
+    }
+    return list.sort((a, b) => {
+      if (this.rightSort === 'name-asc') {
+        return (a.title || '').localeCompare(b.title || '');
+      } else {
+        return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+      }
+    });
+  },
+  // Thuật toán chia trang an toàn, không cắt ngang từ giữa chừng
+  bookPagesList() {
+    if (!this.selectedDoc || !this.selectedDoc.description) {
+      return ['Chưa có bản mô tả chi tiết cho cuốn sách này.'];
+    }
+    const text = this.selectedDoc.description;
+    const pages = [];
+    let start = 0;
+    
+    while (start < text.length) {
+      let end = start + this.charsPerPage;
+      if (end < text.length) {
+        let lastSpace = text.lastIndexOf(' ', end);
+        let lastNewline = text.lastIndexOf('\n', end);
+        let breakPoint = Math.max(lastSpace, lastNewline);
+        if (breakPoint > start) {
+          end = breakPoint;
+        }
+      }
+      pages.push(text.substring(start, end).trim());
+      start = end;
+    }
+    return pages.filter(p => p.length > 0);
+  },
+  totalBookPages() {
+    return this.bookPagesList.length;
+  },
+  currentParagraphs() {
+    const pages = this.bookPagesList;
+    const pageText = pages[this.currentBookPage - 1] || '';
+    return pageText.split('\n').filter(p => p.trim() !== '');
+  }
+},
   mounted() {
     this.fetchLibraryDocs();
     document.addEventListener('click', this.handleClickOutside);
@@ -953,6 +973,8 @@ export default {
   font-size: 0.9rem;
   line-height: 1.8;
   text-align: justify;
+  text-align-last: left;       /* Quan trọng: Tránh dòng cuối đoạn bị kéo giãn thưa thớt */
+  text-justify: inter-word;
   text-indent: 1.2em;
   margin-bottom: 12px;
   word-break: break-word;
