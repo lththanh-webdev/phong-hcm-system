@@ -147,6 +147,8 @@ export default {
   data() {
     return {
       showAlert: false,
+      currentPanelPage: 1,  // Trang hiện tại của modal mảng ảnh
+      charsPerPage: 500,    // Số lượng ký tự tối ưu trên mỗi trang modal để tránh bị tràn/trống
       currentPanel: {
         title: '',
         shortDesc: '',
@@ -502,16 +504,92 @@ Xin cảm ơn các đồng chí đã chú ý theo dõi và lắng nghe bài thuy
       ]
     }
   },
+computed: {
+    // Thuật toán ngắt trang thông minh theo đoạn và câu cho modal mảng ảnh
+    panelPagesList() {
+      if (!this.currentPanel || !this.currentPanel.fullContent) {
+        return ['Chưa có nội dung chi tiết.'];
+      }
+      
+      const text = this.currentPanel.fullContent.trim();
+      const paragraphs = text.split('\n');
+      const pages = [];
+      let currentPageText = '';
+      const limit = this.charsPerPage || 500;
+
+      for (let p of paragraphs) {
+        if (!p.trim()) {
+          if (currentPageText && (currentPageText.length + 1) <= limit) {
+            currentPageText += '\n';
+          }
+          continue;
+        }
+
+        let candidate = currentPageText ? currentPageText + '\n' + p : p;
+        
+        if (candidate.length <= limit) {
+          currentPageText = candidate;
+        } else {
+          if (currentPageText) {
+            pages.push(currentPageText.trim());
+            currentPageText = '';
+          }
+
+          if (p.length > limit) {
+            let sentences = p.match(/[^.!?]+[.!?]+(\s|$)\vert{}.+$/g) || [p];
+            let subPage = '';
+            for (let s of sentences) {
+              if ((subPage + s).length <= limit) {
+                subPage = subPage ? subPage + s : s;
+              } else {
+                if (subPage) {
+                  pages.push(subPage.trim());
+                }
+                subPage = s;
+              }
+            }
+            currentPageText = subPage;
+          } else {
+            currentPageText = p;
+          }
+        }
+      }
+
+      if (currentPageText.trim()) {
+        pages.push(currentPageText.trim());
+      }
+
+      return pages.length > 0 ? pages : ['Chưa có nội dung chi tiết.'];
+    },
+    totalPanelPages() {
+      return this.panelPagesList.length;
+    },
+    currentPanelParagraphs() {
+      const pages = this.panelPagesList;
+      const pageText = pages[this.currentPanelPage - 1] || '';
+      return pageText.split('\n').filter(p => p.trim() !== '');
+    }
+  },
   methods: {
     handleViewPanel(panel) {
       this.currentPanel = panel;
+      this.currentPanelPage = 1; // Reset về trang 1 khi mở modal
       this.showAlert = true;
       document.body.style.overflow = 'hidden';
     },
-    
     closeAlert() {
       this.showAlert = false;
       document.body.style.overflow = 'auto';
+    },
+    nextPanelPage() {
+      if (this.currentPanelPage < this.totalPanelPages) {
+        this.currentPanelPage++;
+      }
+    },
+    prevPanelPage() {
+      if (this.currentPanelPage > 1) {
+        this.currentPanelPage--;
+      }
     }
   }
 }
