@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/db');
 
-// Lấy danh sách lượt truy cập gần đây (Sắp xếp an toàn theo id giảm dần)
+
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM visitor_logs ORDER BY id DESC LIMIT 50');
@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Ghi nhận lượt truy cập mới
 router.post('/', async (req, res) => {
     try {
         const { endpoint } = req.body;

@@ -7,7 +7,7 @@
       <h2 class="section-title">THƯ VIỆN SỐ TRỰC TUYẾN</h2>
       <p class="section-subtitle">Trải nghiệm không gian tủ sách thông minh, tương tác trực quan và hiện đại</p>
       
-      <!-- Thanh tìm kiếm thông minh -->
+    
       <div class="library-toolbar">
         <div class="search-box-wrapper">
           <span class="search-icon">🔍</span>
@@ -22,10 +22,10 @@
       </div>
     </div>
 
-    <!-- Bố cục Tủ Sách Chính & Pháp Luật -->
+   
     <div class="shelves-container">
       
-      <!-- TỦ CHÍNH TRỊ - VĂN HỌC -->
+     
       <div class="book-shelf main-political-shelf">
         <div class="shelf-main-header">
           <div class="shelf-title-group">
