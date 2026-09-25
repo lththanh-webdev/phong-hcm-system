@@ -93,7 +93,7 @@
           PHÒNG HỒ CHÍ MINH SỐ - TIỂU ĐOÀN PHÒNG KHÔNG 16
         </h3>
         <p class="footer-copyright">
-          Bản quyền thuộc về cán bộ chính trị • Thiếu tá Trần Thiên Bảo ctvp/d
+          Bản quyền thuộc về cán bộ chính trị • Thiếu tá Tạ Quang Giáp ctvp/d
         </p>
         <p class="footer-sub">
           Phục vụ công tác giáo dục chính trị, tuyên truyền văn hóa nội bộ đơn vị Quân đội.
