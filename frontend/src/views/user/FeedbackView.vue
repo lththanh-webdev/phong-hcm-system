@@ -168,7 +168,7 @@ export default {
       this.isSubmitting = true;
       
       try {
-        const response = await fetch(`${this.getApiUrl()}/api/feedback`, {
+        const response = await fetch(`${this.getApiUrl()}/api/feedbacks`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
