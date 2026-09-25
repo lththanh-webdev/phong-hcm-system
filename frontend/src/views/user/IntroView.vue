@@ -157,360 +157,318 @@ export default {
         fullContent: ''
       },
       exhibitionPanels: [
-    {
-  title: 'Đảng cộng sản Việt Nam, người tổ chức và lãnh đạo mọi thắng lợi của cách mạng Việt Nam.',
+   {
+  title: 'Đảng Cộng sản Việt Nam - Người tổ chức và lãnh đạo mọi thắng lợi của cách mạng Việt Nam.',
   shortDesc: 'Khẳng định vai trò lãnh đạo tuyệt đối, toàn diện của Đảng trong suốt chiều dài lịch sử đấu tranh và xây dựng đất nước.',
   image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
   imageCaption: 'Đại hội Đại biểu toàn quốc của Đảng - Mốc son lịch sử quang vinh',
-  fullContent: `Thưa toàn thể các đồng chí![cite: 1]
+  fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
-Những năm cuối thế kỷ XIX, đầu thế kỷ XX thực dân Pháp thực hiện các chính sách thực dân hà khắc, biến nước ta từ một nước phong kiến độc lập thành một nước thuộc địa nửa phong kiến, xã hội Việt Nam tồn tại nhiều mâu thuẫn gay gắt.[cite: 1] Hàng loạt phong trào yêu nước theo các khuynh hướng khác nhau liên tiếp nổ ra tiêu biểu là phong trào Cần Vương do vua Hàm Nghi và Tôn Thất Thuyết khởi xướng, phong trào Đông Du của Phan Bội Châu; phong trào cải cách của Phan Chu Trinh; … các cuộc đấu tranh giải phóng dân tộc tuy diễn ra quyết liệt, song cuối cùng đều bị thất bại vì thiếu một đường lối cứu nước đúng đắn, thiếu một tổ chức lãnh đạo có khả năng tập hợp sức mạnh của toàn dân tộc.[cite: 1]
+<p>Những năm cuối thế kỷ XIX, đầu thế kỷ XX, thực dân Pháp thực hiện các chính sách thực dân hà khắc, biến nước ta từ một nước phong kiến độc lập thành một nước thuộc địa nửa phong kiến, xã hội Việt Nam tồn tại nhiều mâu thuẫn gay gắt. Hàng loạt phong trào yêu nước theo các khuynh hướng khác nhau liên tiếp nổ ra, tiêu biểu là phong trào Cần Vương do vua Hàm Nghi và Tôn Thất Thuyết khởi xướng, phong trào Đông Du của Phan Bội Châu, phong trào cải cách của Phan Chu Trinh... Các cuộc đấu tranh giải phóng dân tộc tuy diễn ra quyết liệt, song cuối cùng đều bị thất bại vì thiếu một đường lối cứu nước đúng đắn, thiếu một tổ chức lãnh đạo có khả năng tập hợp sức mạnh của toàn dân tộc.</p>
 
-(Chính vì lý do đó nên…)[cite: 1]
+<p>Chính vì lý do đó, Đảng Cộng sản Việt Nam đã ra đời ngày 03/02/1930 tại Cửu Long (Hương Cảng, Trung Quốc), dưới sự chủ trì của đồng chí Nguyễn Ái Quốc, trên cơ sở hợp nhất ba tổ chức cộng sản là: Đông Dương Cộng sản Đảng, An Nam Cộng sản Đảng và Đông Dương Cộng sản Liên đoàn. Sự ra đời của Đảng Cộng sản Việt Nam đánh dấu bước ngoặt lịch sử của cách mạng Việt Nam. Từ đây, cách mạng Việt Nam đã có một chính Đảng lãnh đạo, đại diện và bảo vệ lợi ích của giai cấp công nhân, nông dân và các tầng lớp nhân dân lao động khác.</p>
 
-(Hình ảnh) Đảng Cộng sản Việt Nam ra đời ngày 03/02/1930 tại Cửu Long (Hương Cảng, Trung Quốc), dưới sự chủ trì của đồng chí Nguyễn Ái Quốc, trên cơ sở hợp nhất ba tổ chức cộng sản là: Đông Dương Cộng sản Đảng, An Nam Cộng sản Đảng và Đông Dương Cộng sản Liên đoàn.[cite: 1] Sự ra đời của Đảng Cộng sản Việt Nam đánh dấu bước ngoặt lịch sử của cách mạng Việt Nam.[cite: 1] Từ đây cách mạng Việt Nam đã có một chính Đảng lãnh đạo, mà tổ chức đó là người đại diện, bảo vệ lợi ích của giai cấp công nhân, nông dân và các tầng lớp nhân dân lao động khác.[cite: 1]
+<p>Thưa toàn thể các đồng chí!</p>
 
-Thưa toàn thể các đồng chí![cite: 1]
+<p>+ <b>Biểu tượng cờ Đảng:</b> Bên trái của mảng ảnh là lá cờ đỏ sao vàng nằm gọn trong biểu tượng “búa - liềm”. “Lưỡi liềm” đại diện cho giai cấp nông dân, “búa” đại diện cho giai cấp công nhân, thể hiện rõ Đảng Cộng sản Việt Nam là đội tiên phong của giai cấp công nhân, đồng thời cũng là đội tiên phong của nhân dân lao động và của dân tộc Việt Nam. Đây cũng là bức ảnh thể hiện nét văn hóa của dân tộc Việt Nam - đất nước phát triển đi lên từ cây lúa nước, sự trường tồn, anh dũng, trung kiên của dân tộc bằng những thắng lợi vĩ đại dưới sự lãnh đạo của Đảng.</p>
 
-* Bên trái của mảng ảnh là lá cờ đỏ sao vàng nằm gọn trong biểu tượng “búa- liềm”, “lưỡi liềm” là đại diện cho giai cấp nông dân, “búa” đại diện cho giai cấp công nhân, thể hiện rõ Đảng Cộng sản Việt Nam là đội tiên phong của giai cấp công nhân, đồng thời cũng là đội tiên phong của nhân dân lao động và của dân tộc Việt Nam.[cite: 1] Đây cũng là bức ảnh thể hiện nét văn hóa của dân tộc Việt Nam, đất nước của sự phát triển đi lên từ cây lúa nước, sự trường tồn, anh dũng, trung kiên của dân tộc bằng những thắng lợi vĩ đại dưới sự lãnh đạo của Đảng.[cite: 1]
+<p>Ngay sau khi thành lập ngày 03/02/1930, Cương lĩnh đầu tiên của Đảng đã chỉ rõ nhiệm vụ chiến lược: “Đánh đổ ách thống trị của đế quốc và tay sai, giành độc lập dân tộc và dân chủ cho nhân dân”. Khẳng định đường lối đúng đắn đó, Cao trào Xô Viết - Nghệ Tĩnh (1930 - 1931), mở đầu bằng cuộc biểu tinh ngày 01/5/1930, đã trở thành mốc son chói lọi. Dù chỉ tồn tại 7 tháng, đây là mô hình Nhà nước công - nông đầu tiên trong lịch sử và là cuộc tổng diễn tập đầu tiên cho Cách mạng Tháng Tám.</p>
 
-Ngay sau khi thành lập ngày 03/2/1930, Cương lĩnh đầu tiên của Đảng đã chỉ rõ nhiệm vụ chiến lược: “Đánh đổ ách thống trị của đế quốc và tay sai, giành độc lập dân tộc và dân chủ cho nhân dân”.[cite: 1] Khẳng định đường lối đúng đắn đó, Cao trào Xô Viết - Nghệ Tĩnh (1930 - 1931), mở đầu bằng cuộc biểu tinh ngày 01/5/1930, đã trở thành mốc son chói lọi.[cite: 1] Dù chỉ tồn tại 7 tháng, đây là mô hình Nhà nước công - nông đầu tiên trong lịch sử và là cuộc tổng diễn tập đầu tiên cho Cách mạng tháng Tám.[cite: 1]
+<p>Trải qua các cuộc diễn tập chiến lược, chỉ sau 15 năm thành lập, Đảng ta đã chớp thời cơ làm nên cuộc cách mạng long trời lở đất. Cuộc Tổng khởi nghĩa Tháng Tám năm 1945 thần tốc trong 2 tuần lễ (từ 14/8 đến 28/8/1945) đã giành chính quyền trọn vẹn về tay nhân dân, khẳng định nghệ thuật chỉ đạo tài tình của Đảng. Để rồi vào ngày 02/9/1945, tại Quảng trường Ba Đình, Chủ tịch Hồ Chí Minh đọc bản “Tuyên ngôn Độc lập”, khai sinh nước Việt Nam Dân chủ Cộng hòa, mở ra kỷ nguyên độc lập, tự do cho dân tộc.</p>
 
-* Trải qua các cuộc diễn tập chiến lược, chỉ sau 15 năm thành lập, Đảng ta đã chớp thời cơ làm nên cuộc cách mạng long trời lở đất.[cite: 1]
+<p>Giữ vững thành quả cách mạng, trước dã tâm xâm lược lần thứ hai của thực dân Pháp, Đảng và Bác Hồ tiếp tục chèo lái con thuyền cách mạng bằng thiên tài quân sự xuất sắc. Mùa Thu năm 1953, tại bản Tỉn Keo, Việt Bắc, Chủ tịch Hồ Chí Minh đã chỉ đạo chiến lược bẻ gãy Kế hoạch Navarre của địch: “Địch tập trung quân cơ động để tạo thành sức mạnh! Không sợ! Ta buộc chúng phải phân tán thì sức mạnh đó không còn!”. Tư tưởng ấy mở đầu cho Cuộc tiến công chiến lược Đông - Xuân 1953 - 1954, mà đỉnh cao là Chiến thắng lịch sử Điện Biên Phủ ngày 07/5/1954 lừng lẫy năm châu, chấn động địa cầu. Khúc tráng ca “Năm mươi sáu ngày đêm, khoét núi, ngủ hầm, mưa dầm, cơm vắt” đã buộc Pháp phải ký Hiệp định Giơ-ne-vơ, chấm dứt chủ nghĩa thực dân cũ tại Đông Dương.</p>
 
-Cuộc Tổng khởi nghĩa Tháng Tám năm 1945 thần tốc trong 2 tuần lễ (từ 14/8 đến 28/8/1945) đã giành chính quyền trọn vẹn về tay nhân dân, khẳng định nghệ thuật chỉ đạo tài tình của Đảng.[cite: 1] Để rồi vào ngày 02/9/1945, tại Quảng trường Ba Đình, Chủ tịch Hồ Chí Minh đọc bản “Tuyên ngôn độc lập”, khai sinh nước Việt Nam Dân chủ Cộng hòa, mở ra kỷ nguyên độc lập, tự do cho dân tộc.[cite: 1]
+<p>Nối tiếp trang sử vàng, cuộc kháng chiến chống Mỹ cứu nước của dân tộc ta đã khắc ghi những mốc son quyết định bằng sức mạnh hiệp đồng tổng lực. Chiến thắng vang dội của Chiến dịch Tây Nguyên (04/3 - 03/4/1975) đã tạo bước ngoặt chiến lược, mở màn cho Chiến dịch Hồ Chí Minh lịch sử. Từ ngày 26 đến ngày 30/4/1975, các cánh quân giải phóng tiến vào Sài Gòn; đúng 11 giờ 30 phút ngày 30/4/1975, cờ đại thắng tung bay trên nóc Dinh Độc Lập, miền Nam hoàn toàn giải phóng, non sông nối liền một dải.</p>
 
-* Giữ vững thành quả cách mạng, trước dã tâm xâm lược lần thứ hai của thực dân Pháp, Đảng và Bác Hồ tiếp tục chèo lái con thuyền cách mạng bằng thiên tài quân sự xuất sắc.[cite: 1]
+<p>Các đồng chí thân mến!</p>
 
-Mùa Thu năm 1953, tại bản Tỉn Keo, Việt Bắc, Chủ tịch Hồ Chí Minh đã chỉ đạo chiến lược bẻ gãy Kế hoạch Navarre của địch: “Địch tập trung quân cơ động để tạo thành sức mạnh! Không sợ! Ta buộc chúng phải phân tán thì sức mạnh đó không còn!”.[cite: 1] Tư tưởng ấy mở đầu cho Cuộc tiến công chiến lược Đông - Xuân 1953 - 1954, mà đỉnh cao là Chiến thắng lịch sử Điện Biên Phủ ngày 07/5/1954 lừng lẫy năm châu, chấn động địa cầu.[cite: 1] Khúc tráng ca “Năm mươi sáu ngày đêm, khoét núi, ngủ hầm, mưa dầm, cơm vắt” đã buộc Pháp phải ký Hiệp định Giơ-ne-vơ, chấm dứt chủ nghĩa thực dân cũ tại Đông Dương.[cite: 1]
+<p>Trải qua quá trình 96 năm xây dựng, chiến đấu và trưởng thành, Đảng ta đã thể hiện rõ vai trò của người cầm lái, sáng suốt đưa con thuyền cách mạng Việt Nam đi từ thắng lợi này đến thắng lợi khác, được thể hiện đậm nét qua những sự kiện chói lọi:</p>
+<ul>
+  <li><b>1930 - 1931:</b> Đảng lãnh đạo Cao trào cách mạng Xô Viết - Nghệ Tĩnh.</li>
+  <li><b>19/8/1945:</b> Lãnh đạo toàn dân Tổng khởi nghĩa làm Cách mạng Tháng Tám thành công, lập nên nước Việt Nam Dân chủ Cộng hòa, Nhà nước công nông đầu tiên ở Đông Nam Á.</li>
+  <li><b>05/1954:</b> Chiến thắng Điện Biên Phủ; Kháng chiến chống thực dân Pháp thắng lợi, Miền Bắc được hoàn toàn giải phóng.</li>
+  <li><b>04/1975:</b> Lãnh đạo cuộc kháng chiến chống Mỹ cứu nước thành công, đất nước hoàn toàn thống nhất.</li>
+  <li><b>12/1986:</b> Đại hội Đại biểu toàn quốc lần thứ VI của Đảng: “Hoạch định đường lối đổi mới, khởi xướng công cuộc đổi mới, tạo ra bước ngoặt trong sự nghiệp xây dựng CNXH ở Việt Nam”.</li>
+</ul>
 
-* Nối tiếp trang sử vàng, cuộc kháng chiến chống Mỹ cứu nước của dân tộc ta đã khắc ghi những mốc son quyết định bằng sức mạnh hiệp đồng tổng lực.[cite: 1]
+<p>Nhân dịp kỷ niệm 30 năm ngày thành lập Đảng, Chủ tịch Hồ Chí Minh đã khẳng định: <i>“Ngoài lợi ích của nhân dân, Đảng ta không có lợi ích gì khác. Vì vậy mà Đảng ta được dân tin, dân phục, dân yêu. Ngày nay, nhiệm vụ của Đảng ta là lãnh đạo quần chúng đánh thắng tình trạng nghèo nàn và lạc hậu, xây dựng đời sống ấm no sung sướng cho nhân dân. Như thế là xây dựng chủ nghĩa xã hội”</i>, câu nói ấy đã trở thành mệnh lệnh cho toàn Đảng, toàn quân và toàn dân ta tiến bước.</p>
 
-Chiến thắng vang dội của Chiến dịch Tây Nguyên (04/3 - 03/4/1975) đã tạo bước ngoặt chiến lược, mở màn cho Chiến dịch Hồ Chí Minh lịch sử.[cite: 1] Từ ngày 26 đến ngày 30/4/1975, các cánh quân giải phóng tiến vào Sài Gòn; đúng 11 giờ 30 phút ngày 30/4/1975, cờ đại thắng tung bay trên nóc Dinh Độc Lập, miền Nam hoàn toàn giải phóng, non sông nối liền một dải.[cite: 1]
+<p>Kính thưa các đồng chí! Sức mạnh của Đảng hôm nay được đúc kết từ trí tuệ và sự hy sinh anh dũng của các thế hệ lãnh đạo tiền bối. Sau đây là chân dung Chủ tịch Hồ Chí Minh vĩ đại và các đồng chí Tổng Bí thư của Đảng qua các thời kỳ:</p>
+<ul>
+  <li><b>Chủ tịch Hồ Chí Minh (1890 - 1969):</b> Quê xã Kim Liên, Nam Đàn, Nghệ An. Người sáng lập Đảng; giữ chức Chủ tịch Đảng giai đoạn 1951 - 1956 và 1960 - 1969. Người trực tiếp đảm nhiệm cương vị Tổng Bí thư từ tháng 10/1956 đến tháng 9/1960.</li>
+  <li><b>Đồng chí Trần Phú (1904 - 1931):</b> Tổng Bí thư đầu tiên của Đảng (10/1930 - 4/1931), hy sinh anh dũng ngày 6/9/1931 với lời nhắn nhủ bất hủ: “Hãy giữ vững chí khí chiến đấu”.</li>
+  <li><b>Đồng chí Lê Hồng Phong (1902 - 1942):</b> Tổng Bí thư từ tháng 3/1935 đến tháng 10/1936.</li>
+  <li><b>Đồng chí Hà Huy Tập (1902 - 1941):</b> Tổng Bí thư từ tháng 10/1936 đến tháng 3/1938.</li>
+  <li><b>Đồng chí Nguyễn Văn Cừ (1912 - 1941):</b> Giữ chức Tổng Bí thư từ tháng 3/1938 đến tháng 1/1940.</li>
+  <li><b>Đồng chí Trường Chinh (1907 - 1988):</b> Tổng Bí thư trong hai giai đoạn (5/1941 - 10/1956 và 7/1986 - 12/1986).</li>
+  <li><b>Đồng chí Lê Duẩn (1907 - 1986):</b> Giữ cương vị Tổng Bí thư lâu nhất lịch sử Đảng với gần 26 năm (9/1960 - 7/1986).</li>
+  <li><b>Đồng chí Nguyễn Văn Linh (1915 - 1998):</b> Tổng Bí thư từ tháng 12/1986 đến tháng 6/1991.</li>
+  <li><b>Đồng chí Đỗ Mười (1917 - 2018):</b> Giữ chức Tổng Bí thư từ tháng 6/1991 đến tháng 12/1997.</li>
+  <li><b>Đồng chí Lê Khả Phiêu (1931 - 2020):</b> Tổng Bí thư từ tháng 12/1997 đến tháng 4/2001.</li>
+  <li><b>Đồng chí Nông Đức Mạnh (Sinh năm 1940):</b> Tổng Bí thư 2 khóa liên tục (4/2001 - 1/2011).</li>
+  <li><b>Tổng Bí thư Nguyễn Phú Trọng (1944 - 2024):</b> Giữ cương vị Tổng Bí thư từ tháng 1/2011 đến năm 2024.</li>
+</ul>
 
-Các đồng chí thân mến![cite: 1]
+<p>Thưa toàn thể các đồng chí, tính đến nay, Đảng ta đã tổ chức thành công 14 lần Đại hội, kể từ lần đầu tiên vào tháng 3/1935. Gần nhất là Đại hội Đại biểu toàn quốc lần thứ XIV, diễn ra từ ngày 20 đến ngày 23/01/2026 tại Thủ đô Hà Nội.</p>
 
-* Trải qua quá trình 96 năm xây dựng, chiến đấu và trưởng thành Đảng ta đã thể hiện rõ vai trò của người cầm lái, sáng suốt đưa con thuyền cách mạng Việt Nam đi từ thắng lợi này đến thắng lợi khác, được thể hiện đậm nét qua những sự kiện chói lọi trên đây, tiêu biểu là:[cite: 1]
-- 1930 - 1931 Đảng lãnh đạo cao trào cách mạng Xô Viết Nghệ Tĩnh.[cite: 1]
-- 19/8/1945 Lãnh đạo toàn dân tổng khởi nghĩa làm Cách Mạng Tháng Tám thành công, lập nên nước Việt Nam Dân Chủ Cộng Hòa, Nhà nước công nông đầu tiên ở Đông Nam Á.[cite: 1]
-- 5/1954 Chiến thắng Điện Biên Phủ; Kháng chiến chống thực dân Pháp thắng lợi. Miền Bắc được hoàn toàn giải phóng.[cite: 1]
-- 4/1975 Đảng lãnh đạo cuộc kháng chiến chống Mỹ cứu nước thành công, Đất nước hoàn toàn thống nhất.[cite: 1]
-- 12/1986 Đại Hội Đại Biểu Lần Thứ VI Của Đảng: “Hoạch định đường lối đổi mới, khởi xướng công cuộc đổi mới, tạo ra bước ngoặt trong sự nghiệp xây dựng CNXH ở Việt Nam”.[cite: 1]
+<p>Kế thừa xuất sắc sự nghiệp cách mạng vẻ vang, trong kỷ nguyên vươn mình của dân tộc, toàn Đảng, toàn quân và toàn dân ta đặt trọn niềm tin vào người đứng đầu trong Đại hội Đảng lần thứ XIV:</p>
+<ul>
+  <li><b>Đồng chí Tổng Bí thư Tô Lâm:</b> Sinh tại Hưng Yên, là Giáo sư, Tiến sĩ Luật học. Ngày 03/8/2024, đồng chí được bầu giữ chức Tổng Bí thư khóa XIII. Ngày 23/01/2026, tại Đại hội XIV, đồng chí tiếp tục được tín nhiệm bầu giữ chức Tổng Bí thư khóa XIV. Tại Kỳ họp thứ Nhất, Quốc hội khóa XVI, với tỷ lệ tán thành tuyệt đối 100%, đồng chí Tô Lâm được bầu giữ chức Chủ tịch nước Cộng hòa xã hội chủ nghĩa Việt Nam nhiệm kỳ 2026 - 2031.</li>
+</ul>
 
-* Nhân dịp kỷ niệm 30 năm ngày thành lập Đảng, Chủ tịch Hồ Chí Minh đã khẳng định: “Ngoài lợi ích của nhân dân, Đảng ta không có lợi ích gì khác. Vì vậy mà Đảng ta được dân tin, dân phục, dân yêu, Ngày nay, nhiệm vụ của Đảng ta là lãnh đạo quần chúng đánh thắng tình trạng nghèo nàn và lạc hậu, xây dựng đời sống ấm no sung sướng cho nhân dân. Như thế là xây dựng chủ nghĩa xã hội”, đã trở thành mệnh lệnh cho toàn Đảng, toàn quân và toàn dân ta tiến bước.[cite: 1]
+<p>Kính thưa các đồng chí! Bước ra khỏi khói lửa chiến tranh, dưới sự lãnh đạo của Đảng, sự nghiệp Đổi mới đất nước từ năm 1986 đã đem lại những thành tựu có ý nghĩa lịch sử sâu sắc:</p>
+<ul>
+  <li><b>Về kinh tế - nông nghiệp:</b> Việt Nam từ một nước thiếu lương thực, công nghiệp thô sơ, nay đã cơ bản cơ giới hóa hiện đại, trở thành quốc gia xuất khẩu gạo đứng thứ 2 thế giới chỉ sau Ấn Độ.</li>
+  <li><b>Về năng lượng:</b> Đa dạng hóa mạnh mẽ các nguồn năng lượng sạch. Hệ thống điện gió phát triển vượt bậc với hơn 140 nhà máy điện gió, tổng công suất vận hành thương mại đạt hơn 6.000 Megawatt, bảo đảm an ninh năng lượng quốc gia.</li>
+  <li><b>Về hạ tầng giao thông:</b> Tuyến đường cao tốc Hà Nội - Lào Cai dài 265 km hiện đại, tạo động lực mạnh mẽ phát triển kinh tế vùng chiến lược Tây Bắc. Cùng với tuyến Metro Bến Thành - Suối Tiên vừa được đưa vào hoạt động năm 2025 đã tạo bước chuyển lớn cho hệ thống giao thông thành phố, góp phần phát triển kinh tế khu vực.</li>
+  <li><b>Về chiến lược biển:</b> Ngành Dầu khí Việt Nam chủ động hội nhập kinh tế quốc tế, khẳng định vai trò trụ cột kinh tế gắn liền với bảo vệ chủ quyền, quyền chủ quyền và quyền tài phán trên Biển Đông.</li>
+</ul>
 
-* Kính thưa các đồng chí! Sức mạnh của Đảng hôm nay được đúc kết từ trí tuệ và sự hy sinh anh dũng của các thế hệ lãnh đạo tiền bối. Sau đây là chân dung Chủ tịch Hồ Chí Minh vĩ đại và các đồng chí Tổng Bí thư của Đảng qua các thời kỳ:[cite: 1]
-Chủ tịch Hồ Chí Minh (1890 - 1969): Quê xã Kim Liên, Nam Đàn, Nghệ An. Người sáng lập Đảng; giữ chức Chủ tịch Đảng giai đoạn 1951 - 1956 và 1960 - 1969. Người trực tiếp đảm nhiệm cương vị Tổng Bí thư từ tháng 10/1956 đến tháng 9/1960.[cite: 1]
-Đồng chí Trần Phú (1904 - 1931): Ông là Tổng Bí thư đầu tiên của Đảng (10/1930 - 4/1931), hy sinh anh dũng ngày 6/9/1931 với lời nhắn nhủ bất hủ: “Hãy giữ vững chí khí chiến đấu”.[cite: 1]
-Đồng chí Lê Hồng Phong (1902 - 1942): Ông làm Tổng Bí thư từ tháng 3/1935 đến tháng 10/1936.[cite: 1]
-Đồng chí Hà Huy Tập (1902 - 1941): Ông làm Tổng Bí thư từ tháng 10/1936 đến tháng 3/1938.[cite: 1]
-Đồng chí Nguyễn Văn Cừ (1912 - 1941): Ông giữ chức Tổng Bí thư từ tháng 3/1938 đến tháng 1/1940.[cite: 1]
-Đồng chí Trường Chinh (1907 - 1988): Ông là Tổng Bí thư trong hai giai đoạn (5/1941 - 10/1956 và 7/1986 - 12/1986).[cite: 1]
-Đồng chí Lê Duẩn (1907 - 1986): Ông giữ cương vị Tổng Bí thư lâu nhất lịch sử Đảng gần 26 năm (9/1960 - 7/1986).[cite: 1]
-Đồng chí Nguyễn Văn Linh (1915 - 1998): Ông làm Tổng Bí thư từ tháng 12/1986 đến tháng 6/1991.[cite: 1]
-Đồng chí Đỗ Mười (1917 - 2018): Ông giữ chức Tổng Bí thư từ tháng 6/1991 đến tháng 12/1997.[cite: 1]
-Đồng chí Lê Khả Phiêu (1931 - 2020): Ông làm Tổng Bí thư từ tháng 12/1997 đến tháng 4/2001.[cite: 1]
-Đồng chí Nông Đức Mạnh (Sinh năm 1940): Ông làm Tổng Bí thư 2 khóa liên tục (4/2001 - 1/2011).[cite: 1]
-Tổng Bí thư Nguyễn Phú Trọng (1944 - 2024): Ông giữ cương vị Tổng Bí thư từ tháng 1/2011 đến năm 2024.[cite: 1]
+<p>Kính thưa toàn thể các đồng chí!</p>
 
-* Thưa toàn thể các đồng chí, tính đến nay, Đảng ta đã tổ chức thành công XIV lần Đại hội, kể từ lần đầu tiên vào tháng 3/1935. Gần nhất là Đại hội đại biểu toàn quốc lần thứ XIV, diễn ra từ ngày 20 đến ngày 23/1/2026 tại Thủ đô Hà Nội.[cite: 1]
+<p>Kế thừa những thành tựu của 40 năm đổi mới, Đại hội Đại biểu toàn quốc lần thứ XIV của Đảng đã vạch ra mục tiêu chiến lược toàn diện cho chặng đường tiếp theo:</p>
 
-* Kế thừa xuất sắc sự nghiệp cách mạng vẻ vang, trong kỷ nguyên vươn mình của dân tộc, toàn Đảng, toàn quân và toàn dân ta đặt trọn niềm tin vào người đứng đầu trong Đại hội Đảng lần thứ XIV[cite: 1]
-Đồng chí Tổng Bí thư Tô Lâm sinh tại Hưng Yên, là Giáo sư, Tiến sĩ Luật học.[cite: 1]
-Ngày 3/8/2024, đồng chí được bầu giữ chức Tổng Bí thư khóa XIII.[cite: 1]
-Ngày 23/1/2026, tại Đại hội XIV, đồng chí tiếp tục được tín nhiệm bầu giữ chức Tổng Bí thư khóa XIV. Tại Kỳ họp thứ Nhất, Quốc hội khóa XVI, với tỷ lệ tán thành tuyệt đối 100%, đồng chí Tô Lâm được bầu giữ chức Chủ tịch nước Cộng hòa xã hội chủ nghĩa Việt Nam nhiệm kỳ 2026 - 2031.[cite: 1]
+<p><i>“Giữ vững môi trường hòa bình, ổn định; phát triển nhanh, bền vững đất nước; cải thiện và nâng cao toàn diện đời sống nhân dân; tự chủ chiến lược, tự cường, tự tin, tiến mạnh trong kỷ nguyên mới của dân tộc… Thực hiện thắng lợi mục tiêu đến năm 2030 trở thành nước đang phát triển có công nghiệp hiện đại, thu nhập trung bình cao; hiện thực hóa tầm nhìn đến năm 2045 trở thành nước phát triển, thu nhập cao, là một nước Việt Nam xã hội chủ nghĩa hòa bình, độc lập, dân chủ, giàu mạnh, phồn vinh, văn minh, hạnh phúc…”</i></p>
 
-Kính thưa các đồng chí! Bước ra khỏi khói lửa chiến tranh, dưới sự lãnh đạo của Đảng, sự nghiệp Đổi mới đất nước từ năm 1986 đã đem lại những thành tựu có ý nghĩa lịch sử sâu sắc:[cite: 1]
-Về kinh tế - nông nghiệp: Việt Nam từ một nước thiếu lương thực, công nghiệp thô sơ, nay đã cơ bản cơ giới hóa hiện đại, trở thành quốc gia xuất khẩu gạo đứng thứ 2 thế giới chỉ sau Ấn Độ.[cite: 1]
-Về năng lượng: Đa dạng hóa mạnh mẽ các nguồn năng lượng sạch. Hệ thống điện gió phát triển vượt bậc với hơn 140 nhà máy điện gió, tổng công suất vận hành thương mại đạt hơn 6000 Megawatt, bảo đảm an ninh năng lượng quốc gia.[cite: 1]
-Về hạ tầng giao thông: Tuyến đường cao tốc Hà Nội - Lào Cai dài 265 km hiện đại, tạo động lực mạnh mẽ phát triển kinh tế vùng chiến lược Tây Bắc. Cùng với tuyến metro Bến Thành - Suối Tiên vừa được đưa vào hoạt động năm 2025 đã tạo bước chuyển lớn cho hệ thống giao thông thành phố. Góp phần phát triển kinh tế khu vực.[cite: 1]
-Về chiến lược biển: Ngành Dầu khí Việt Nam chủ động hội nhập kinh tế quốc tế, khẳng định vai trò trụ cột kinh tế gắn liền với bảo vệ chủ quyền, quyền chủ quyền và quyền tài phán trên Biển Đông.[cite: 1]
+<p>Để đạt được mục tiêu đề ra đòi hỏi sự đồng lòng nhất trí từ đội ngũ chính quyền các cấp và toàn thể nhân dân. Sự đồng lòng, nhất trí ấy được khẳng định sinh động qua sự kiện ngày 15/3/2026, khi gần 76,2 triệu cử tri cả nước hân hoan tham gia bầu cử đại biểu Quốc hội khóa XVI và đại biểu Hội đồng nhân dân các cấp nhiệm kỳ 2026 - 2031.</p>
 
-Kính thưa toàn thể các đồng chí![cite: 1]
+<p>Kính thưa toàn thể các đồng chí!</p>
 
-* Kế thừa những thành tựu của 40 năm đổi mới, Đại hội đại biểu toàn quốc lần thứ XIV của Đảng đã vạch ra mục tiêu chiến lược toàn diện cho chặng đường tiếp theo.[cite: 1]
-‘‘Giữ vững môi trường hoà bình, ổn định; phát triển nhanh, bền vững đất nước; cải thiện và nâng cao toàn diện đời sống nhân dân; tự chủ chiến lược, tự cường, tự tin, tiến mạnh trong kỷ nguyên mới của dân tộc… Thực hiện thắng lợi mục tiêu đến năm 2030 trở thành nước đang phát triển có công nghiệp hiện đại, thu nhập trung bình cao; hiện thực hoá tầm nhìn đến năm 2045 trở thành nước phát triển, thu nhập cao, là một nước Việt Nam xã hội chủ nghĩa hoà bình, độc lập, dân chủ, giàu mạnh, phồn vinh, văn minh, hạnh phúc…’’[cite: 1]
+<p>Cùng với việc thực hiện theo phương châm của Đại hội Đại biểu toàn quốc lần thứ XIV và thấm nhuần di chúc của Chủ tịch Hồ Chí Minh, Đảng và Nhà nước ta đã và đang không ngừng nâng cao vị thế quốc gia trên mọi lĩnh vực:</p>
+<ul>
+  <li>Không ngừng sáng tạo đổi mới, nâng cao chất lượng, hiện đại hóa, công nghiệp hóa đất nước, áp dụng những thành tựu KHKT tiến bộ trong kỷ nguyên số, thời đại 4.0 và sắp tới là thời đại 5.0.</li>
+  <li>Để đạt được mục tiêu đó không phải trong thời gian ngắn, điều đó còn phụ thuộc vào tương lai và thế hệ mai sau. Chính vì lẽ đó, việc chăm lo cho thế hệ trẻ luôn được Đảng và Nhà nước đặt lên quan tâm hàng đầu.</li>
+  <li>Cùng với thế hệ trẻ, xóa đói giảm nghèo, thực hiện tiến bộ và công bằng xã hội đóng vai trò quan trọng không kém, đặc biệt trong công tác dân vận, xây dựng “Thế trận lòng dân” là điều cần thiết trong giai đoạn này vì mục tiêu “Dân giàu, nước mạnh”.</li>
+  <li>Tăng cường QP-AN, bảo vệ vững chắc Tổ quốc XHCN là yêu cầu hàng đầu của Quân đội, cải tiến, trang bị VKKT tiên tiến nhằm chủ động trước mọi tình huống và tăng vị thế Việt Nam về mặt quân sự.</li>
+  <li>Từ những năm gần đây, vị thế Việt Nam trên trường quốc tế ngày càng được nâng cao. Nhiều diễn đàn, hội nghị quốc tế đã diễn ra thành công mà trong đó Việt Nam đóng vai trò quan trọng, vừa là cầu nối, vừa có nhiệm vụ chiến lược, qua đó giúp Việt Nam ngày càng củng cố vị trí và sánh vai với các cường quốc trên thế giới.</li>
+</ul>
 
-Để đạt được mục tiêu đề ra đòi hỏi sự đồng lòng nhất trí từ đội ngũ chính quyền các cấp và toàn thể nhân dân[cite: 1]
-
-Sự đồng lòng, nhất trí ấy được khẳng định sinh động qua sự kiện ngày 15/3/2026, khi gần 76,2 triệu cử tri cả nước hân hoan tham gia bầu cử đại biểu Quốc hội khóa XVI và đại biểu Hội đồng nhân dân các cấp nhiệm kỳ 2026 - 2031[cite: 1]
-
-Kính thưa toàn thể các đồng chí![cite: 1]
-Cùng với việc thực hiện theo phương châm của Đại Hội Đại Biểu toàn quốc lần thứ XIV và thâm nhuần di chúc của Chủ tịch Hồ Chí Minh, Đảng và Nhà nước ta đã và đang không ngừng nâng cao vị thế quốc gia trên mọi lĩnh vực:[cite: 1]
-+ Không ngừng sáng tạo đổi mới, nâng cao chất lượng, HĐH CNH đất nước, áp dụng những thành tựu KHKT tiến bộ trong kỷ nguyên số, thời đại 4.0 và sắp tới là thời đại 5.0.[cite: 1]
-+ Để đạt được mục tiêu đó, không phải trong thời gian ngắn. Điều đò còn phụ thuộc vào tương lai và thế hệ mai sau. Chính vì lẽ đó, việc chăm lo cho thế hệ trẻ luôn được Đảng và Nhà nước đặt lên quan tâm hàng đầu.[cite: 1]
-+ Cùng với thế hệ trẻ, xóa đói giảm nghèo, thực hiện tiến bộ và công bằng xã hội đóng vai trò quan trọng không kém, đặc biệt trong công tác dân vận, xây dựng ‘Thế trận lòng dân’ là điều cần thiết trong giai đoạn này vì ‘Dân giàu, nước mạnh’.[cite: 1]
-+ Tăng cường QP-AN, bảo vệ vững chắc Tổ quốc XHCN là yêu cầu hàng đầu của Quân đội, cải tiến, trang bị VKKT tiên tiến nhằm chủ động trước mọi tình huống và tăng vị thế VN về mặt quân sự.[cite: 1]
-+ Từ những năm gần đây, vị thế VN trên trường quốc tế ngày càng được nâng cao. Nhiều diễn đàn, hội nghị quốc tế đã diễn ra thành công mà trong đó VN đóng vai trò quan trọng, vừa là cầu nối, vừa có nhiệm vụ chiến lược, qua đó giúp VN ngày càng củng cố vị trí và sánh vai với các cường quốc trên thế giới.[cite: 1]
-
-Chuyên đề của tôi đến đây kết thúc, cảm ơn quý thủ trưởng cùng các đồng chí đã theo dõi.`
+<p>Chuyên đề của tôi đến đây kết thúc, cảm ơn quý thủ trưởng cùng các đồng chí đã theo dõi!</p>`
 },
-     {
-  title: 'Việt Nam, đất nước, con người.',
+    {
+  title: 'Việt Nam - Đất nước, con người',
   shortDesc: 'Giới thiệu truyền thống văn hóa tốt đẹp, cảnh quan thiên nhiên và vẻ đẹp con người Việt Nam qua các thời kỳ.',
   image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
   imageCaption: 'Non sông gấm vóc Việt Nam - Tươi đẹp và giàu truyền thống',
-  fullContent: `Thưa toàn thể các đồng chí!
+  fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
-* Hình ảnh hoa sen - quốc hoa của dân tộc Việt Nam thể hiện sự tinh khiết, lòng thủy chung son sắc, được tôn vinh trên nền bản đồ Việt Nam hình chữ S trên những nét hoa văn tinh tế của mặt trống Đông Sơn, nhắc chúng ta nhớ đến truyền thống Con Lạc Cháu Hồng qua hơn 4000 năm dựng nước và giữ nước. Chúng ta sẽ cùng tìm hiểu theo dòng chảy lịch sử và văn hóa của dân tộc để thấy rõ hình ảnh Việt Nam, đất nước con người.
+<p>Hình ảnh hoa sen - quốc hoa của dân tộc Việt Nam thể hiện sự tinh khiết, lòng thủy chung son sắc, được tôn vinh trên nền bản đồ Việt Nam hình chữ S cùng những nét hoa văn tinh tế của mặt trống Đồng Sơn, nhắc chúng ta nhớ đến truyền thống Con Lạc Cháu Hồng qua hơn 4.000 năm dựng nước và giữ nước. Chúng ta sẽ cùng tìm hiểu theo dòng chảy lịch sử và văn hóa của dân tộc để thấy rõ hình ảnh Việt Nam - đất nước, con người.</p>
 
-* Đây là hình ảnh Bác Hồ đọc bản Tuyên ngôn độc lập: Vào ngày 02/9/1945, tại quảng trường Ba Đình - Hà Nội, Chủ tịch Hồ Chí Minh thay mặt Chính phủ lâm thời đọc bản Tuyên ngôn độc lập tuyên bố với quốc dân và thế giới: Nước Việt Nam Dân chủ Cộng hòa ra đời. Người đã trịnh trọng tuyên ngôn: "Nước Việt Nam có quyền hưởng tự do và độc lập, và sự thật đã thành một nước tự do độc lập. Toàn thể dân tộc Việt Nam quyết đem tất cả tinh thần và lực lượng, tính mạng và của cải để giữ vững quyền tự do, độc lập ấy!"
+<p><b>Tuyên ngôn Độc lập (02/9/1945):</b> Vào ngày 02/9/1945, tại Quảng trường Ba Đình - Hà Nội, Chủ tịch Hồ Chí Minh thay mặt Chính phủ lâm thời đọc bản Tuyên ngôn Độc lập tuyên bố với quốc dân và thế giới: Nước Việt Nam Dân chủ Cộng hòa ra đời. Người đã trịnh trọng tuyên ngôn: <i>“Nước Việt Nam có quyền hưởng tự do và độc lập, và sự thật đã thành một nước tự do độc lập. Toàn thể dân tộc Việt Nam quyết đem tất cả tinh thần và lực lượng, tính mạng và của cải để giữ vững quyền tự do, độc lập ấy!”</i>.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Thưa toàn thể các đồng chí!</p>
 
-Các đồng chí quan sát đây là hình ảnh khái quát những dấu ấn lịch sử và văn hóa Việt Nam: Vào thời kỳ dựng nước: Từ thế kỷ thứ 7 đến thế kỷ thứ 6 trước Công Nguyên, 15 bộ lạc sinh sống tại vùng châu thổ sông Hồng, sông Mã đã thống nhất lập nên nước Văn Lang, Vua nước Văn Lang, tất cả 18 đời, đều xưng là Hùng Vương. 
+<p>Đây là khái quát những dấu ấn lịch sử và văn hóa Việt Nam qua các thời kỳ:</p>
 
-Đây là hình ảnh khu Di tích lịch sử Đền Hùng thuộc thôn Cổ Tích - xã Hy Cương - TP. Việt Trì, Phú Thọ, là nơi thờ cúng các vua Hùng đã có công dựng nước, tổ tiên của dân tộc Việt Nam. Thường niên vào ngày Mùng 10 tháng 3 âm lịch là ngày giỗ Tổ Hùng Vương.
-“Dù ai đi ngược về xuôi
-Nhớ ngày giỗ tổ mồng Mười tháng Ba”.
+<ul>
+  <li><b>Thời kỳ dựng nước (Thế kỷ VII - VI TCN):</b> 15 bộ lạc sinh sống tại vùng châu thổ sông Hồng, sông Mã đã thống nhất lập nên nước Văn Lang. Vua nước Văn Lang qua 18 đời đều xưng là Hùng Vương. Khu Di tích lịch sử Đền Hùng thuộc thôn Cổ Tích, xã Hy Cương, TP. Việt Trì, tỉnh Phú Thọ là nơi thờ cúng các vua Hùng đã có công dựng nước, tổ tiên của dân tộc Việt Nam. Hằng năm, ngày Mùng 10 tháng 3 Âm lịch là ngày giỗ Tổ Hùng Vương:</li>
+</ul>
 
-Thế kỷ thứ 2 trước CN, Thục Phán lên làm vua nước Văn Lang xưng là An Dương Vương và đổi tên nước thành Âu Lạc, xây thành ốc ở Cổ Loa làm kinh đô, là công trình mang đậm nét đặc trưng lịch sử văn hóa. Vào đời Hùng Vương thứ 6, có truyền thuyết Thánh Gióng, giúp Vua Hùng phá tan giặc Ân rồi bay về Trời, chẳng màng báo đáp công trạng. 
+<p><i>“Dù ai đi ngược về xuôi<br>Nhớ ngày giỗ Tổ mồng Mười tháng Ba”</i></p>
 
-Năm 179 trước CN, nước Âu Lạc bị nước Nam Việt của Triệu Đà xâm lược, mở đầu cho thời kỳ lịch sử đen tối, đau thương, đầy uất hận dài đằng đẵng hơn 1000 năm của dân tộc Việt. Sau CN, năm 40, Hai Bà Trưng khởi nghĩa ở Mê Linh. Cuộc khởi nghĩa giành thắng lợi. Nhưng chỉ 3 năm sau, đất nước lại bị rơi vào tay nhà Hán. Và nhiều cuộc khởi nghĩa sau đó thất bại. Lịch sử văn hóa đắp đê Sông Hồng xuất hiện trong giai đoạn này.
+<ul>
+  <li><b>Thời kỳ Âu Lạc và chống Bắc thuộc:</b> Thế kỷ II TCN, Thục Phán lên làm vua xưng là An Dương Vương, đổi tên nước thành Âu Lạc, xây thành ốc ở Cổ Loa làm kinh đô. Vào đời Hùng Vương thứ 6, có truyền thuyết Thánh Gióng giúp Vua Hùng phá tan giặc Ân rồi bay về Trời. Năm 179 TCN, nước Âu Lạc bị nhà Triệu xâm lược, mở đầu cho thời kỳ hơn 1.000 năm Bắc thuộc. Năm 40, Hai Bà Trưng khởi nghĩa ở Mê Linh giành thắng lợi, tuy nhiên 3 năm sau đất nước lại rơi vào tay nhà Hán.</li>
+  <li><b>Khôi phục độc lập và các chiến công hiển sách:</b> Năm 542, Lý Bí khởi nghĩa thành công, xưng là Lý Nam Đế, lập ra nước Vạn Xuân. Năm 550, Triệu Quang Phục đánh tan quân Lương, khôi phục nước Vạn Xuân. Năm 938, Ngô Quyền đánh tan quân Nam Hán trên sông Bạch Đằng. Năm 939, Ngô Quyền xưng vương, dựng kinh đô tại Cổ Loa, mở ra thời kỳ độc lập tự chủ hoàn toàn.</li>
+  <li><b>Thời kỳ nhà Đinh, Tiền Lê, Lý, Trần, Lê:</b> Năm 967, Đinh Bộ Lĩnh thống nhất 12 sứ quân, lên ngôi Hoàng đế xưng là Đinh Tiên Hoàng, đặt tên nước là Đại Cồ Việt, đóng đô tại Hoa Lư. Năm 1075 - 1077, Thái úy Lý Thường Kiệt lãnh đạo cuộc kháng chiến chống Tống, xây dựng tuyến phòng thủ sông Như Nguyệt, gắn liền với bài thơ thần <i>Nam quốc sơn hà</i>.</li>
+</ul>
 
-Năm 542, Lý Bí khởi nghĩa thành công, xưng là Lý Nam Đế, lập ra nước Vạn Xuân. Năm 545, nhà Lương đem quân sang xâm lược nước Vạn Xuân. Cuối cùng năm 550, Triệu Quang Phục mới giành được thắng lợi, khôi phục nước Vạn Xuân, tự xưng là Triệu Việt Vương. Sau đó nước ta lại rơi vào tay nhà Tùy, rồi nhà Đường. Năm 938, quân Nam Hán do thái tử Hoằng Tháo kéo sang nước ta theo đường thủy định phối hợp với Kiều Công Tiễn để đánh bại Ngô Quyền. Nhưng khi quân Nam Hán lọt vào trận địa mai phục ở cửa sông Bạch Đằng thì bị đánh cho tan tác. Năm 939, Ngô Quyền xưng vương, dựng kinh đô tại Cổ Loa. Mở ra thời kỳ độc lập tự chủ hoàn toàn cho nước ta sau hơn 1000 năm bị đô hộ bởi phong kiến phương Bắc. 
+<p>Giai đoạn này xuất hiện nhiều công trình kiến trúc và di sản văn hóa độc đáo như: Tháp Chăm Po Nagar, Văn Miếu - Quốc Tử Giám, Chùa Một Cột, Thành Nhà Hồ, Tháp Phổ Minh; công trình đắp đê sông Hồng phát triển rực rỡ tạo bước tiến lớn về trị thủy. Về văn học, lịch sử có các tác phẩm kinh điển: <i>Nam quốc sơn hà</i> (Lý Thường Kiệt), <i>Đại Việt sử ký</i> (Lê Văn Hưu), <i>Bình Ngô đại cáo</i> (Nguyễn Trãi), Bộ luật Hồng Đức (thời nhà Lê).</p>
 
-Đây là hình ảnh phác thảo chiến thắng Bạch Đằng của Ngô Quyền (chỉ lên ảnh).
+<p>Bài <i>Bình Ngô đại cáo</i> do Nguyễn Trãi thảo ra sau khi cuộc khởi nghĩa Lam Sơn giành thắng lợi hoàn toàn có giá trị như bản Tuyên ngôn Độc lập thứ hai của dân tộc ta:</p>
 
-Năm 944, Ngô Quyền từ trần. Tình hình đất nước rơi vào cảnh hỗn loạn. Đất nước bị chia cắt thành 12 sứ quân. Năm 967, Đinh Bộ Lĩnh thống nhất được 12 sứ quân, lên ngôi Hoàng Đế xưng là Đinh Tiên Hoàng, đặt tên nước là Đại Cồ Việt, kinh đô đóng tại Hoa Lư.
+<p><i>“Từ Triệu, Đinh, Lý, Trần bao đời dựng nền độc lập<br>Cùng Hán, Đường, Tống, Nguyên mỗi bên hùng cứ một phương<br>Tuy mạnh yếu từng lúc khác nhau<br>Song hào kiệt đời nào cũng có”</i></p>
 
-Từ năm 979 đến Năm 1009, đất nước trải qua các triều nhà Đinh, Lê, Lý Công Uẩn (Lý Thái Tổ). Năm 1072, Lý Nhân Tông lên ngôi khi mới 6 tuổi. Nhà Tống bên Trung Quốc cho là cơ hội tốt chuẩn bị lương thảo có ý xâm lược nước ta. Vì vua còn nhỏ nên quan phụ quốc Thái úy Lý Thường Kiệt nắm trọn binh quyền. 
+<p>Thưa toàn thể các đồng chí!</p>
 
-Năm 1075, Lý Thường Kiệt chủ trương “đánh phủ đầu” quân Tống để tự vệ. Do bị bất ngờ nên quân Tống thua liên tiếp. Tháng 8 năm 1076, nhà Tống đem 30 vạn quân chia hai đường thủy, xâm lược nước ta. Lý Thường Kiệt chọn nơi quyết chiến tại sông Như Nguyệt, quân Tống hao tổn binh lực do thiếu lương thực vũ khí vì bị quân ta đánh du kích. Cuối cùng quân Tống phải chấp nhận giảng hòa rút quân về. Triều Lý bắt tay xây dựng đất nước và bước vào thời kỳ hưng thịnh.
+<p>Đến thời đại Hồ Chí Minh, chúng ta đánh tan hai cuộc chiến tranh xâm lược của thực dân Pháp và đế quốc Mỹ. Muốn biết một cuộc chiến tranh thắng hay bại, hãy nhìn vào ánh mắt người mẹ tiễn con ra trận. Tượng đài Bà Mẹ Việt Nam Anh hùng Nguyễn Thị Thứ (thượng thọ 106 tuổi tại Quảng Nam) là biểu tượng của gần 500 ngàn Mẹ Việt Nam Anh hùng trong cả nước, tượng trưng cho tinh thần bất khuất, kiên trung của Phụ nữ Việt Nam.</p>
 
-Đây là hình ảnh đền Thờ Lý Thường Kiệt, một nhà quân sự kiệt xuất, có tài thao lược. Gắn liền với tên tuổi của Lý Thường Kiệt là bài thơ thần: Nam Quốc Sơn Hà.
+<p>Tinh thần yêu nước của dân tộc Việt Nam được Chủ tịch Hồ Chí Minh đúc kết: <i>“Dân ta có một lòng nồng nàn yêu nước, đó là một truyền thống quý báu của ta, từ xưa đến nay, mỗi khi Tổ quốc bị xâm lăng, thì tinh thần ấy lại sôi nổi, nó kết thành một làn sóng vô cùng mạnh mẽ, to lớn, nó lướt qua mọi sự nguy hiểm, khó khăn, nó nhấn chìm tất cả lũ bán nước và lũ cướp nước.”</i></p>
 
-Giai đoạn này xuất hiện các công trình kiến trúc mang nét văn hóa độc đáo như: Tháp Chăm Po Nagar; Văn Miếu Quốc Tử Giám; Chùa Một Cột; Thành Nhà Hồ; Tháp Phổ Minh; Đắp đê Sông Hồng phát triển rực rỡ, tạo bước phát triển lớn về trị thủy. Về văn học có: Tác phẩm thơ: Nam Quốc Sơn Hà của Lý Thường Kiệt; Đại Việt Sử ký của Lê Văn Hưu; Bình Ngô đại cáo của Nguyễn Trãi; Bộ luật Hồng Đức thời nhà Lê.
+<p>Không chỉ là một đất nước anh hùng trong chiến tranh vệ quốc, Việt Nam còn là ngôi nhà chung của 54 dân tộc anh em với những nét văn hóa, phong tục phong phú trên khắp mọi miền đất nước.</p>
 
-Đây là Đền thờ Nguyễn Trãi - nhà văn hóa kiệt xuất, có nhiều cống hiến lớn lao trong việc đề ra đường lối cứu nước, phò tá Lê Lợi hoạch định mưu lược đưa cuộc khởi nghĩa phát triển thành một cuộc chiến tranh giải phóng dân tộc mang tính nhân dân sâu rộng trên quy mô cả nước. Đại cáo bình Ngô được Nguyễn Trãi thảo ra sau khi cuộc khởi nghĩa Lam Sơn giành được thắng lợi hoàn toàn. Đại cáo bình Ngô giá trị như bản Tuyên ngôn độc lập thứ 2 của dân tộc ta:
-“Từ Triệu, Đinh, Lý, Trần, bao đời dựng nền độc lập
-Cùng Hán, Đường, Tống, Nguyên mỗi bên hùng cứ một phương
-Tuy mạnh yếu từng lúc khác nhau
-Song hào kiệt đời nào cũng có”.
+<p><b>Cảnh quan thiên nhiên, di sản văn hóa và kiến trúc 3 miền:</b></p>
+<ul>
+  <li><b>Văn Miếu - Quốc Tử Giám:</b> Xây dựng năm 1070 - 1076 dưới triều Lý, được xem là trường Đại học đầu tiên của nước ta, tôn vinh các bậc anh tài và thể hiện truyền thống hiếu học.</li>
+  <li><b>Vịnh Hạ Long:</b> Kỳ quan thiên nhiên thế giới với hàng ngàn đảo đá vôi hùng vĩ.</li>
+  <li><b>Ruộng bậc thang vùng cao Yên Bái:</b> Bức tranh thiên nhiên tuyệt đẹp và là phương thức canh tác độc đáo của đồng bào vùng cao Tây Bắc.</li>
+  <li><b>Di tích Cố đô Huế:</b> Quần thể kiến trúc lịch sử triều Nguyễn được UNESCO công nhận là Di sản Văn hóa Thế giới.</li>
+  <li><b>Chợ Bến Thành & Hang Sơn Đoòng:</b> Chợ Bến Thành là biểu tượng của TP. Hồ Chí Minh năng động, còn Hang Sơn Đoòng (Quảng Bình) là hang động tự nhiên lớn nhất thế giới.</li>
+  <li><b>Lễ hội & Văn hóa dân gian:</b> Không gian văn hóa Cồng chiêng Tây Nguyên (Di sản văn hóa phi vật thể của nhân loại), Lễ hội Tháp Bà Po Nagar (Khánh Hòa), Lễ hội Đua ghe Ngo của đồng bào Khmer Nam Bộ...</li>
+</ul>
 
-Thưa toàn thể các đồng chí!
+<p>Thưa toàn thể các đồng chí!</p>
 
-Đến thời đại Hồ Chí Minh, chúng ta đánh tan hai cuộc chiến tranh xâm lược của thực dân Pháp và đế quốc Mỹ, hai nước thực dân, hai đế quốc hùng mạnh, sừng sỏ bậc nhất thế giới lúc bấy giờ. Có câu nói rằng, muốn biết một cuộc chiến tranh thắng hay bại, hãy nhìn vào ánh mắt người mẹ tiễn con ra trận. Hình ảnh tượng đài Bà Mẹ Việt Nam anh hùng Nguyễn Thị Thứ thượng thọ 106 tuổi tại xã Điện Thắng - Điện Bàn - Quảng Nam (nay là phường An Thắng, Thành phố Đà Nẵng). Biểu tượng của gần 500 ngàn Mẹ Việt Nam Anh hùng trong cả nước, là biểu trưng cho tinh thần bất khuất, kiên trung của Phụ nữ Việt Nam (Đây là công trình nghệ thuật tri ân những Bà Mẹ Việt Nam anh hùng và tưởng niệm các Anh hùng liệt sỹ). (Hình ảnh).
+<p>Để có được thành quả như ngày hôm nay là nhờ bề dày lịch sử - văn hóa hơn 4.000 năm và sự đóng góp của nhiều nhân tài kiệt xuất, tiêu biểu là Chủ tịch Hồ Chí Minh cùng các thế hệ lãnh đạo Đảng, Nhà nước qua các thời kỳ.</p>
 
-Tinh thần yêu nước của dân tộc Việt Nam được Hồ Chủ tịch đúc kết: “Dân ta có một lòng nồng nàn yêu nước, đó là một truyền thống quý báu của ta, từ xưa đến nay, mỗi khi Tổ quốc bị xâm lăng, thì tinh thần ấy lại sôi nổi, nó kết thành một làn sóng vô cùng mạnh mẽ, to lớn, nó lướt qua mọi sự nguy hiểm, khó khăn, nó nhấn chìm tất cả lũ bán nước và lũ cướp nước”. (Hình ảnh).
+<p><b>Lãnh đạo Đảng, Nhà nước, Quốc hội nhiệm kỳ 2021 - 2026:</b></p>
+<ul>
+  <li><b>Đồng chí Tô Lâm:</b> Tổng Bí thư Ban Chấp hành Trung ương Đảng Cộng sản Việt Nam, Chủ tịch nước Cộng hòa xã hội chủ nghĩa Việt Nam.</li>
+  <li><b>Đồng chí Lê Minh Hưng:</b> Thủ tướng Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam.</li>
+  <li><b>Đồng chí Trần Thanh Mẫn:</b> Chủ tịch Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam.</li>
+</ul>
 
-* Không chỉ là một đất nước anh hùng trong chiến tranh vệ quốc, Việt Nam còn là ngôi nhà chung của 54 dân tộc. Đây là tên gọi, số liệu dân số, địa bàn sinh sống của 54 dân tộc anh em. (Hình ảnh)
+<p>Thưa toàn thể các đồng chí!</p>
 
-* Ở góc trái phía dưới là chùm ảnh về kiến trúc của cả ba miền Bắc Trung Nam. Đó là những giá trị vô giá, những sản phẩm kết tinh từ tinh thần cần cù chăm chỉ, thông minh sáng tạo của dân tộc Việt Nam đồng thời đó là những di sản quý giá để thế hệ mai sau trân trọng tự hào và giữ gìn. Văn Miếu - Quốc Tử Giám, được xây dựng dưới triều đại nhà Lý 1076, được xem là trường ĐH đầu tiên của nước ta. Văn Miếu là nơi tôn vinh các bậc anh tài, đồng thời thể hiện rõ Nhà nước Việt Nam luôn quan tâm đến giáo dục. (Hình ảnh)
+<p>Qua mảng ảnh “Việt Nam - Đất nước, Con người”, chúng ta đã được giới thiệu những nét khái quát nhất về lịch sử, truyền thống, văn hóa của dân tộc ta, thêm tự hào về một quê hương tươi đẹp và anh hùng. Từ đó, mỗi chúng ta trên cương vị chức trách được giao, phát huy truyền thống dân tộc, quân đội, phấn đấu trở thành người quân nhân cách mạng, xứng danh “Bộ đội Cụ Hồ”; xây dựng tinh thần yêu quê hương đất nước, yêu thương giống nòi... góp phần xây dựng và bảo vệ Tổ quốc, như Bác Hồ hằng mong ước, như nhà thơ Tố Hữu hằng khát khao:</p>
 
-Vịnh Hạ Long - Kỳ quan thiên nhiên của thế giới; Thửa ruộng bậc thang vùng cao Yên Bái, một phong cảnh tuyệt đẹp của vùng cao Tây Bắc, giúp chúng ta biết rõ hơn về phương pháp canh tác, sinh hoạt văn hóa ở mỗi vùng miền. (Hình ảnh)
+<p><i>“Tôi lại mơ bên Thái Bình Dương<br>Tổ quốc tôi như một thiên đường<br>Của muôn triệu anh hùng làm nên cuộc sống<br>Của tự do, hy vọng, tình thương.”</i></p>
 
-Di tích Cố đô Huế - một công trình kiến trúc được xây dựng từ triều đại Nhà Nguyễn cho đến nay vẫn còn và được tôn tạo giữ gìn, được công nhận là di sản văn hóa thế giới. (Hình ảnh)
-
-Chợ Bến Thành, một biểu tượng của Thành phố Hồ Chí Minh. Và hình ảnh hang Sơn Đoòng - Hang động tự nhiên lớn nhất thế giới tại Quảng Bình. (Hình ảnh) cho chúng ta thấy Việt Nam là quốc gia được thiên nhiên trù phú và ban tặng cho những cảnh đẹp cùng những kỳ quan hùng vĩ.
-
-Tiếp theo là các lễ hội truyền thống như Không gian văn hóa Cồng Chiêng Tây Nguyên - di sản văn hóa phi vật thể của nhân loại; Di tích Tháp Bà Po Nagar ở Nha Trang, tỉnh Khánh Hòa; Lễ hội Đua ghe Ngo của đồng bào miền Tây Nam Bộ. Tất cả đã toát lên nét đẹp văn hóa ở mỗi vùng miền góp phần làm sinh động thêm về quê hương đất nước con người Việt Nam. (Hình ảnh)
-
-Thưa toàn thể các đồng chí!
-
-* Để có được thành quả như ngày hôm nay, đã có một bề dày lịch sử và văn hóa hơn 4000 năm; đồng thời đất nước đã luôn sản sinh ra nhiều nhân tài kiệt xuất ở mọi thời đại, tiêu biểu là Chủ tịch Hồ Chí Minh và các thế hệ cán bộ lãnh đạo Đảng và Nhà nước đã và đang tiếp nối con đường mà Đảng, Bác Hồ và nhân dân ta đã lựa chọn. 
-
-Đây là hình ảnh các đồng chí lãnh đạo Đảng, Nhà nước, Quốc hội nhiệm kỳ 2021 - 2026: 
-1. Đồng chí Tổng Bí thư BCH TW Đảng Cộng sản Việt Nam, Chủ tịch nước CH XHCN Việt Nam - Tô Lâm;
-2. Thủ tướng Chính phủ nước CH XHCN Việt Nam – Lê Minh Hưng;
-3. Chủ tịch Quốc hội nước CHXHCN Việt Nam – Trần Thanh Mẫn. 
-
-Thưa toàn thể các đồng chí!
-
-Qua mảng ảnh “Việt Nam - Đất nước, Con người”, chúng ta đã được giới thiệu những nét khái quát nhất về lịch sử, truyền thống, văn hóa của dân tộc ta, thêm tự hào về một quê hương tươi đẹp và anh hùng. Từ đó, mỗi chúng ta trên cương vị chức trách được giao, phát huy truyền thống dân tộc, quân đội, phấn đấu trở thành người quân nhân cách mạng, xứng danh “Bộ đội Cụ Hồ”; xây dựng tinh thần yêu quê hương đất nước, yêu thương giống nòi... góp phần xây dựng và bảo vệ Tổ quốc, như Bác Hồ hằng mong ước, như nhà thơ Tố Hữu hằng khát khao:
-“Tôi lại mơ bên Thái Bình Dương
-Tổ quốc tôi như một thiên đường
-Của muôn triệu anh hùng làm nên cuộc sống
-Của tự do, hy vọng, tình thương”.
-
-Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!`
+<p>Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!</p>`
 },
-    {
-  title: 'Chủ tịch Hồ Chí Minh cuộc đời và sự nghiệp.',
+  {
+  title: 'Chủ tịch Hồ Chí Minh - Cuộc đời và sự nghiệp',
   shortDesc: 'Tóm tắt tiểu sử, quá trình hoạt động cách mạng và di sản tư tưởng vô giá của Người để lại cho dân tộc.',
   image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
   imageCaption: 'Chủ tịch Hồ Chí Minh - Vị lãnh tụ thiên tài của dân tộc Việt Nam',
-  fullContent: `Kính thưa thủ trưởng, thưa toàn thể các đồng chí!
+  fullContent: `<p>Kính thưa thủ trưởng, thưa toàn thể các đồng chí!</p>
 
-Đây là toàn bộ những hình ảnh về thân thế, sự nghiệp Chủ tịch Hồ Chí Minh. Anh hùng giải phóng dân tộc, danh nhân văn hóa thế giới, người chiến sĩ lỗi lạc của phong trào cộng sản và công nhân quốc tế. Mảng ảnh được chia làm 3 phần:
-+ Thứ nhất là chùm ảnh về cuộc đời và sự nghiệp của Hồ Chí Minh.
-+ Thứ hai là những nội dung cơ bản của tư tưởng, đạo đức, phong cách Hồ Chí Minh.
-+ Thứ ba là những dấu mốc về cuộc đời và sự nghiệp của Chủ tịch Hồ Chí Minh.
+<p>Đây là toàn bộ những nội dung về thân thế và sự nghiệp Chủ tịch Hồ Chí Minh - Anh hùng giải phóng dân tộc, danh nhân văn hóa thế giới, người chiến sĩ lỗi lạc của phong trào cộng sản và công nhân quốc tế. Mảng ảnh được chia làm 3 phần:</p>
+<ul>
+  <li><b>Phần 1:</b> Cuộc đời và sự nghiệp của Chủ tịch Hồ Chí Minh.</li>
+  <li><b>Phần 2:</b> Những nội dung cơ bản của tư tưởng, đạo đức, phong cách Hồ Chí Minh.</li>
+  <li><b>Phần 3:</b> Những dấu mốc lịch sử trong cuộc đời và sự nghiệp cách mạng của Bác.</li>
+</ul>
 
-Kính thưa toàn thể các đồng chí!
+<p>Kính thưa toàn thể các đồng chí!</p>
 
-Chủ tịch Hồ Chí Minh là tấm gương trung với Đảng, trung với nước, hiếu với dân, trọn đời phấn đấu, hy sinh cho sự nghiệp giải phóng dân tộc, giải phóng giai cấp, giải phóng con người và toàn nhân loại. Chủ tịch Hồ Chí Minh tên thời thơ ấu là Nguyễn Sinh Cung, sinh ngày 19/5/1890 tại Hoàng Trù, xã Kim Liên, tỉnh Nghệ An (Hình ảnh ngôi nhà ở quê ngoại Bác Hồ).
+<p>Chủ tịch Hồ Chí Minh là tấm gương trung với Đảng, trung với nước, hiếu với dân, trọn đời phấn đấu, hy sinh cho sự nghiệp giải phóng dân tộc, giải phóng giai cấp, giải phóng con người và toàn nhân loại. Chủ tịch Hồ Chí Minh tên thời thơ ấu là Nguyễn Sinh Cung, sinh ngày 19/5/1890 tại Hoàng Trù, xã Kim Liên, tỉnh Nghệ An.</p>
 
-Sinh ra và lớn lên trong một gia đình nhà nho yêu nước, Cha là Cụ phó Bảng Nguyễn Sinh Sắc, mẹ là bà Hoàng Thị Loan. Bác là con thứ ba trong gia đình có 4 anh chị em. Chứng kiến bao cảnh lầm than cơ cực của nhân dân lao động dưới sự bóc lột hà khắc của thực dân Pháp và tay sai thời bấy giờ, người thanh niên Nguyễn Tất Thành đầy lòng yêu nước, thương dân. Ngày 05/6/1911, tại Bến cảng Nhà Rồng, Bác đã ra đi tìm đường cứu nước (Hình ảnh Bến cảng Nhà Rồng nơi Bác Hồ ra đi tìm đường cứu nước).
+<p>Sinh ra và lớn lên trong một gia đình nhà nho yêu nước (cha là cụ Phó bảng Nguyễn Sinh Sắc, mẹ là bà Hoàng Thị Loan), Bác là con thứ ba trong gia đình có 4 anh chị em. Chứng kiến bao cảnh lầm than cơ cực của nhân dân lao động dưới sự bóc lột hà khắc của thực dân Pháp và tay sai thời bấy giờ, người thanh niên Nguyễn Tất Thành tràn đầy lòng yêu nước, thương dân. Ngày 05/6/1911, tại Bến cảng Nhà Rồng, Bác đã ra đi tìm đường cứu nước.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Thưa toàn thể các đồng chí!</p>
 
-Sau 10 năm đi qua 3 đại dương, 4 châu lục (Á, Âu, Phi, Mỹ - Latin); năm 1920 Người đã đọc Luận cương của Lênin về vấn đề dân tộc và thuộc địa, Người đã tìm ra con đường cứu nước cho dân tộc Việt Nam đó là con đường cách mạng vô sản. Người nói: “Tôi vui mừng đến phát khóc lên, ngồi một mình trong phòng mà tôi nói to như nói trước đồng bào, hỡi đồng bào bị đọa đày đau khổ, đây là cái cần thiết cho chúng ta, đây là con đường để giải phóng nhân dân ta”.
+<p>Sau 10 năm đi qua 3 đại dương, 4 châu lục (Á, Âu, Phi, Mỹ - Latinh), năm 1920, Người đã đọc <i>Luận cương của Lênin về vấn đề dân tộc và thuộc địa</i>, từ đó tìm ra con đường cứu nước cho dân tộc Việt Nam - con đường cách mạng vô sản. Người xúc động nói: <i>“Tôi vui mừng đến phát khóc lên, ngồi một mình trong phòng mà tôi nói to như nói trước đồng bào: Hỡi đồng bào bị đọa đày đau khổ, đây là cái cần thiết cho chúng ta, đây là con đường để giải phóng nhân dân ta!”</i>.</p>
 
-Tháng 12/1920, tại Đại hội lần thứ 18 Đảng xã hội Pháp, cùng với những người cộng sản Pháp, Người đã bỏ phiếu tán thành Quốc tế thứ III, tham gia thành lập Đảng Cộng sản Pháp, Nguyễn Ái Quốc đã trở thành người cộng sản Việt Nam đầu tiên (Hình ảnh Nguyễn Ái Quốc tại Đại hội Tours năm 1920).
+<p>Tháng 12/1920, tại Đại hội lần thứ 18 Đảng Xã hội Pháp (Đại hội Tours), cùng với những người cộng sản Pháp, Người đã bỏ phiếu tán thành Quốc tế thứ III, tham gia thành lập Đảng Cộng sản Pháp, trở thành người cộng sản Việt Nam đầu tiên. Tại Đại hội Quốc tế Cộng sản lần thứ V (Mát-xcơ-va năm 1924), Nguyễn Ái Quốc được bầu là thành viên của Quốc tế Cộng sản, tạo tiền đề quan trọng để Người tiếp cận và thực hiện nhiệm vụ giải phóng dân tộc.</p>
 
-Tại Đại hội Quốc tế Cộng sản lần thứ V, Nguyễn Ái Quốc được bầu là thành viên của Quốc tế Cộng Sản. Đây cũng chính là cơ hội lớn hơn để Người tiếp cận và thực hiện nhiệm vụ giải phóng dân tộc mình (Hình ảnh Bác Hồ tại Đại hội Quốc tế Cộng sản lần thứ V - Mát-xcơ-va năm 1924).
+<p>Tháng 11/1924, Người đến Quảng Châu (Trung Quốc) - nơi có điều kiện thuận lợi cho phong trào cách mạng Việt Nam. Ngày 03/2/1930, tại Cửu Long (Hương Cảng, Trung Quốc), Người đã chủ trì Hội nghị thành lập Đảng Cộng sản Việt Nam.</p>
 
-Tháng 11/1924 Người đến Quảng Châu - Trung Quốc nơi có điều kiện thuận lợi cho phong trào cách mạng Việt Nam.
+<p>Tác phẩm <i>Đường Kách mệnh</i> ghi lại những bài giảng của Nguyễn Ái Quốc cho các lớp đào tạo cán bộ tại Quảng Châu, do Bộ Tuyên truyền của “Hội Liên hiệp các dân tộc bị áp bức ở Á Đông” phát hành vào đầu năm 1927. Cuốn sách đánh dấu bước ngoặt cho sự truyền bá chủ nghĩa Mác - Lênin vào Việt Nam.</p>
 
-Ngày 03/02/1930 tại Cửu Long - Hương Cảng - Trung Quốc, Người đã chủ trì hội nghị thành lập Đảng Cộng sản Việt Nam. 
+<p>Tháng 8/1932, Hồ Chí Minh bị chính quyền Tưởng Giới Thạch bắt giam vô cớ. Trong suốt 13 tháng ở tù (mùa thu 1932 đến mùa thu 1933), tuy bị đày ải vô cùng cực khổ, Người vẫn giữ phong thái ung dung tự tại của một người cộng sản trung kiên qua tập thơ <i>Ngục trung nhật ký</i> (Nhật ký trong tù), thể hiện ý chí khát vọng mãnh liệt hết lòng vì nước, vì dân.</p>
 
-Tháng 8/1932, Hồ Chí Minh bị chính quyền Tưởng Giới Thạch bắt giam vô cớ. Trong suốt 13 tháng ở tù (mùa thu năm 1932 đến mùa thu năm 1933), tuy bị đày ải vô cùng cực khổ, Người vẫn giữ phong thái ung dung tự tại của một người yêu nước, một người cộng sản trung kiên, thể hiện được ý chí khát vọng mãnh liệt hết lòng vì nước, vì dân (Hình ảnh Tập thơ Ngục trung nhật ký – Nhật ký trong tù).
+<p>Thưa toàn thể các đồng chí!</p>
 
-Đường Kách mệnh là tác phẩm ghi lại những bài giảng của Nguyễn Ái Quốc cho các lớp đào tạo cán bộ tại Quảng Châu do Bộ tuyên truyền của “Hội Liên hiệp các dân tộc bị áp bức ở Á Đông” phát hành vào đầu năm 1927. Cuốn sách này đánh dấu cho sự truyền bá Chủ nghĩa Marx – Lenin vào Việt Nam những năm 20 của thế kỷ XX. (Hình ảnh tác phẩm Đường Kách mệnh của Bác Hồ)
+<p>Mùa xuân năm 1941, sau hơn 30 năm bôn ba nước ngoài, ngày 28/01/1941, Người về nước trực tiếp lãnh đạo cuộc đấu tranh giải phóng dân tộc. Sau thắng lợi của Cách mạng Tháng Tám, ngày 02/9/1945, tại Quảng trường Ba Đình, Bác Hồ đọc bản <i>Tuyên ngôn Độc lập</i> khai sinh ra nước Việt Nam Dân chủ Cộng hòa - Nhà nước công nông đầu tiên ở Đông Nam Á. Ngày 02/3/1946, tại Kỳ họp thứ nhất Quốc hội khóa I, Người được bầu làm Chủ tịch nước.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Vừa mới ra đời, chính quyền cách mạng cùng một lúc phải đối phó với thù trong giặc ngoài. Trong tình thế "ngàn cân treo sợi tóc", đêm ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra <i>Lời kêu gọi Toàn quốc kháng chiến</i>. Sau đó, Bác Hồ và Trung ương Đảng chuyển lên Chiến khu Việt Bắc để lãnh đạo nhân dân trường kỳ kháng chiến chống thực dân Pháp.</p>
 
-Vừa mới ra đời, Cách mạng Việt Nam cùng một lúc phải đối phó với thù trong giặc ngoài. Trong tình thế cách mạng khó khăn “ngàn cân treo sợi tóc”, đêm ngày 19/12/1946 Chủ tịch Hồ Chí Minh ra lời kêu gọi “Toàn quốc kháng chiến”; sau đó Bác Hồ và Trung ương Đảng phải sơ tán lên chiến khu Việt Bắc để làm việc và lãnh đạo nhân dân ta trường kỳ kháng chiến chống thực dân Pháp xâm lược. 
+<p>Tháng 6/1950, Đảng, Chính phủ và Bộ Tổng Tư lệnh quyết định mở Chiến dịch Biên giới thu - đông. Chiến dịch thắng lợi là sự cụ thể hóa tư tưởng Hồ Chí Minh về kết hợp sức mạnh dân tộc với sức mạnh thời đại.</p>
 
-Tháng 6/1950, Đảng, Chính phủ và Bộ Tổng tư lệnh quyết định mở Chiến dịch Biên giới để khai thông biên giới Việt - Trung, mở rộng đường liên lạc giữa nước ta với các nước XHCN. Chiến dịch Biên giới thắng lợi là sự cụ thể hoá tư tưởng của Hồ Chí Minh là phải biết kết hợp sức mạnh của dân tộc với sức mạnh của thời đại. (Hình ảnh Bác Hồ tại mặt trận Đông Khê - Cao Bằng năm 1950)
+<p>Thưa toàn thể các đồng chí!</p>
 
-Mùa Xuân năm 1941, sau hơn 30 năm bôn ba nước ngoài, đi tìm đường cứu nước, ngày 28/01/1941, Người về nước trực tiếp lãnh đạo cuộc đấu tranh giải phóng dân tộc. Cách mạng Tháng Tám thành công, ngày 02/9/1945, tại Quảng trường Ba Đình, Bác Hồ đọc “Tuyên ngôn độc lập” khai sinh ra nước Việt Nam Dân chủ Cộng hòa, Nhà nước công nông đầu tiên ở Đông Nam Á. Ngày 02/3/1946 tại kỳ họp thứ nhất của Quốc hội nước Việt Nam Dân chủ Cộng hòa Người được bầu làm Chủ tịch nước (Hình ảnh Bác Hồ được bầu làm Chủ tịch nước Việt Nam Dân chủ Cộng hòa).
+<p>Tư tưởng Hồ Chí Minh luôn chứa đựng lòng quý trọng, yêu mến nhân dân. Người nói: <i>“Trong bầu trời không gì quý bằng nhân dân. Trong thế giới không gì mạnh bằng lực lượng đoàn kết của nhân dân”</i> và khẳng định: <i>“Dân khí mạnh thì binh lính nào, súng ống nào cũng không địch nổi”</i>. Trong suốt quá trình lãnh đạo cách mạng, Người luôn tin tưởng và dựa vào sức mạnh của nhân dân.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Đại hội Đại biểu toàn quốc lần thứ III của Đảng Lao động Việt Nam (tháng 9/1960) đã bầu Bác Hồ làm Chủ tịch Đảng. Trong diễn văn khai mạc, Bác chỉ rõ: <i>“Đại hội lần này là Đại hội xây dựng chủ nghĩa xã hội ở miền Bắc và đấu tranh hòa bình thống nhất nước nhà”</i>, thể hiện sâu sắc tư tưởng <i>“Không có gì quý hơn độc lập, tự do”</i> và <i>“Độc lập dân tộc gắn liền với chủ nghĩa xã hội”</i>.</p>
 
-Tư tưởng Hồ Chí Minh luôn chứa đựng tất cả lòng quý trọng, yêu mến nhân dân, Người nói: “Trong bầu trời không gì quý bằng nhân dân. Trong thế giới không gì mạnh bằng lực lượng đoàn kết của nhân dân”. Người khẳng định: “Dân khí mạnh thì binh lính nào, súng ống nào cũng không địch nổi”. Chính vì vậy, trong suốt quá trình lãnh đạo cách mạng Người luôn tin tưởng vào sức mạnh của nhân dân, bám trụ vào sự che chở của nhân dân. (Hình ảnh Bác Hồ ở chiến khu Việt Bắc năm 1951) - Tờ Báo Nhân dân mà Bác đang đọc là tờ báo số ra ngày 11/3/1951 (số đầu tiên), in 6 trang, ngay trên trang nhất in trang trọng Tuyên ngôn của Đảng Lao động Việt Nam, bài của Tổng Bí thư Trường Chinh với tiêu đề "Hồ Chủ tịch người sáng lập, rèn luyện và lãnh đạo Đảng ta" và bài "Bàn về cách mạng Việt Nam". Đây là loạt bài có tính tổng hợp, chỉ đạo, vạch rõ đường lối cách mạng khi đất nước có chiến tranh.
+<p>Sinh thời, Chủ tịch Hồ Chí Minh hết sức yêu thương đồng chí, đồng bào. Ước nguyện lớn nhất của Bác là thống nhất hai miền Nam - Bắc. Dù ở cương vị Chủ tịch nước, Người vẫn giữ phong cách sống thanh cao, giản dị trong ngôi nhà sàn đơn sơ. Bác luôn dành sự quan tâm đặc biệt tới học sinh, sinh viên, cán bộ, chiến sĩ Quân đội, lực lượng giải phóng miền Nam, bà con nông dân và các cụ già.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Trong Di chúc, Chủ tịch Hồ Chí Minh đã căn dặn: <i>“Đảng cần phải có kế hoạch thật tốt để phát triển kinh tế và văn hóa, nhằm không ngừng nâng cao đời sống của nhân dân”</i>, đồng thời nhấn mạnh nhiệm vụ xây dựng nền tảng vật chất, kỹ thuật của chủ nghĩa xã hội với công nghiệp và nông nghiệp hiện đại, khoa học tiến tiến.</p>
 
-Đại hội đại biểu toàn quốc lần thứ III của Đảng Lao động Việt Nam, được tiến hành tại Thủ đô Hà Nội từ ngày 05 - 10/9/1960. Trong diễn văn khai mạc Đại hội, Chủ tịch Hồ Chí Minh đã chỉ rõ: "Đại hội lần này là Đại hội xây dựng chủ nghĩa xã hội ở miền Bắc và đấu tranh hoà bình thống nhất nước nhà", thể hiện tư tưởng “Không có gì quý hơn độc lập tự do” và “Độc lập dân tộc gắn liền với chủ nghĩa xã hội”. Tại đại hội lần này Bác Hồ được bầu làm Chủ tịch Đảng. (Hình ảnh Bác Hồ tại Đại hội Đảng lần thứ III năm 1960).
+<p>Thưa toàn thể các đồng chí!</p>
 
-Bức ảnh “Bác bắt nhịp bài ca kết đoàn” được chụp tối 13/9/1960 tại chương trình văn nghệ quần chúng chào mừng thành công của Đại hội Đảng toàn quốc lần thứ III (tổ chức tại công viên Bách Thảo, Hà Nội). Bác không chỉ là người chỉ huy dàn nhạc giao hưởng năm ấy mà còn là người nhạc trưởng vĩ đại của cả dân tộc Việt Nam.
+<p>Ngày 02/9/1969, Chủ tịch Hồ Chí Minh đã trút hơi thở cuối cùng, thọ 79 tuổi. Bác ra đi là một mất mát to lớn đối với nhân dân Việt Nam và nhân dân yêu chuộng hòa bình trên thế giới. Trong Lời Điếu văn của Ban Chấp hành Trung ương Đảng do đồng chí Lê Duẩn đọc tại Lễ truy điệu ngày 9/9/1969 đã khẳng định: <i>“Dân tộc ta, nhân dân ta, non sông đất nước ta đã sinh ra Hồ Chủ tịch người anh hùng dân tộc vĩ đại, và chính Người đã làm rạng rỡ dân tộc ta, nhân dân ta và non sông đất nước ta.”</i></p>
 
-Thưa toàn thể các đồng chí!
+<p>Năm 1990, nhân dịp kỷ niệm 100 năm Ngày sinh của Chủ tịch Hồ Chí Minh, Tổ chức Giáo dục, Khoa học và Văn hóa của Liên Hợp Quốc (UNESCO) đã tôn vinh Người là: <b>“Anh hùng giải phóng dân tộc, Danh nhân văn hóa thế giới”</b>.</p>
 
-Sinh thời chủ tịch Hồ Chí Minh hết sức yêu thương đồng chí, yêu thương con người. Ước nguyện lớn nhất của Bác khi còn sống đó là thống nhất hai miền Nam - Bắc, Bác dành tặng cho miền Nam những tình cảm hết sức đặc biệt. (Hình ảnh Bác Hồ chăm sóc cây vú sữa do đồng bào Miền Nam tặng năm 1956).
+<p>Kính thưa các đồng chí!</p>
 
-Là Chủ tịch nước, nhưng lại có phong cách sống rất thanh cao giản dị, chỉ muốn làm bạn với cỏ cây hoa lá, thiên nhiên, không ham vật chất xa hoa. Suốt đời hoạt động cách mạng ở chiến khu, cũng như ở Thủ đô lúc nào Bác cũng chỉ muốn ở trong ngôi nhà sàn đơn sơ, vách nứa (Hình ảnh Nhà sàn Bác Hồ ở Phủ Chủ tịch).
+<p>Hồ Chí Minh là nhà tư tưởng lớn của thời đại, một danh nhân văn hóa kiệt xuất. Ngày nay, khi đất nước bước vào kỷ nguyên mới - kỷ nguyên vươn mình của dân tộc, cấp ủy, chỉ huy các cấp và mỗi cán bộ, chiến sĩ cần tiếp tục quán triệt thực hiện tốt việc học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh.</p>
 
-Lúc sinh thời, Bác Hồ hết sức quan tâm tới học sinh, sinh viên - thế hệ tương lai của đất nước nhà. Khoảng tháng 9 năm 1945, Chủ tịch Hồ Chí Minh đã viết thư gửi các em học sinh nhân ngày khai trường đầu tiên của nước Việt Nam, Bác đã khẳng định: “Nước nhà trông mong, chờ đợi ở các em rất nhiều. Non sông Việt Nam có thể trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các cháu”. (Hình ảnh Bác Hồ với học sinh Thủ đô 1956).
+<p>Thường xuyên trau dồi phẩm chất đạo đức, rèn luyện kỹ năng sống, phấn đấu xứng danh “Bộ đội Cụ Hồ”, hoàn thành xuất sắc mọi nhiệm vụ được giao, góp phần xây dựng đơn vị VMTD “Mẫu mực, tiêu biểu” và xây dựng Quân đội nhân dân Việt Nam chính quy, tinh nhuệ, hiện đại.</p>
 
-Trong Di chúc, Chủ tịch Hồ Chí Minh đã căn dặn: “Đảng cần phải có kế hoạch thật tốt để phát triển kinh tế và văn hóa, nhằm không ngừng nâng cao đời sống của nhân dân”; Người đã chỉ rõ: “... nhiệm vụ quan trọng nhất của chúng ta là phải xây dựng nền tảng vật chất và kỹ thuật của chủ nghĩa xã hội,... có công nghiệp và nông nghiệp hiện đại, có văn hóa và khoa học tiên tiến”. Trong quá trình cách mạng xã hội chủ nghĩa, chúng ta phải cải tạo nền kinh tế cũ và xây dựng nền kinh tế mới, mà xây dựng là nhiệm vụ chủ chốt và lâu dài (Hình ảnh Bác Hồ thăm vùng mỏ Quảng Ninh năm 1959).
-
-Đặc biệt, Người dành một sự quan tâm và tình thương yêu đặc biệt đối với cán bộ, chiến sĩ trong quân đội nói chung và với cán bộ, chiến sĩ và đồng bào miền Nam nói riêng (Hình ảnh Bác Hồ về thăm Đại đội 1 - Trung đoàn cao xạ 234 ngày 19/7/1965, nay là Đại đội 1 - Tiểu đoàn 1 - Lữ đoàn PPK234 - Quân đoàn 3 và Hình ảnh Bác Hồ và các đại biểu dự Đại hội Anh Hùng chiến sĩ các lực lượng vũ trang nhân dân giải phóng miền Nam ra thăm miền Bắc ngày 11/11/1965).
-
-Luôn gần gũi, bình dị, quan tâm chăm lo đến đồng bào nhân dân cả nước, Bác là người thích đến với nhân dân, gần dân, thấm đượm tình yêu dân, trọng dân, vì dân (Bác Hồ với bà con nông dân ngoại thành Hà Nội 1961). Mặc dầu rất bận việc nước nhưng Người luôn dành thời gian thăm hỏi động viên quan tâm đến các cụ già (Bác Hồ về thăm lại đồng bào Pác Bó – Cao Bằng năm 1961).
-
-Thưa toàn thể các đồng chí!
-
-Ngày 02/9/1969, sau một cơn đau tim nặng, Chủ tịch Hồ Chí Minh đã trút hơi thở cuối cùng vào lúc 9 giờ 40 phút, thọ 79 tuổi, để về với Các - Mác, Lê - Nin. Bác ra đi là một mất mát to lớn, để lại niềm tiếc thương vô hạn đối với nhân dân Việt Nam và nhân dân yêu chuộng hòa bình trên thế giới.
-
-Cuộc đời và sự nghiệp cách mạng vĩ đại của Chủ tịch Hồ Chí Minh luôn là tấm gương sáng ngời cho chúng ta học tập. Tên tuổi của Người đã đi vào lịch sử thế giới như là người khởi xướng cuộc đấu tranh giải phóng dân tộc của các nước thuộc địa trong thế kỷ XX.
-
-Một người con ưu tú, kiệt xuất của dân tộc, người chiến sĩ cách mạng lỗi lạc, suốt đời tận tụy cho sự nghiệp đấu tranh giải phóng dân tộc, trong lời Điếu văn của Ban Chấp hành Trung ương Đảng Lao động Việt Nam do đồng chí Lê Duẩn, Bí thư thứ nhất, đọc tại Lễ truy điệu trọng thể Hồ Chủ tịch, ngày 9 tháng 9 năm 1969: “Dân tộc ta, nhân dân ta, non sông đất nước ta đã sinh ra Hồ Chủ tịch người anh hùng dân tộc vĩ đại, và chính Người đã làm rạng rỡ dân tộc ta, nhân dân ta và Non sông đất nước ta.”
-
-Thưa toàn thể các đồng chí!
-
-Chủ tịch Hồ Chí Minh kính yêu của chúng ta đã đi xa nhưng Người để lại cho dân tộc ta là một kho tàng quý báu cho sự nghiệp xây dựng và bảo vệ Tổ quốc trong thời đại mới. Năm 1990, nhân dịp kỷ niệm sinh nhật lần thứ 100 của Chủ tịch Hồ Chí Minh, Tổ chức giáo dục, khoa học và văn hóa của Liên hợp quốc (UNESCO) đã tôn vinh Người là: “Anh hùng giải phóng dân tộc, danh nhân văn hóa thế giới”.
-
-* Những nội dung cơ bản của tư tưởng, đạo đức, phong cách Hồ Chí Minh, đó là: (vừa nói vừa chỉ trực tiếp trên mảng ảnh).
-* Khái quát cuộc đời và thân thế sự nghiệp của Chủ tịch Hồ Chí Minh qua những dấu mốc về cuộc đời và sự nghiệp cách mạng là minh chứng hùng hồn nhất và rõ nét nhất (chỉ trực tiếp trên mảng ảnh).
-
-Kính thưa các đồng chí!
-
-Trong suốt hơn 4000 năm dựng nước và giữ nước của dân tộc ta, qua nhiều thời kỳ khác nhau, thời kỳ nào cũng có những anh hùng hào kiệt, làm vẻ vang cho non sông, đất nước. Hồ Chí Minh - Người được toàn dân ta gọi bằng cái tên tôn kính: “Bác Hồ”. Người là một trong những vị anh hùng lớn nhất của lịch sử đấu tranh giành độc lập tự do cho dân tộc. Không những thế, Người còn là một nhà tư tưởng lớn của thời đại, một danh nhân văn hoá Việt Nam và thế giới.
-
-Ngày nay, nước ta đang bước vào kỷ nguyên mới - kỷ nguyên vươn mình của dân tộc Việt Nam, các thế lực thù địch đang ra sức chống phá bóp méo hình ảnh cuộc đời và sự nghiệp của Chủ tịch Hồ Chí Minh... Hơn lúc nào hết, cấp ủy, chỉ huy các cấp và mỗi cán bộ, chiến sĩ chúng ta tiếp tục quán triệt thực hiện tốt Chỉ thị số 01–CT/BCT về tiếp tục đẩy mạnh thực hiện Chỉ thị số 05-CT/TW ngày 15/5/2016 của Bộ Chính trị; Chỉ thị số 87-CT/QUTW ngày 08/7/2016 của Quân uỷ Trung ương về “Đẩy mạnh học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh” trong đảng bộ quân đội và toàn quân.
-
-Thường xuyên trau dồi phẩm chất đạo đức, rèn luyện kỹ năng sống để trở thành người có ích cho xã hội, trang bị những hành trang cơ bản để phấn đấu xứng danh “Bộ đội Cụ Hồ”, hoàn thành tốt các nhiệm vụ được giao. Thực hiện tốt phong trào “Đoàn kết, kỷ cương, tình thương, trách nhiệm”, bằng những việc làm cụ thể hàng ngày để ngày càng hoàn thiện mình xứng đáng với danh hiệu “Bộ đội Cụ Hồ” mà nhân dân trao tặng, góp phần xây dựng đơn vị VMTD “Mẫu mực, tiêu biểu”; xây dựng Quân đội nhân dân Việt Nam chính quy, tinh nhuệ, hiện đại./.
-
-Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!`
+<p>Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!</p>`
 },
-      {
-  title: 'Truyền thống Quân đội nhân dân Việt Nam.',
+    {
+  title: 'Truyền thống Quân đội nhân dân Việt Nam',
   shortDesc: 'Tôn vinh lịch sử vẻ vang, tinh thần quyết chiến quyết thắng và những chiến công oanh liệt của QĐND Việt Nam.',
   image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
   imageCaption: 'Quân đội nhân dân Việt Nam - Từ nhân dân mà ra, vì nhân dân mà chiến đấu',
-  fullContent: `Thưa toàn thể các đồng chí!
+  fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
-Quân đội ta là Quân đội anh hùng của một dân tộc anh hùng, từ nhân dân mà ra, vì nhân dân mà chiến đấu. Từ khi thành lập đến nay, lớp lớp cán bộ, chiến sĩ của Quân đội ta luôn chiến đấu anh dũng kiên cường, hoàn thành xuất sắc các nhiệm vụ được giao. Hình ảnh lá cờ đỏ sao vàng quyết chiến, quyết thắng lấp lánh những chiến công tung bay cùng hình ảnh các quân, binh chủng của Quân đội biểu trưng cho sức mạnh “Bách chiến, Bách thắng” của QĐNDVN hơn 81 năm qua. Xứng đáng với lời dạy của Bác: “Quân đội ta trung với Đảng, hiếu với dân, sẵn sàng chiến đấu, hy sinh vì độc lập tự do của Tổ quốc, vì chủ nghĩa xã hội, nhiệm vụ nào cũng hoàn thành, khó khăn nào cũng vượt qua, kẻ thù nào cũng đánh thắng”.
+<p>Quân đội ta là Quân đội anh hùng của một dân tộc anh hùng, từ nhân dân mà ra, vì nhân dân mà chiến đấu. Từ khi thành lập đến nay, lớp lớp cán bộ, chiến sĩ của Quân đội ta luôn chiến đấu anh dũng, kiên cường, hoàn thành xuất sắc các nhiệm vụ được giao. Hình ảnh lá cờ đỏ sao vàng quyết chiến, quyết thắng lấp lánh những chiến công biểu trưng cho sức mạnh “Bách chiến, Bách thắng” của Quân đội nhân dân Việt Nam hơn 81 năm qua, xứng đáng với lời dạy của Bác: <i>“Quân đội ta trung với Đảng, hiếu với dân, sẵn sàng chiến đấu, hy sinh vì độc lập tự do của Tổ quốc, vì chủ nghĩa xã hội, nhiệm vụ nào cũng hoàn thành, khó khăn nào cũng vượt qua, kẻ thù nào cũng đánh thắng”</i>.</p>
 
-Thấm nhuần lời dạy của Bác Hồ trong buổi nói chuyện với cán bộ, chiến sĩ Đại đoàn 308 - Đại đoàn Quân tiên phong tại Đền Hùng - Phú Thọ năm 1954 trước khi về tiếp quản Thủ đô, Bác dạy: “Các Vua Hùng đã có công dựng nước, Bác cháu ta phải cùng nhau giữ lấy nước”.
+<p>Thấm nhuần lời dạy của Bác Hồ trong buổi nói chuyện với cán bộ, chiến sĩ Đại đoàn 308 (Đại đoàn Quân tiên phong) tại Đền Hùng (Phú Thọ) năm 1954 trước khi về tiếp quản Thủ đô: <i>“Các Vua Hùng đã có công dựng nước, Bác cháu ta phải cùng nhau giữ lấy nước”</i>.</p>
 
-Kế thừa tinh hoa nghệ thuật quân sự độc đáo, độc lập, tự chủ của dân tộc, Quân đội ta đã từng bước được hình thành và khẳng định vai trò nòng cốt trong sự nghiệp đấu tranh giải phóng giai cấp, giải phóng dân tộc.
+<p>Kế thừa tinh hoa nghệ thuật quân sự độc đáo, độc lập, tự chủ của dân tộc, Quân đội ta đã từng bước được hình thành và khẳng định vai trò nòng cốt trong sự nghiệp đấu tranh giải phóng giai cấp, giải phóng dân tộc.</p>
 
-Từ các “Đội tự vệ đỏ” trong cao trào Xô Viết Nghệ Tĩnh (1930 - 1931) đến các “Đội cứu quốc quân” tại chiến khu Cao - Bắc - Lạng (1941 - 1944), đây chính là những tổ chức tiền thân vững chắc của Quân đội ta. Trước đòi hỏi của lịch sử, ngày 22/12/1944, Đội Việt Nam Tuyên truyền Giải phóng quân chính thức được thành lập tại Nguyên Bình, Cao Bằng dưới sự chỉ đạo của đồng chí Võ Nguyên Giáp. Với 34 chiến sĩ, vũ khí thô sơ cùng "bữa cơm nhạt" ngày thành lập, đội quân ấy đã mưu trí, dũng cảm giành thắng lợi ngay trận đầu tại Phai Khắt, Nà Ngần (25 và 26/12/1944). Chiến thắng này khẳng định lời tiên tri của Bác: “Tuy lúc đầu quy mô của nó còn nhỏ, nhưng tiền đồ của nó rất vẻ vang, nó là khởi điểm của giải phóng quân, nó có thể đi suốt từ Nam chí Bắc, khắp đất nước Việt Nam chúng ta...”.
+<p>Từ các “Đội tự vệ đỏ” trong cao trào Xô Viết Nghệ Tĩnh (1930 - 1931) đến các “Đội Cứu quốc quân” tại chiến khu Cao - Bắc - Lạng (1941 - 1944), đây chính là những tổ chức tiền thân vững chắc của Quân đội ta. Trước đòi hỏi của lịch sử, ngày 22/12/1944, Đội Việt Nam Tuyên truyền Giải phóng quân chính thức được thành lập tại Nguyên Bình (Cao Bằng) dưới sự chỉ đạo của đồng chí Võ Nguyên Giáp. Với 34 chiến sĩ, vũ khí thô sơ cùng "bữa cơm nhạt" ngày thành lập, đội quân ấy đã mưu trí, dũng cảm giành thắng lợi ngay trận đầu tại Phai Khắt, Nà Ngần (25 và 26/12/1944). Chiến thắng này khẳng định lời tiên tri của Bác: <i>“Tuy lúc đầu quy mô của nó còn nhỏ, nhưng tiền đồ của nó rất vẻ vang, nó là khởi điểm của giải phóng quân, nó có thể đi suốt từ Nam chí Bắc, khắp đất nước Việt Nam chúng ta...”</i>.</p>
 
-Từ những đốm lửa đầu tiên, Quân đội ta càng đánh càng mạnh, cùng toàn dân lập nên những kỳ tích rung chuyển thế giới trong thế kỷ XX.
+<p>Từ những đốm lửa đầu tiên, Quân đội ta càng đánh càng mạnh, cùng toàn dân lập nên những kỳ tích rung chuyển thế giới trong thế kỷ XX.</p>
 
-Trong cuộc kháng chiến chống thực dân Pháp, chúng ta lần lượt đánh thắng các chiến dịch Việt Bắc (1947), Biên giới (1950), Đông Xuân (1953 - 1954), và đỉnh cao là Chiến thắng lịch sử Điện Biên Phủ ngày 07/5/1954 với hình ảnh lá cờ đỏ sao vàng tung bay trên nóc hầm Đờ-Cát, kết thúc 9 năm trường kỳ kháng chiến, đưa miền Bắc tiến lên chủ nghĩa xã hội, đúng như vần thơ lịch sử:
-“Chín năm làm một Điện Biên
-Nên vành hoa đỏ, nên thiên sử vàng”.
+<p>Trong cuộc kháng chiến chống thực dân Pháp, chúng ta lần lượt đánh thắng các chiến dịch Việt Bắc (1947), Biên giới (1950), Đông Xuân (1953 - 1954), và đỉnh cao là Chiến thắng lịch sử Điện Biên Phủ ngày 07/5/1954 với hình ảnh lá cờ đỏ sao vàng tung bay trên nóc hầm Đờ-Cát, kết thúc 9 năm trường kỳ kháng chiến, đưa miền Bắc tiến lên chủ nghĩa xã hội, đúng như vần thơ lịch sử:</p>
+<p><i>“Chín năm làm một Điện Biên<br>Nên vành hoa đỏ, nên thiên sử vàng”</i>.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Thưa toàn thể các đồng chí!</p>
 
-Sau khi lập lại hòa bình ở miền Bắc, ở miền Nam, đế quốc Mỹ đơn phương bác bỏ Hiệp định Giơ-ne-vơ, hất cẳng thực dân Pháp, chính thức xâm lược Việt Nam dưới chế độ “thực dân kiểu mới”, dựng lên chính quyền bù nhìn Ngô Đình Diệm, lê máy chém đi khắp chiến trường đàn áp phong trào cách mạng miền Nam.
+<p>Sau khi lập lại hòa bình ở miền Bắc, ở miền Nam, đế quốc Mỹ đơn phương bác bỏ Hiệp định Giơ-ne-vơ, hất cẳng thực dân Pháp, chính thức xâm lược Việt Nam dưới chế độ “thực dân kiểu mới”, dựng lên chính quyền bù nhìn Ngô Đình Diệm, lê máy chém đi khắp chiến trường đàn áp phong trào cách mạng miền Nam.</p>
 
-Thực hiện lời dạy của Chủ tịch Hồ Chí Minh: “Cuộc kháng chiến chống Mỹ có thể còn kéo dài, đồng bào ta có thể hy sinh nhiều của, nhiều người. Dù sao chúng ta cũng phải quyết tâm đánh giặc Mỹ đến thắng lợi hoàn toàn”.
-“Còn non, còn nước, còn người
-Thắng giặc Mỹ ta sẽ xây dựng hơn mười ngày nay”.
-“Dù có phải đốt cháy cả dãy Trường Sơn cũng quyết tâm giành cho được độc lập”, “Không có gì quý hơn độc lập tự do”. Với quyết tâm sắt đá và ước vọng độc lập thống nhất cháy bỏng, hàng triệu người con ưu tú của dân tộc đã “Xẻ dọc Trường Sơn đi cứu nước mà lòng phơi phới dậy tương lai”. Quân đội ta, dưới sự lãnh đạo của Đảng đã lần lượt đánh bại các chiến lược chiến tranh của Mỹ thực hiện từ 1954 - 1975 trên toàn lãnh thổ Việt Nam đó là: “Chiến tranh đơn phương”, “Chiến tranh đặc biệt”, “Chiến tranh cục bộ” và chiến lược “Việt Nam hóa chiến tranh”. Chiến thắng Điện Biên Phủ trên không - Hà Nội (12/1972) buộc Mỹ phải ký Hiệp định Paris về Việt Nam (27/01/1973), rút hết quân Mỹ về nước.
+<p>Thực hiện lời dạy của Chủ tịch Hồ Chí Minh: <i>“Cuộc kháng chiến chống Mỹ có thể còn kéo dài, đồng bào ta có thể hy sinh nhiều của, nhiều người. Dù sao chúng ta cũng phải quyết tâm đánh giặc Mỹ đến thắng lợi hoàn toàn”</i>; <i>“Còn non, còn nước, còn người / Thắng giặc Mỹ ta sẽ xây dựng hơn mười ngày nay”</i>; <i>“Dù có phải đốt cháy cả dãy Trường Sơn cũng quyết tâm giành cho được độc lập”</i>; <i>“Không có gì quý hơn độc lập, tự do”</i>. Với quyết tâm sắt đá và ước vọng độc lập thống nhất cháy bỏng, hàng triệu người con ưu tú của dân tộc đã <i>“Xẻ dọc Trường Sơn đi cứu nước / Mà lòng phơi phới dậy tương lai”</i>.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Quân đội ta, dưới sự lãnh đạo của Đảng đã lần lượt đánh bại các chiến lược chiến tranh của Mỹ thực hiện từ 1954 - 1975 trên toàn lãnh thổ Việt Nam: “Chiến tranh đơn phương”, “Chiến tranh đặc biệt”, “Chiến tranh cục bộ” và “Việt Nam hóa chiến tranh”. Chiến thắng “Điện Biên Phủ trên không” tại Hà Nội (12/1972) đã buộc Mỹ phải ký Hiệp định Paris về Việt Nam (27/01/1973), rút toàn bộ quân Mỹ về nước.</p>
 
-Thời cơ chiến lược xuất hiện, toàn quân bước vào cuộc tổng tiến công và nổi dậy mùa Xuân năm 1975 với tinh thần thần tốc, táo bạo.
+<p>Thưa toàn thể các đồng chí!</p>
 
-Mở đầu bằng chiến dịch Tây Nguyên (04/3/1975) với trận then chốt giải phóng thị xã Buôn Ma Thuột ngày 10/3/1975 đập tan tuyến phòng thủ của địch, tạo thế chẻ tre để Bộ Chính trị mở Chiến dịch Hồ Chí Minh lịch sử. Ngày 30/4/1975, hình ảnh xe tăng húc đổ cổng Dinh Độc Lập đã báo hiệu chiến dịch toàn thắng, miền Nam hoàn toàn giải phóng, non sông thu về một mối.
+<p>Thời cơ chiến lược xuất hiện, toàn quân bước vào cuộc Tổng tiến công và nổi dậy Mùa Xuân năm 1975 với tinh thần thần tốc, táo bạo.</p>
 
-Tham gia trong Ngày Toàn thắng 30/4/1975 trong đoàn quân oai hùng tiến về Sài Gòn có sự góp mặt của Quân đoàn 3 “Binh đoàn Tây Nguyên”, Quân đoàn 4 “Binh đoàn Cửu Long” (nay là Quân đoàn 34) chúng ta. Ngay sau khi được thành lập, Quân đoàn được giao nhiệm vụ tham gia Chiến dịch Hồ Chí Minh lịch sử. Đây là niềm vinh dự tự hào lớn lao nhưng cũng là thử thách rất lớn. Thực hiện đúng sự chỉ đạo của trên, với tinh thần “thần tốc”, hơn 3 vạn cán bộ, chiến sĩ cùng với hàng nghìn phương tiện kỹ thuật, Quân đoàn đã vào vị trí tập kết để tham gia Chiến dịch sớm hơn quy định. Trong Chiến dịch, Quân đoàn 3 được giao nhiệm vụ đảm nhiệm hướng tiến công chủ yếu Tây Bắc Sài Gòn, Quân đoàn 4 đảm nhiệm hướng chủ yếu Đông và Đông Nam.
+<p>Mở đầu bằng Chiến dịch Tây Nguyên (04/3/1975) với trận then chốt giải phóng thị xã Buôn Ma Thuột ngày 10/3/1975 đập tan tuyến phòng thủ của địch, tạo thế chẻ tre để Bộ Chính trị mở Chiến dịch Hồ Chí Minh lịch sử. Ngày 30/4/1975, lá cờ chiến thắng tung bay trên Dinh Độc Lập đã báo hiệu chiến dịch toàn thắng, miền Nam hoàn toàn giải phóng, non sông thu về một mối.</p>
 
-Thực hiện phương châm, tư tưởng chỉ đạo tác chiến: “Táo bạo, chắc thắng, đánh mạnh, đánh liên tục, nắm chắc thời cơ thọc sâu phát triển nhanh”, các đơn vị của Quân đoàn đã phối hợp chặt chẽ với lực lượng vũ trang các địa phương và các cánh quân tiến vào Sài Gòn, lần lượt đánh chiếm và làm chủ các mục tiêu tại: Gò Dầu Hạ, Trảng Bàng, Đồng Dù, Hóc Môn, Trung tâm huấn luyện Quang Trung, sân bay Tân Sơn Nhất, Bộ Tổng tham mưu Ngụy...
+<p>Tham gia trong Ngày Toàn thắng 30/4/1975, trong đoàn quân oai hùng tiến về Sài Gòn có sự góp mặt của Quân đoàn 3 (“Binh đoàn Tây Nguyên”) và Quân đoàn 4 (“Binh đoàn Cửu Long”) - nay là Quân đoàn 34. Ngay sau khi được thành lập, Quân đoàn được giao nhiệm vụ tham gia Chiến dịch Hồ Chí Minh lịch sử. Đây là niềm vinh dự tự hào lớn lao nhưng cũng là thử thách rất lớn. Thực hiện đúng sự chỉ đạo của cấp trên, với tinh thần “thần tốc”, hơn 3 vạn cán bộ, chiến sĩ cùng với hàng nghìn phương tiện kỹ thuật, Quân đoàn đã vào vị trí tập kết để tham gia Chiến dịch sớm hơn quy định. Trong Chiến dịch, Quân đoàn 3 đảm nhiệm hướng tiến công chủ yếu Tây Bắc Sài Gòn, Quân đoàn 4 đảm nhiệm hướng chủ yếu Đông và Đông Nam.</p>
 
-Vinh dự, tự hào lớn lao về những thành tích vẻ vang hơn 50 năm xây dựng, chiến đấu và trưởng thành, cán bộ, chiến sĩ Quân đoàn 34 tiếp tục phát huy chủ nghĩa anh hùng cách mạng, đoàn kết, thi đua để lập nên nhiều kỳ tích mới trong thực hiện nhiệm vụ chính trị trung tâm là huấn luyện, sẵn sàng chiến đấu, nhằm góp phần quan trọng vào công cuộc xây dựng, phát triển Tây Nguyên và vùng Đông Nam Bộ, bảo vệ vững chắc Tổ quốc Việt Nam XHCN…
+<p>Thực hiện phương châm, tư tưởng chỉ đạo tác chiến: <i>“Táo bạo, chắc thắng, đánh mạnh, đánh liên tục, nắm chắc thời cơ thọc sâu phát triển nhanh”</i>, các đơn vị của Quân đoàn đã phối hợp chặt chẽ với lực lượng vũ trang các địa phương và các cánh quân tiến vào Sài Gòn, lần lượt đánh chiếm và làm chủ các mục tiêu tại: Gò Dầu Hạ, Trảng Bàng, Đồng Dù, Hóc Môn, Trung tâm huấn luyện Quang Trung, Sân bay Tân Sơn Nhất, Bộ Tổng Tham mưu chính quyền Sài Gòn...</p>
 
-Thưa toàn thể các đồng chí!
+<p>Vinh dự, tự hào lớn lao về những thành tích vẻ vang hơn 50 năm xây dựng, chiến đấu và trưởng thành, cán bộ, chiến sĩ Quân đoàn 34 tiếp tục phát huy chủ nghĩa anh hùng cách mạng, đoàn kết, thi đua lập nên nhiều kỳ tích mới trong thực hiện nhiệm vụ chính trị trung tâm là huấn luyện, sẵn sàng chiến đấu, góp phần quan trọng vào công cuộc xây dựng, phát triển Tây Nguyên và vùng Đông Nam Bộ, bảo vệ vững chắc Tổ quốc Việt Nam XHCN.</p>
 
-Sau ngày đại thắng, chưa một ngày ngơi nghỉ, Quân đội nhân dân Việt Nam lại tiếp tục bước vào cuộc chiến đấu mới để bảo vệ toàn vẹn lãnh thổ và thực hiện nghĩa vụ quốc tế cao cả.
+<p>Thưa toàn thể các đồng chí!</p>
 
-Chúng ta đã kiên cường chiến đấu trong cuộc chiến tranh bảo vệ biên giới Tây Nam và biên giới phía Bắc năm 1979, giữ vững chủ quyền quốc gia. Đồng thời, thấm nhuần lời dạy “Giúp bạn là tự giúp mình”, Quân đội ta đã sang giúp nhân dân Lào và Campuchia đập tan họa diệt chủng Pôn Pốt. Hình ảnh quân tình nguyện Việt Nam hoàn thành nhiệm vụ trở về nước trong sự lưu luyến của nhân dân bạn (Hình ảnh Nhân dân Campuchia lưu luyến tiễn đưa quân tình nguyện Việt Nam) (trong đoàn quân đó có Quân đoàn 4) đã làm ngời sáng phẩm chất “Bộ đội Cụ Hồ”. Như Tiến sĩ Chay Y Hiệng - Cố vấn Chính phủ Hoàng gia Campuchia đã khẳng định: Việt Nam trong trái tim người dân Campuchia chính là hình ảnh về một “Quân đội nhà Phật” từ cõi thiện xa xôi đến cứu giúp nhân dân qua hoạn nạn.
+<p>Sau ngày đại thắng, chưa một ngày ngơi nghỉ, Quân đội nhân dân Việt Nam lại tiếp tục bước vào cuộc chiến đấu mới để bảo vệ toàn vẹn lãnh thổ và thực hiện nghĩa vụ quốc tế cao cả.</p>
 
-Một lần nữa bản chất cách mạng của “Bộ đội Cụ Hồ” được khẳng định và tỏa sáng. 
+<p>Chúng ta đã kiên cường chiến đấu trong cuộc chiến tranh bảo vệ biên giới Tây Nam và biên giới phía Bắc năm 1979, giữ vững chủ quyền quốc gia. Đồng thời, thấm nhuần lời dạy <i>“Giúp bạn là tự giúp mình”</i>, Quân đội ta đã sang giúp nhân dân Lào và Campuchia đập tan họa diệt chủng Pôn Pốt. Hình ảnh quân tình nguyện Việt Nam (trong đó có Quân đoàn 4) hoàn thành nhiệm vụ trở về nước trong sự lưu luyến của nhân dân bạn đã làm ngời sáng phẩm chất “Bộ đội Cụ Hồ”. Như Tiến sĩ Chay Y Hiệng - Cố vấn Chính phủ Hoàng gia Campuchia đã khẳng định: Việt Nam trong trái tim người dân Campuchia chính là hình ảnh về một <i>“Quân đội nhà Phật”</i> từ cõi thiện xa xôi đến cứu giúp nhân dân qua hoạn nạn.</p>
 
-Thưa toàn thể các đồng chí!
+<p>Một lần nữa, bản chất cách mạng của “Bộ đội Cụ Hồ” được khẳng định và tỏa sáng.</p>
 
-Phát huy truyền thống vẻ vang trong chiến tranh cách mạng, ngày nay, Quân đội ta bước vào thời kỳ xây dựng tinh, gọn, mạnh theo tinh thần Nghị quyết Đại hội XIV của Đảng.
+<p>Thưa toàn thể các đồng chí!</p>
 
-Chủ trương chiến lược được xác định rõ: ‘‘Về xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại. Đại hội XIII xác định, đến năm 2025, cơ bản xây dựng Quân đội tinh, gọn, mạnh, tạo tiền đề vững chắc, phấn đấu năm 2030 xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại. Quán triệt, triển khai thực hiện Nghị quyết Đại hội XIV của Đảng về xây dựng Quân đội cách mạng, chính quy, tinh nhuệ, hiện đại; chỉ đạo của đồng chí Tổng Bí thư về "2 kiên định, 2 đẩy mạnh, 2 ngăn ngừa", "phương châm 5 vững" và mục tiêu "quyết tâm nghiên cứu, sản xuất vũ khí trang bị tiên tiến, hiện đại". Hơn 81 năm qua, Quân đội luôn thực hiện tốt 3 chức năng "đội quân chiến đấu, đội quân công tác, đội quân lao động và sản xuất".
+<p>Phát huy truyền thống vẻ vang trong chiến tranh cách mạng, ngày nay, Quân đội ta bước vào thời kỳ xây dựng tinh, gọn, mạnh theo tinh thần Nghị quyết Đại hội của Đảng.</p>
 
-* Thực hiện tốt chức năng đội quân chiến đấu:
-Đây là chức năng cơ bản, chủ yếu của Quân đội nhân dân Việt Nam. Toàn quân không ngừng nâng cao chất lượng huấn luyện, sẵn sàng chiến đấu, làm chủ vũ khí, trang bị kỹ thuật, nhất là vũ khí công nghệ cao; đẩy mạnh nghiên cứu khoa học, đổi mới sáng tạo, ứng dụng thành tựu của Cách mạng công nghiệp lần thứ tư nhằm nâng cao sức mạnh chiến đấu, đáp ứng yêu cầu bảo vệ vững chắc Tổ quốc trong tình hình mới. (Hình ảnh: không quân Việt Nam, diễu binh trên biển, tăng thiết giáp, …)
+<p>Chủ trương chiến lược được xác định rõ: Xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại. Đến năm 2025, cơ bản xây dựng Quân đội tinh, gọn, mạnh, tạo tiền đề vững chắc, phấn đấu đến năm 2030 xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại; quán triệt và triển khai chỉ đạo của đồng chí Tổng Bí thư về "2 kiên định, 2 đẩy mạnh, 2 ngăn ngừa", "phương châm 5 vững" và mục tiêu "quyết tâm nghiên cứu, sản xuất vũ khí trang bị tiên tiến, hiện đại". Hơn 81 năm qua, Quân đội luôn thực hiện tốt 3 chức năng: <b>đội quân chiến đấu, đội quân công tác, đội quân lao động sản xuất</b>.</p>
 
-* Thực hiện tốt chức năng đội quân công tác:
-Quân đội luôn gắn bó máu thịt với nhân dân, tích cực tuyên truyền, vận động nhân dân thực hiện chủ trương của Đảng, chính sách, pháp luật của Nhà nước; tham gia xây dựng hệ thống chính trị cơ sở, giúp dân phát triển kinh tế, giảm nghèo, xây dựng nông thôn mới, phòng, chống thiên tai, cứu hộ, cứu nạn. Đồng thời, tích cực thực hiện nhiệm vụ đối ngoại quốc phòng, tham gia lực lượng gìn giữ hòa bình Liên hợp quốc, góp phần xây dựng "thế trận lòng dân" vững chắc và lan tỏa phẩm chất cao đẹp "Bộ đội Cụ Hồ". (Hình ảnh)
+<ul>
+  <li><b>Thực hiện tốt chức năng đội quân chiến đấu:</b> Đây là chức năng cơ bản, chủ yếu của Quân đội nhân dân Việt Nam. Toàn quân không ngừng nâng cao chất lượng huấn luyện, sẵn sàng chiến đấu, làm chủ vũ khí, trang bị kỹ thuật, nhất là vũ khí công nghệ cao; đẩy mạnh nghiên cứu khoa học, đổi mới sáng tạo, ứng dụng thành tựu của Cách mạng công nghiệp lần thứ tư nhằm nâng cao sức mạnh chiến đấu, đáp ứng yêu cầu bảo vệ vững chắc Tổ quốc trong tình hình mới.</li>
+  <li><b>Thực hiện tốt chức năng đội quân công tác:</b> Quân đội luôn gắn bó máu thịt với nhân dân, tích cực tuyên truyền, vận động nhân dân thực hiện chủ trương của Đảng, chính sách, pháp luật của Nhà nước; tham gia xây dựng hệ thống chính trị cơ sở, giúp dân phát triển kinh tế, giảm nghèo, xây dựng nông thôn mới, phòng, chống thiên tai, cứu hộ, cứu nạn. Đồng thời, tích cực thực hiện nhiệm vụ đối ngoại quốc phòng, tham gia lực lượng gìn giữ hòa bình Liên Hợp Quốc, góp phần xây dựng "thế trận lòng dân" vững chắc và lan tỏa phẩm chất cao đẹp "Bộ đội Cụ Hồ".</li>
+  <li><b>Thực hiện tốt chức năng đội quân lao động sản xuất:</b> Quân đội tích cực tăng gia sản xuất, thực hành tiết kiệm, nâng cao đời sống bộ đội; tham gia phát triển kinh tế gắn với củng cố quốc phòng, an ninh, nhất là ở vùng sâu, vùng xa, biên giới, hải đảo. Qua đó góp phần phát triển kinh tế - xã hội, tăng cường tiềm lực quốc phòng và xây dựng Quân đội ngày càng vững mạnh.</li>
+</ul>
 
-* Thực hiện tốt chức năng đội quân lao động sản xuất:
-Quân đội tích cực tăng gia sản xuất, thực hành tiết kiệm, nâng cao đời sống bộ đội; tham gia phát triển kinh tế gắn với củng cố quốc phòng, an ninh, nhất là ở vùng sâu, vùng xa, biên giới, hải đảo. Qua đó góp phần phát triển kinh tế - xã hội, tăng cường tiềm lực quốc phòng và xây dựng Quân đội ngày càng vững mạnh. (Hình ảnh).
+<p>Trải qua hơn 81 năm xây dựng, chiến đấu và trưởng thành đã đúc kết nên những nét tiêu biểu nhất về bản chất cách mạng và truyền thống vẻ vang của Quân đội nhân dân Việt Nam:</p>
 
-Trải qua hơn 81 năm xây dựng, chiến đấu và trưởng thành đã đúc kết nên những nét tiêu biểu nhất về bản chất cách mạng và truyền thống vẻ vang của QĐND Việt Nam, đó là:
+<ol>
+  <li><b>Trung thành vô hạn</b> với Tổ quốc Việt Nam xã hội chủ nghĩa, với Đảng, Nhà nước và nhân dân.</li>
+  <li><b>Quyết chiến, quyết thắng</b>, biết đánh, biết thắng.</li>
+  <li><b>Gắn bó máu thịt với nhân dân</b>, quân dân một ý chí.</li>
+  <li><b>Nội bộ đoàn kết</b>, cán bộ, chiến sĩ bình đẳng thương yêu giúp đỡ nhau, trên dưới đồng lòng thống nhất ý chí và hành động.</li>
+  <li><b>Kỷ luật tự giác</b> nghiêm minh.</li>
+  <li><b>Độc lập tự chủ, tự lực tự cường</b>, cần kiệm xây dựng Quân đội, xây dựng đất nước, tôn trọng và bảo vệ của công.</li>
+  <li><b>Lối sống trong sạch, lành mạnh</b>, có văn hóa, trung thực, khiêm tốn, giản dị, lạc quan.</li>
+  <li><b>Tinh thần ham học, cầu tiến bộ</b>, có ý chí vươn lên.</li>
+  <li><b>Đoàn kết quốc tế trong sáng</b>, thủy chung, chí nghĩa, chí tình.</li>
+</ol>
 
-NHỮNG NẾT TIÊU BIỂU NHẤT VỀ BẢN CHẤT CÁCH MẠNG VÀ TRUYỀN THỐNG VẺ VANG CỦA QUÂN ĐỘI NHÂN DÂN VIỆT NAM:
-1. TRUNG THÀNH VÔ HẠN VỚI TỔ QUỐC VIỆT NAM XÃ HỘI CHỦ NGHĨA, VỚI ĐẢNG, NHÀ NƯỚC VÀ NHÂN DÂN.
-2. QUYẾT CHIẾN, QUYẾT THẮNG, BIẾT ĐÁNH, BIẾT THẮNG.
-3. GẮN BÓ MÁU THỊT VỚI NHÂN DÂN, QUÂN DÂN MỘT Ý CHÍ.
-4. NỘI BỘ ĐOÀN KẾT, CÁN BỘ, CHIẾN SĨ BÌNH ĐẲNG THƯƠNG YÊU GIÚP ĐỠ NHAU, TRÊN DƯỚI ĐỒNG LÒNG THỐNG NHẤT Ý CHÍ VÀ HÀNH ĐỘNG.
-5. KỶ LUẬT TỰ GIÁC NGHIÊM MINH.
-6. ĐỘC LẬP TỰ CHỦ, TỰ LỰC TỰ CƯỜNG, CẦN KIỆM XÂY DỰNG QUÂN ĐỘI, XÂY DỰNG ĐẤT NƯỚC, TÔN TRỌNG VÀ BẢO VỆ CỦA CÔNG.
-7. LỐI SỐNG TRONG SẠCH, LÀNH MẠNH, CÓ VĂN HÓA, TRUNG THỰC, KHIÊM TỐN, GIẢN DỊ, LẠC QUAN.
-8. TINH THẦN HAM HỌC, CẦU TIẾN BỘ, CÓ Ý CHÍ VƯƠN LÊN.
-9. ĐOÀN KẾT QUỐC TẾ TRONG SÁNG, THỦY CHUNG, CHÍ NGHĨA, CHÍ TÌNH.
+<p>Sự lớn mạnh của Quân đội nhân dân Việt Nam luôn gắn liền với sự lãnh đạo, chỉ đạo sâu sát của các đồng chí lãnh đạo Bộ Quốc phòng qua các thời kỳ. Hiện nay, lãnh đạo Bộ Quốc phòng gồm có:</p>
+<ul>
+  <li><b>Đại tướng Phan Văn Giang:</b> Bộ trưởng Bộ Quốc phòng.</li>
+  <li><b>Đại tướng Nguyễn Trọng Nghĩa:</b> Chủ nhiệm Tổng cục Chính trị.</li>
+  <li><b>Đại tướng Nguyễn Tân Cương:</b> Tổng Tham mưu trưởng Quân đội nhân dân Việt Nam, Thứ trưởng Bộ Quốc phòng.</li>
+</ul>
 
-Sự lớn mạnh của QĐNDVN luôn gắn liền với sự lãnh đạo, chỉ đạo sâu sát của các đồng chí lãnh đạo Bộ Quốc phòng qua các thời kỳ. Hiện nay, lãnh đạo BQP gồm các đồng chí:
-- Đồng chí Đại tướng Phan Văn Giang - Bộ trưởng BQP;
-- Đồng chí Đại tướng Nguyễn Trọng Nghĩa - Chủ nhiệm Tổng cục Chính trị;
-- Đồng chí Đại tướng Nguyễn Tân Cương - Tổng Tham mưu trưởng Quân đội nhân dân Việt Nam. 
+<p>Sự thống nhất về ý chí và hành động của toàn quân tiếp tục được khẳng định và nâng tầm thông qua các sự kiện chính trị trọng đại. Đại hội đại biểu Đảng bộ Quân đội lần thứ XII (nhiệm kỳ 2025 - 2030) đã đánh giá toàn diện kết quả thực hiện nhiệm vụ giai đoạn 2020 - 2025, quyết định phương hướng, mục tiêu lãnh đạo nhiệm vụ quân sự, quốc phòng và xây dựng Đảng bộ Quân đội 5 năm tới, đóng góp vào văn kiện và bầu đoàn đại biểu dự Đại hội đại biểu toàn quốc của Đảng.</p>
 
-Sự thống nhất về ý chí và hành động của toàn quân tiếp tục được khẳng định và nâng tầm thông qua các sự kiện chính trị trọng đại.
+<p>Kính thưa các đồng chí!</p>
 
-Đại hội đại biểu Đảng bộ Quân đội lần thứ XII, nhiệm kỳ 2025 - 2030 đã thành công tốt đẹp. Đại hội đã đánh giá toàn diện kết quả thực hiện nhiệm vụ giai đoạn 2020 - 2025, quyết định phương hướng, mục tiêu lãnh đạo nhiệm vụ quân sự, quốc phòng và xây dựng Đảng bộ Quân đội 5 năm tới, đóng góp vào văn kiện và bầu đoàn đại biểu dự Đại hội đại biểu toàn quốc lần thứ XIV của Đảng.
+<p>Để bảo đảm cho Quân đội luôn hoàn thành xuất sắc mọi nhiệm vụ trong tình hình mới, các cơ quan, đơn vị và từng cán bộ, chiến sĩ trong toàn quân cần tiếp tục phấn đấu xây dựng bản lĩnh chính trị vững vàng, giữ vững phẩm chất “Bộ đội Cụ Hồ”. Toàn đơn vị gương mẫu thực hiện Chỉ thị 05 và Kết luận 01 của Bộ Chính trị khóa XIII về đẩy mạnh học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh; giữ vững nguyên tắc lãnh đạo tuyệt đối, trực tiếp về mọi mặt của Đảng đối với Quân đội.</p>
 
-Kính thưa các đồng chí!
+<p>Mỗi quân nhân phải thường xuyên quán triệt sâu sắc đường lối, quan điểm của Đảng; xác định rõ đối tác, đối tượng theo Nghị quyết Trung ương 8 (khóa XII, XIII) về “Chiến lược bảo vệ Tổ quốc trong tình hình mới”. Luôn nêu cao tinh thần cảnh giác cách mạng, phối hợp chặt chẽ với các lực lượng, đập tan mọi âm mưu “diễn biến hòa bình”, “phi chính trị hóa quân đội” của các thế lực thù địch, ngăn chặn biểu hiện “tự diễn biến”, “tự chuyển hóa” từ trong nội bộ, quyết tâm bảo vệ vững chắc độc lập, chủ quyền, toàn vẹn lãnh thổ của Tổ quốc.</p>
 
-Để bảo đảm cho Quân đội luôn hoàn thành xuất sắc mọi nhiệm vụ trong tình hình mới, các cơ quan, đơn vị và từng cán bộ, chiến sĩ trong toàn quân cần tiếp tục phấn đấu xây dựng bản lĩnh chính trị vững vàng, giữ vững phẩm chất “Bộ đội Cụ Hồ”. Toàn đơn vị gương mẫu thực hiện Chỉ thị 05 và Kết luận 01 của Bộ Chính trị khóa XIII về đẩy mạnh học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh; giữ vững nguyên tắc lãnh đạo tuyệt đối, trực tiếp về mọi mặt của Đảng đối với Quân đội.
-
-Mỗi quân nhân phải thường xuyên quán triệt sâu sắc đường lối, quan điểm của Đảng; xác định rõ đối tác, đối tượng theo Nghị quyết Trung ương 8 (khóa XII, XIII) về “Chiến lược bảo vệ Tổ quốc trong tình hình mới”. Luôn nêu cao tinh thần cảnh giác cách mạng, phối hợp chặt chẽ với các lực lượng, đập tan mọi âm mưu “diễn biến hòa bình”, “phi chính trị hóa quân đội” của các thế lực thù địch, ngăn chặn biểu hiện “tự diễn biến”, “tự chuyển hóa” từ trong nội bộ, quyết tâm bảo vệ vững chắc độc lập, chủ quyền, toàn vẹn lãnh thổ của Tổ quốc.
-
-Chuyên đề thuyết minh của tôi đến đây là kết thúc.
-Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!`
+<p>Trân trọng cảm ơn các đồng chí đã chú ý lắng nghe!</p>`
 },
       {
   title: 'Tuổi trẻ Quân đội phấn đấu xứng danh “Bộ đội Cụ Hồ” thời kỳ mới.',
