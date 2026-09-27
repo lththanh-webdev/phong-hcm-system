@@ -116,7 +116,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { createClient } from '@supabase/supabase-js';
 import { Viewer } from '@photo-sphere-viewer/core';
 import '@photo-sphere-viewer/core/index.css';
-
+import panoImage from '@/assets/360hcm.jpg';
 // Khởi tạo Supabase client sử dụng biến môi trường Vite
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
@@ -261,8 +261,8 @@ const openTour360 = async () => {
 
       viewerInstance = new Viewer({
         container: viewerContainer.value,
-        panorama: '/assets/360hcm.jpg',
-        autoload: true,
+        panorama: panoImage,
+       
         size: { width: '100%', height: '500px' },
       });
     }
