@@ -160,7 +160,7 @@ export default {
    {
   title: 'Đảng Cộng sản Việt Nam - Người tổ chức và lãnh đạo mọi thắng lợi của cách mạng Việt Nam.',
   shortDesc: 'Khẳng định vai trò lãnh đạo tuyệt đối, toàn diện của Đảng trong suốt chiều dài lịch sử đấu tranh và xây dựng đất nước.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/Dang.jpg',
   imageCaption: 'Đại hội Đại biểu toàn quốc của Đảng - Mốc son lịch sử quang vinh',
   fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
@@ -248,7 +248,7 @@ export default {
     {
   title: 'Việt Nam - Đất nước, con người',
   shortDesc: 'Giới thiệu truyền thống văn hóa tốt đẹp, cảnh quan thiên nhiên và vẻ đẹp con người Việt Nam qua các thời kỳ.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/VNdatnuoc.jpg',
   imageCaption: 'Non sông gấm vóc Việt Nam - Tươi đẹp và giàu truyền thống',
   fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
@@ -318,7 +318,7 @@ export default {
   {
   title: 'Chủ tịch Hồ Chí Minh - Cuộc đời và sự nghiệp',
   shortDesc: 'Tóm tắt tiểu sử, quá trình hoạt động cách mạng và di sản tư tưởng vô giá của Người để lại cho dân tộc.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/ChutichHCM.jpg',
   imageCaption: 'Chủ tịch Hồ Chí Minh - Vị lãnh tụ thiên tài của dân tộc Việt Nam',
   fullContent: `<p>Kính thưa thủ trưởng, thưa toàn thể các đồng chí!</p>
 
@@ -382,7 +382,7 @@ export default {
     {
   title: 'Truyền thống Quân đội nhân dân Việt Nam',
   shortDesc: 'Tôn vinh lịch sử vẻ vang, tinh thần quyết chiến quyết thắng và những chiến công oanh liệt của QĐND Việt Nam.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/TruyenthongQD.jpg',
   imageCaption: 'Quân đội nhân dân Việt Nam - Từ nhân dân mà ra, vì nhân dân mà chiến đấu',
   fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
@@ -473,7 +473,7 @@ export default {
       {
   title: 'Tuổi trẻ Quân đội phấn đấu xứng danh “Bộ đội Cụ Hồ” thời kỳ mới.',
   shortDesc: 'Khơi dậy khát vọng cống hiến, xung kích, sáng tạo rèn luyện bản lĩnh của đoàn viên thanh niên trong đơn vị.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/BodoiCuHo.jpg',
   imageCaption: 'Thanh niên quân đội xung kích, sáng tạo, quyết thắng',
   fullContent: `<p>Thưa toàn thể các đồng chí!</p>
 
@@ -554,7 +554,7 @@ Tuổi trẻ Quân đội là bộ phận ưu tú của thanh niên cả nước
      {
   title: 'Đơn vị của chúng tôi.',
   shortDesc: 'Giới thiệu thành tích, kết quả huấn luyện, sẵn sàng chiến đấu và xây dựng chính quy của Tiểu đoàn Phòng không 16.',
-  image: 'https://media.vietnamplus.vn/images/7a1104291381b813e66ae3b0da957f44bb808b410bac30fb476f12cd699c8f06dce6b209706a3ec7b11fab6e1c8f60e858db261190b4d4ffeaa677e558889593/chu-tich-ho-chi-minh-9.jpg.webp',
+  image: 'https://anhphonghcm.netlify.app/assets/Donvichungtoi.jpg',
   imageCaption: 'Tiểu đoàn Phòng không 16 - Vững mạnh toàn diện, mẫu mực tiêu biểu',
   fullContent: `<p>Kính thưa các thủ trưởng, thưa toàn thể các đồng chí!</p>
 
