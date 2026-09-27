@@ -261,7 +261,7 @@ const openTour360 = async () => {
 
       viewerInstance = new Viewer({
         container: viewerContainer.value,
-        panorama: 'https://anhphonghcm.netlify.app/assets/360hcm.jpg',
+        panorama: '/assets/360hcm.jpg',
         autoload: true,
         size: { width: '100%', height: '500px' },
       });
